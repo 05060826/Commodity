@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commodity", "Commodity\Comm
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommodityApi", "CommodityApi\CommodityApi.csproj", "{66783932-A319-4578-BAAE-32C587FF1674}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{88413BA4-3286-468F-B6FF-AA5E26961754}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{6200DAEF-C507-496A-83AE-11394C72C0EA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{66783932-A319-4578-BAAE-32C587FF1674}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66783932-A319-4578-BAAE-32C587FF1674}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66783932-A319-4578-BAAE-32C587FF1674}.Release|Any CPU.Build.0 = Release|Any CPU
-		{88413BA4-3286-468F-B6FF-AA5E26961754}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{88413BA4-3286-468F-B6FF-AA5E26961754}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88413BA4-3286-468F-B6FF-AA5E26961754}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{88413BA4-3286-468F-B6FF-AA5E26961754}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6200DAEF-C507-496A-83AE-11394C72C0EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6200DAEF-C507-496A-83AE-11394C72C0EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6200DAEF-C507-496A-83AE-11394C72C0EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6200DAEF-C507-496A-83AE-11394C72C0EA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
