@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using DataAccess.DataModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using DataAccess;
+using DataAccess.DataDal;
 
 namespace CommodityApi.Controllers
 {
@@ -12,13 +14,16 @@ namespace CommodityApi.Controllers
     [ApiController]
     public class SupplierController : ControllerBase
     {
-        public List<BookInfo> GetBookInfo()
-        {
-            using (CommercedataContext context=new CommercedataContext())
+        AllCountrol dal = new AllCountrol();
+      
+            //查询语句
+            public List<Customer> GetAll()
             {
-                List<BookInfo>  list=context.BookInfo.ToList();
-                return list;
+
+            var list = dal.GetAll();
+            return list;
+
             }
-        }
+       
     }
 }
