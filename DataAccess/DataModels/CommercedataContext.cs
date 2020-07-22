@@ -8,11 +8,13 @@ namespace DataAccess.DataModels
     {
         public CommercedataContext()
         {
+
         }
 
         public CommercedataContext(DbContextOptions<CommercedataContext> options)
             : base(options)
         {
+            
         }
 
         public virtual DbSet<AllClassTypes> AllClassTypes { get; set; }
@@ -34,8 +36,7 @@ namespace DataAccess.DataModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=192.168.1.100;Database=Commercedata;uid=sa;pwd=123456");
+                optionsBuilder.UseSqlServer("Server=192.168.43.81;Database=Commercedata;uid=sa;pwd=123456");
             }
         }
 
