@@ -1,0 +1,89 @@
+﻿
+
+
+@{
+    Layout = null;
+}
+<script src="~/layuiadmin/layui/layui.js"></script>
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<!DOCTYPE html>
+
+<div class="layui-form">
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+    <div id="laypage"></div>
+</div>
+<script>
+    //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        form.render(); //渲染页面
+    });
+
+    $(function () {
+        var pageSize = 10; //每页显示的数据条数
+        var currentPageNo = 1; //当前页数
+        //初始化获取值
+        GetReceiptData(pageSize, currentPageNo);
+        //查询
+        $("#btnselect").click(function () {
+            GetReceiptData(pageSize, currentPageNo);
+        });
+        //跳转新增页面
+        $("#btnAdd").click(function () {
+            window.location.href = "/Allot/CreateAllot";
+        })
+    })
+    //显示数据
+    function GetReceiptData(pageSize, currentPageNo ) {
+        layui.use(['table','laypage'], function () {
+            var table = layui.table;
+            var laypage = layui.laypage;
+            table.render({
+                elem: '#test'
+                , url: "http://49.234.34.192:7086/api/Allot/CheckShowModel?pageName=" + currentPageNo + "&&limitName=" + pageSize +  ''
+                , title: '盘点页面'
+                , totalRow: true
+
+                , cols: [[
+                    { type: 'checkbox', fixed: 'left' }
+                    , { field: 'WName', title: '仓库', width: 150, edit: 'text' }
+                    , { field: 'Sid', title: '商品编号', width: 150, edit: 'text' }
+                    , { field: 'SName', title: '商品名称', width: 150, sort: true, totalRow: true }
+                    , { field: 'Units', title: '单位', width: 150, edit: 'text', sort: true }
+                    , { field: 'SystemNumber', title: '系统库存', width: 150, sort: true, totalRow: true }
+                    , { field: 'CheckNumber', title: '盘点库存', width: 150 }
+                    , { field: 'Money', title: '盘盈盘亏', width: 150, templet: function (d) { return d.SystemNumber - d.CheckNumber } }
+
+                ]]
+                , done: function (res, curr, count) {
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    laypage.render({
+                        elem: 'laypage'
+                        , count: count
+                        , curr: currentPageNo
+                        , limit: pageSize
+                        , layout: ['prev', 'page', 'next', 'skip', 'count', 'limit']
+                        , jump: function (obj, first) {
+                            if (!first) {
+                                currentPageNo = obj.curr;
+                                pageSize = obj.limit;
+                                GetReceiptData(pageSize, currentPageNo);
+                            }
+                        }
+                    })
+                }
+            });
+        });
+    }
+</script>
+
+
+
+
+

@@ -34,7 +34,7 @@ namespace DataAccess.DataModels
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=192.168.1.100;Database=Commercedata;uid=sa;pwd=123456");
+                optionsBuilder.UseSqlServer("Server=192.168.43.81;Database=Commercedata;uid=sa;pwd=123456");
             }
         }
 
