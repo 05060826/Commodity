@@ -10,7 +10,7 @@ namespace DataAccess.Model
     /// </summary>
   public  class Client_ShowModel
     {
-        public List<UserorderRecound> ShowList { get; set; }
+        public List<OrderItems> ShowList { get; set; }
         /// <summary>
         /// 总条数
         /// </summary>

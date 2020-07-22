@@ -16,14 +16,14 @@ namespace CommodityApi.Controllers
     {
         AllCountrol dal = new AllCountrol();
       
-            //查询语句
-            public List<Customer> GetAll()
-            {
+            ////查询语句
+            //public List<Customer> GetAll()
+            //{
 
-            var list = dal.GetAll();
-            return list;
+            //var list = dal.GetAll();
+            //return list;
 
-            }
+            //}
        
     }
 }

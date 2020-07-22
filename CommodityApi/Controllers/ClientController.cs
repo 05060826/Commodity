@@ -26,7 +26,20 @@ namespace CommodityApi.Controllers
         [HttpGet]
         public Client_ShowModel ClientShow(int pageIndex = 1, int pageSize = 3)
         {
-            return null;
+            var list = _business.GetOrders();
+
+            //总条数
+            var totalCount = list.Count();
+            //总页数
+            var totalPage = totalCount / pageSize + (totalCount % pageSize > 0 ? 1 : 0);
+
+            list = list.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            Client_ShowModel pageShowlist = new Client_ShowModel();
+            pageShowlist.ShowList = list;
+            pageShowlist.ToTalCount = totalCount;
+            pageShowlist.PageTotal = totalPage;
+            return pageShowlist;
         }
 
         [HttpGet]
