@@ -62,5 +62,6 @@ namespace CommodityApi
                 endpoints.MapControllers();
             });
         }
+
     }
 }
