@@ -8,11 +8,13 @@ namespace DataAccess.DataModels
     {
         public CommercedataContext()
         {
+
         }
 
         public CommercedataContext(DbContextOptions<CommercedataContext> options)
             : base(options)
         {
+            
         }
 
         public virtual DbSet<AllClassTypes> AllClassTypes { get; set; }
