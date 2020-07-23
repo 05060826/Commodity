@@ -18,8 +18,6 @@ namespace DataAccess.DataDal
         {
             return db.Set<T>().ToList();
 
-
-
         }
         //添加数据
         public int Add(T t)

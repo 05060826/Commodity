@@ -12,7 +12,5 @@ namespace DataAccess.DataDal
        // CommercedataContext db = new CommercedataContext();
         //查询语句
        
-
-
     }
 }
