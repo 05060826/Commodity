@@ -30,5 +30,15 @@ namespace Commodity.Controllers
         {
             return View();
         }
+
+
+
+
+
+        //查看我的信息
+        public IActionResult UserOrder()
+        {
+            return View();
+        }
     }
 }
