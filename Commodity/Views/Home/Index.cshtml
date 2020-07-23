@@ -168,28 +168,24 @@
                                 </dd>
                             </dl>
                         </li>
-                        @*调拨页面*@
+                        @*顾客后台*@
                         <li data-name="app" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" lay-tips="仓库" lay-direction="2">
                                 <i class="layui-icon layui-icon-app"></i>
-                                <cite>仓库</cite>
+                                <cite>购物车</cite>
                             </a>
                             <dl class="layui-nav-child">
-
                                 <dd data-name="content">
-                                    <a href="javascript:;">调拨</a>
+                                    <a href="javascript:;">购物车</a>
                                     <dl class="layui-nav-child">
-                                        <dd data-name="list"><a href="/Allot/ShowTaA" target="main_self_frame">调拨列表</a></dd>
-                                        <dd data-name="tags"><a href="/Allot/CreateAllot" target="main_self_frame">新增调拨</a></dd>
+                                        <dd data-name="list"><a href="/Client_/Index" target="main_self_frame">商品显示</a></dd>
+                                        <dd data-name="tags"><a href="/Client_/RecoundShowAll" target="main_self_frame">全部订单</a></dd>
+                                        <dd data-name="tags"><a href="/Client_/Non_Payment" target="main_self_frame">未付款订单</a></dd>
+                                        <dd data-name="tags"><a href="/Client_/Affirm" target="main_self_frame">待确认订单</a></dd>
+                                        <dd data-name="tags"><a href="/Client_/Evaluate" target="main_self_frame">待评价订单</a></dd>
                                     </dl>
                                 </dd>
-                                <dd data-name="echarts">
-                                    <a href="javascript:;">盘点</a>
-                                    <dl class="layui-nav-child">
-                                        <dd data-name="comment"><a href="/Allot/ShowChecks" target="main_self_frame">盘点列表</a></dd>
-                                        <dd data-name="comment"><a href="/Allot/FormSum" target="main_self_frame">盘点报表</a></dd>
-                                    </dl>
-                                </dd>
+                                
                             </dl>
                         </li>
                         @*资金页面*@

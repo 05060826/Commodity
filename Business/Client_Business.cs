@@ -8,12 +8,25 @@ namespace Business
     //顾客业务处理
     public class Client_Business
     {
-        EFHelper<OrderItems> cus = new EFHelper<OrderItems>();
-
+        EFHelper<OrderItems> Od = new EFHelper<OrderItems>();
+        EFHelper<UserorderRecound> Ur = new EFHelper<UserorderRecound>();
+        EFHelper<BankInfo> Ban = new EFHelper<BankInfo>();
         //显示出所有已经放入购物车中的商品
         public List<OrderItems>GetOrders()
         {
-            var dt = cus.GetAll();
+            var dt = Od.GetAll();
+            return dt;
+        }
+        //查询转态
+        public List<UserorderRecound> GetUserorderRecound()
+        {
+            var data = Ur.GetAll();
+            return data;
+        }
+        //显示付款账户
+        public List<BankInfo>GetBanks()
+        {
+            var dt = Ban.GetAll();
             return dt;
         }
     }

@@ -16,5 +16,38 @@ namespace Commodity.Controllers
         {
             return View();
         }
+        //查询全部订单
+        public IActionResult RecoundShowAll()
+        {
+            return View();
+        }
+        //查询 未付款订单
+        public IActionResult Non_Payment()
+        {
+            return View();
+        }
+        //查询 待确认收货订单
+        public IActionResult Affirm()
+        {
+            return View();
+        }
+        //查询 待评价订单
+        public IActionResult Evaluate()
+        {
+            return View();
+        }
+        //模型
+        public IActionResult Model()
+        {
+            return View();
+        }
+        public IActionResult Model2()
+        {
+            return View();
+        }
+        public IActionResult Model3()
+        {
+            return View();
+        }
     }
 }
