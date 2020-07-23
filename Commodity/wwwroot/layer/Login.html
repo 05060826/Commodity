@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>登录页面</title>
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="../layuiadmin/layui/layui.js"></script>
+    <script src="../layuiadmin/layui/lay/modules/jquery.js"></script>
+    <link href="../layuiadmin/layui/css/layui.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div style="height:50px;width:400px">
+        <button id="Customer" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Gu()">顾客</button>
+        <button id="UserRoderInfo" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Gong()">供应商</button>
+        <button id="ManageInfo" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Guan()">管理员</button>
+    </div>
+
+    
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" id="name" style="height:40px;width:100px">用户名：</label>
+            <div class="layui-input-inline" style="margin-top:10px">
+                <input type="text" id="username" placeholder="请输入用户名" class="input_long" />
+                <i style="color:red">*</i>
+            </div>
+            
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" id="pass" style="height:40px;width:100px">密码：</label>
+            <div class="layui-input-inline" style="margin-top:10px">
+                <input type="password" id="password" placeholder="请输入密码" class="input_long" />
+                <i style="color:red">*</i>
+            </div>           
+        </div>
+    </div>
+
+</body>
+</html>
+
+<script>
+    function Gu() {
+
+        document.getElementById('name').innerText = "顾客用户名：";
+        document.getElementById('pass').innerText = "顾客密码：";
+
+    }
+
+    function Gong() {
+        document.getElementById('name').innerText = "供应商用户名：";
+        document.getElementById('pass').innerText = "供应商密码：";
+
+    }
+
+    function Guan() {
+        document.getElementById('name').innerText = "管理员用户名：";
+        document.getElementById('pass').innerText = "管理员密码：";
+    }
+
+</script>
