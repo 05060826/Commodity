@@ -213,13 +213,17 @@
                                         dataType: "json",
                                         contentType:"application/json",
                                         success: function (result) {
-                                            if (result > 0) {
-                                                //关闭弹出层
-                                                layer.close(index);
+                                            if (result <= 0) {                                               
+                                                layui.use('layer', function () {
+                                                    var layer = layui.layer;
+
+                                                    layer.msg('仓库已有');
+                                                });
                                             }
                                         }
                                     });
-                                   
+                                   //关闭弹出层
+                                   layer.close(index);
                                 }
                             });
                         });;

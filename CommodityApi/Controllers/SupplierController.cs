@@ -49,6 +49,7 @@ namespace CommodityApi.Controllers
                 return JsonConvert.SerializeObject(obj);
             }
         }
+
         //分类
         [HttpGet]
         public List<NextClassType> GetTypeData()
@@ -81,11 +82,19 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
-                info.Score = 0;
-                info.SaledQuantity = 0;
-                info.BookStues = "未出售";
-                context.SupplierBookInfo.Add(info);
-                return context.SaveChanges();
+                var list = (from s in context.SupplierBookInfo where s.Isbn == info.Isbn select s).FirstOrDefault();
+                if (list==null)
+                {
+                    info.Score = 0;
+                    info.SaledQuantity = 0;
+                    info.BookStues = "未出售";
+                    context.SupplierBookInfo.Add(info);
+                    return context.SaveChanges();
+                }
+                else
+                {
+                    return 0;
+                }
             }
         }
         //获取仓库未出售图书
@@ -224,6 +233,32 @@ namespace CommodityApi.Controllers
                 var list = (from s in context.SupplierBookInfo where s.Isbn == Isbn select s).FirstOrDefault();
                 list.BookStues = "未出售";
                 context.SupplierBookInfo.Update(list);
+                return context.SaveChanges();
+            }
+        }
+        //商家信息
+        [HttpGet]
+        public string GetUserRoder(string SupperId)
+        {
+            using (CommercedataContext context = new CommercedataContext())
+            {
+                var list = (from s in context.UserRoderInfo where s.SuppLierId == SupperId select s).FirstOrDefault();
+                return JsonConvert.SerializeObject(list);
+            }
+        }
+        //修改商家信息
+        [HttpPost]
+        public int UpdUserRoder(UserRoderInfo info)
+        {
+            using (CommercedataContext context = new CommercedataContext())
+            {
+                var list = (from s in context.UserRoderInfo where s.SuppLierId == info.SuppLierId select s).FirstOrDefault();
+                list.ShopName = info.ShopName;
+                list.ShopAddress = info.ShopAddress;
+                list.ContactName = info.ContactName;
+                list.CortactPhone = info.CortactPhone;
+                list.Mail = info.Mail;
+                list.TrueName = info.TrueName;
                 return context.SaveChanges();
             }
         }
