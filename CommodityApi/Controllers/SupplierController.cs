@@ -259,6 +259,7 @@ namespace CommodityApi.Controllers
                 list.CortactPhone = info.CortactPhone;
                 list.Mail = info.Mail;
                 list.TrueName = info.TrueName;
+                context.UserRoderInfo.Update(list);
                 return context.SaveChanges();
             }
         }
