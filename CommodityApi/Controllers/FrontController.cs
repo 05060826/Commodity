@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccess.DataDal;
 using DataAccess.DataModels;
 using DataAccess.Login;
 using JWT.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebApplication72.Models;
 
 namespace CommodityApi.Controllers
 {

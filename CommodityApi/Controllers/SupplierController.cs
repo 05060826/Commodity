@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataAccess.DataDal;
 using DataAccess.DataModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -99,16 +100,20 @@ namespace CommodityApi.Controllers
         }
         //获取仓库未出售图书
         [HttpGet]
-        public string GetCkBookInfo(string authorName = "", string title = "", string pubish = "", int pageName = 1, int limitName = 10)
+        public string GetCkBookInfo(string Token="",string authorName = "", string title = "", string pubish = "", int pageName = 1, int limitName = 10)
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                JWTHelper jWT = new JWTHelper();
+                UserRoderInfo user=JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(Token));
+                var ue = context.UserRoderInfo.Where(n => n.TrueName.Equals(user.TrueName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                string SupplierId = ue.SuppLierId;
                 var list = (from da in context.BookInfo
                             join du in context.AuthorInfo
                             on da.AuthorId equals du.AuthorId
                             join dd in context.SupplierBookInfo
                             on da.Isbn equals dd.Isbn
-                            where dd.BookStues=="未出售"
+                            where dd.BookStues=="未出售" && dd.SupplierId==SupplierId
                             select new { da.Isbn, da.Title, da.Publish, da.PublishTime, dd.Price,dd.TotalQuantity,dd.Discount,dd.BookType,dd.SaledQuantity,dd.BookStues, du.AuthorId, du.Aname }).ToList();
                 if (!string.IsNullOrEmpty(authorName))
                 {
@@ -236,6 +241,27 @@ namespace CommodityApi.Controllers
                 return context.SaveChanges();
             }
         }
+        //已卖出商品
+        [HttpGet]
+        public string GetGoodMC(string SupplierId="", int pageName = 1, int limitName = 10)
+        {
+            using (CommercedataContext context = new CommercedataContext())
+            {
+                var list = (from da in context.OrderItems
+                            join du in context.UserorderRecound
+                            on da.OrderId equals du.OrderId
+                            join dd in context.SupplierBookInfo
+                            on da.SupplierId equals dd.SupplierId
+                            where da.SupplierId==SupplierId
+                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice,da.Quantity,da.Statue, du.OrderId, du.ConsigName,du.ClinchTime }).ToList();
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("data",list);
+                dic.Add("count",list.Count);
+                return JsonConvert.SerializeObject(dic);
+            }
+        }
+
+
         //商家信息
         [HttpGet]
         public string GetUserRoder(string SupperId)

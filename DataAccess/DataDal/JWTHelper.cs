@@ -10,7 +10,7 @@ using JWT.Exceptions;
 using JWT.Serializers;
 
 
-namespace WebApplication72.Models
+namespace DataAccess.DataDal
 {
     public class JWTHelper
     {
