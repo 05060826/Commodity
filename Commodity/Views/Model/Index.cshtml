@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+    <script>
+        /*删除*/
+        $(function () {
+            $(".blue").bind("click", function () {
+                $(this).parent().parent().remove();
+                totalPrice();
+            });
+
+            /*当鼠标离开文本框时，获取当前值，调用totalPrice()函数进行结算*/
+            $(".shopping_product_list_5 input").bind("blur", function () {
+                var t = $(this).val();
+                totalPrice();
+            });
+            var allPrice = 0;
+            var allReduce = 0;
+            var allCount = 0;
+
+            $("#myTableProduct tr").each(function () {  /*循环购物车列表的每一行*/
+                var num = parseInt($(this).find(".shopping_product_list_5 input").val());  /*获取文本框中数量值*/
+                var price = parseFloat($(this).find(".shopping_product_list_4 label").text()); /* 获取商品价格*/
+                var total = price * num;
+                allPrice += total; /*计算所有商品的总价格*/
+
+                /*获取节省的金额*/
+                var reduce = parseFloat($(this).find(".shopping_product_list_3 label").text()) - parseFloat($(this).find(".shopping_product_list_4 label").text());
+                var reducePrice = reduce * num;
+                allReduce += reducePrice;
+
+                /*获取积分*/
+                var count = parseFloat($(this).find(".shopping_product_list_2 label").text());
+                allCount += count;
+            });
+            $("#product_total").text(allPrice.toFixed(2)); /*填写计算结果，其中利用toFixed()函数保留两位小数*/
+            $("#product_save").text(allReduce.toFixed(2));
+            $("#product_integral").text(allCount.toFixed(2));
+        });
+        function totalPrice() {
+            var allPrice = 0;
+            var allReduce = 0;
+            var allCount = 0;
+            $("#myTableProduct tr").each(function () {
+                var num = parseInt($(this).find(".shopping_product_list_5 input").val());
+                var price = parseFloat($(this).find(".shopping_product_list_4 label").text());
+                var total = price * num;
+                allPrice += total;
+
+                var reduce = parseFloat($(this).find(".shopping_product_list_3 label").text()) - parseFloat($(this).find(".shopping_product_list_4 label").text());
+                var reducePrice = reduce * num;
+                allReduce += reducePrice;
+
+                var count = parseFloat($(this).find(".shopping_product_list_2 label").text());
+                allCount += count;
+            });
+            $("#product_total").text(allPrice.toFixed(2));
+            $("#product_save").text(allReduce.toFixed(2));
+            $("#product_integral").text(allCount.toFixed(2));
+        }
+    </script>
+</head>
+<body>
+    <div class="shopping_list_top">您已选购以下商品</div>
+    <div class="shopping_list_border">
+        <table width="100%" border="1px solid #ccc">
+            <tr class="shopping_list_title">
+                <td class="shopping_list_title_1">商品名</td>
+                <td class="shopping_list_title_2">单品积分</td>
+                <td class="shopping_list_title_3">市场价</td>
+                <td class="shopping_list_title_4">当当价</td>
+                <td class="shopping_list_title_5">数量</td>
+                <td class="shopping_list_title_6">删除</td>
+            </tr>
+        </table>
+        <table width="100%" border="1px solid #ccc" id="myTableProduct">
+
+            <tr class="shopping_product_list" id="shoppingProduct_01">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">私募（首部披露资本博弈秘密的金融...</a></td>
+                <td class="shopping_product_list_2"><label>189</label></td>
+                <td class="shopping_product_list_3">￥<label>32.00</label></td>
+                <td class="shopping_product_list_4">￥<label>18.90 </label>(59折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="1" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+            <tr class="shopping_product_list" id="shoppingProduct_02">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue"> 小团圆（张爱玲最神秘小说遗稿）</a></td>
+                <td class="shopping_product_list_2"><label>173</label></td>
+                <td class="shopping_product_list_3">￥<label>28.00</label></td>
+                <td class="shopping_product_list_4">￥<label>17.30</label>(62折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="1" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+            <tr class="shopping_product_list" id="shoppingProduct_03">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">不抱怨的世界(畅销全球80国的世界...</a></td>
+                <td class="shopping_product_list_2"><label>154</label></td>
+                <td class="shopping_product_list_3">￥<label>24.80</label></td>
+                <td class="shopping_product_list_4">￥<label>15.40</label> (62折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="2" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+            <tr class="shopping_product_list" id="shoppingProduct_04">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">福玛特双桶洗衣机XPB20-07S</a></td>
+                <td class="shopping_product_list_2"><label>358</label></td>
+                <td class="shopping_product_list_3">￥<label>458.00</label></td>
+                <td class="shopping_product_list_4">￥<label>358.00</label> (78折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="1" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+            <tr class="shopping_product_list" id="shoppingProduct_05">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">PHP和MySQL Web开发 （原书第4版）</a></td>
+                <td class="shopping_product_list_2"><label>712</label></td>
+                <td class="shopping_product_list_3">￥<label>95.00</label></td>
+                <td class="shopping_product_list_4">￥<label>71.20</label> (75折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="1" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+            <tr class="shopping_product_list" id="shoppingProduct_06">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">法布尔昆虫记</a>（再买￥68.30即可参加“满199元减10元现金”活动）</td>
+                <td class="shopping_product_list_2"><label>10</label></td>
+                <td class="shopping_product_list_3">￥<label>198.00</label></td>
+                <td class="shopping_product_list_4">￥<label>130.70</label> (66折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="1" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+        </table>
+        <div class="shopping_list_end">
+            <div><a id="removeAllProduct" href="javascript:void(0);" rel="external nofollow">清空购物车</a></div>
+            <ul>
+                <li class="shopping_list_end_1"><input name="" type="image" src="images/shopping_balance.gif" /></li>
+                <li class="shopping_list_end_2">￥<label id="product_total"></label></li>
+                <li class="shopping_list_end_3">商品金额总计：</li>
+                <li class="shopping_list_end_4">
+                    您共节省金额：￥<label class="shopping_list_end_yellow" id="product_save"></label><br />
+                    可获商品积分：<label class="shopping_list_end_yellow" id="product_integral"></label>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

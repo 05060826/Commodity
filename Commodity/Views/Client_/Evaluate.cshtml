@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewData["Title"] = "Evaluate";
+}
+
+<script src="~/layuiadmin/layui/layui.js"></script>
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<!DOCTYPE html>
+
+<div class="layui-form">
+    <table class="layui-hide" id="test" lay-filter="test"></table>
+    <div id="laypage"></div>
+</div>
+<script>
+    //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element;
+    });
+
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        form.render(); //渲染页面
+    });
+
+    $(function () {
+        var pageSize = 10; //每页显示的数据条数
+        var currentPageNo = 1; //当前页数
+        //初始化获取值
+        GetReceiptData(pageSize, currentPageNo);
+    })
+    //显示数据
+    function GetReceiptData(pageSize, currentPageNo ) {
+        layui.use(['table','laypage'], function () {
+            var table = layui.table;
+            var laypage = layui.laypage;
+            table.render({
+                elem: '#test'
+                , url: "http://localhost:54063/api/Client/Evaluate?pageName=" + currentPageNo + "&&limitName=" + pageSize +  ''
+                , title: '待评价订单'
+                , totalRow: true
+
+                , cols: [[
+                    { field: 'OrderId', title: '订单编号', width: 150 }
+                    , { field: 'ConsigName', title: '收货人姓名', width: 150 }
+                    , { field: 'ConsigAddress', title: '收货地址', width: 150 }
+                    , { field: 'ConsigTel', title: '收货电话', width: 150 }
+                    , { field: 'ClinchTime', title: '成交时间', width: 150 }
+                    , { field: 'BuyNum', title: '购买总数', width: 150 }
+                    , { field: 'SaledMoney', title: '应付金额', width: 150 }
+                    , { field: 'PayTime', title: '付款时间', width: 150 }
+                    , { field: 'ConfirmTime', title: '确认收货时间', width: 150 }
+                    , { field: 'DeliveryTime', title: '发货时间', width: 150 }
+                    , { field: 'BuyerFreebACK', title: '顾客留言', width: 150 }
+                    , { field: 'OrderStatue', title: '订单状态', width: 150 }
+                    , { field: 'PayStatues', title: '付款状态', width: 150 }
+                    , { field: 'DelivaeryStatue', title: '发货状态', width: 150 }
+                    , { field: 'ReplayStatue', title: '回复状态', width: 150 }
+                ]]
+                , done: function (res, curr, count) {
+                    //如果是异步请求数据方式，res即为你接口返回的信息。
+                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
+                    laypage.render({
+                        elem: 'laypage'
+                        , count: count
+                        , curr: currentPageNo
+                        , limit: pageSize
+                        , layout: ['prev', 'page', 'next', 'skip', 'count', 'limit']
+                        , jump: function (obj, first) {
+                            if (!first) {
+                                currentPageNo = obj.curr;
+                                pageSize = obj.limit;
+                                GetReceiptData(pageSize, currentPageNo);
+                            }
+                        }
+                    })
+                }
+            });
+        });
+    }
+</script>
+
+
+
+
+
+
+
+
+
+
+
