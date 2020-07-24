@@ -17,6 +17,12 @@ namespace Business
             var dt = Od.GetAll();
             return dt;
         }
+        //添加订单
+        public  int ADD(UserorderRecound ur)
+        {
+            var add = Ur.Add(ur);
+            return add;
+        }
         //查询转态
         public List<UserorderRecound> GetUserorderRecound()
         {
@@ -28,6 +34,19 @@ namespace Business
         {
             var dt = Ban.GetAll();
             return dt;
+        }
+
+        //修改支付状态，收货，评价状态
+        public  int Updata(UserorderRecound ur)
+        {
+            var up = Ur.Modify(ur);
+            return up;
+        }
+        //修改银行卡余额
+        public int UpBnak(BankInfo bank)
+        {
+            var up = Ban.Modify(bank);
+            return up;
         }
     }
 }

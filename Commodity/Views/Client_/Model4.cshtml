@@ -111,7 +111,7 @@
     </div>
 </body>
 </html>
-<script>
+<script type="text/javascript">
     //首次加载
     $(function () {
         btnCha();
@@ -143,15 +143,20 @@
                     //    <td class="price">15</td>
                     //    <td class="price">15</td>
                     //    <td class="price">未付款</td>
+                    //<p class="num_box">
+                    //    <a class="J_jia">+</a><label>
+                    //        <input type="text" class="num" value="1" />
+                    //    </label><a class="J_jian">-</a>
+                    //</p>
                     var str = '<tr>' +
                         '<td class="product" >' + this.orderitemId + '</td>' +
                         '<td class="unit-price" >' + this.supplierId + '</td>' +
                         '<td class="number" >' + this.bookName +
                         '<td class="price">' + this.bookPrice + '</td>' +
-                        '<td class="number">'+
-                        '<span class="reduce">'+ '-' +'</span>'+
-                        '<span class="num">' + this.quantity +'</span>'+
-                        '<span class="add">'+ '+' +'</span>'+
+                        '<td class="num_box">'+
+                            '<a class="J_jia">'+ '+' +'</a>'+
+                            '<input type="text" class="num" value='+ this.quantity +' >'+
+                            '<a class="J_jian">'+ '-' +'</a>'+
                         '</td>';
                     $("#tab1").append(str);
                 })
@@ -196,6 +201,44 @@
 
         btnCha();
     };
+    $(document).ready(function () {
+        var add, reduce, num, num_txt;
+        add = $(".J_jia");//添加数量
+        reduce = $(".J_jian");//减少数量
+        num = "";//数量初始值
+        num_txt = $(".num");//接受数量的文本框
+        //var num_val=num_txt.val();//给文本框附上初始值
+
+        /*添加数量的方法*/
+        add.click(function () {
+            num = $(".num").val();
+            num++;
+            num_txt.val(num);
+            //ajax代码可以放这里传递到数据库实时改变总价
+        });
+
+        /*减少数量的方法*/
+        reduce.click(function () {
+            //如果文本框的值大于0才执行减去方法
+            num = $(".num").val();
+            if (num > 0) {
+                //并且当文本框的值为1的时候，减去后文本框直接清空值，不显示0
+                if (num == 1) {
+                    num--;
+                    num_txt.val("");
+                    if (num_txt.val("")) {
+                        alert("不能输入为0");
+                    }
+                }
+                //否则就执行减减方法
+                else {
+                    num--;
+                    num_txt.val(num);
+                }
+
+            }
+        });
+    })
     let Anum = document.getElementsByClassName("num");
     let Areduce = document.getElementsByClassName("reduce");
     let Aadd = document.getElementsByClassName("add");

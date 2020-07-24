@@ -1,404 +1,144 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>vuejs-数量选择器(2层数据结构)</title>
-    <style type="text/css">
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-            font-size: 16px;
+    <title></title>
+    <script type="text/javascript" src="js/jquery-1.8.3.js"></script>
+    <script>
+        /*删除*/
+        $(function () {
+            $(".blue").bind("click", function () {
+                $(this).parent().parent().remove();
+                totalPrice();
+            });
+
+            /*当鼠标离开文本框时，获取当前值，调用totalPrice()函数进行结算*/
+            $(".shopping_product_list_5 input").bind("blur", function () {
+                var t = $(this).val();
+                totalPrice();
+            });
+            var allPrice = 0;
+            var allReduce = 0;
+            var allCount = 0;
+
+            $("#myTableProduct tr").each(function () {  /*循环购物车列表的每一行*/
+                var num = parseInt($(this).find(".shopping_product_list_5 input").val());  /*获取文本框中数量值*/
+                var price = parseFloat($(this).find(".shopping_product_list_4 label").text()); /* 获取商品价格*/
+                var total = price * num;
+                allPrice += total; /*计算所有商品的总价格*/
+
+                /*获取节省的金额*/
+                var reduce = parseFloat($(this).find(".shopping_product_list_3 label").text()) - parseFloat($(this).find(".shopping_product_list_4 label").text());
+                var reducePrice = reduce * num;
+                allReduce += reducePrice;
+
+                /*获取积分*/
+                var count = parseFloat($(this).find(".shopping_product_list_2 label").text());
+                allCount += count;
+            });
+            $("#product_total").text(allPrice.toFixed(2)); /*填写计算结果，其中利用toFixed()函数保留两位小数*/
+            $("#product_save").text(allReduce.toFixed(2));
+            $("#product_integral").text(allCount.toFixed(2));
+        });
+        function totalPrice() {
+            var allPrice = 0;
+            var allReduce = 0;
+            var allCount = 0;
+            $("#myTableProduct tr").each(function () {
+                var num = parseInt($(this).find(".shopping_product_list_5 input").val());
+                var price = parseFloat($(this).find(".shopping_product_list_4 label").text());
+                var total = price * num;
+                allPrice += total;
+
+                var reduce = parseFloat($(this).find(".shopping_product_list_3 label").text()) - parseFloat($(this).find(".shopping_product_list_4 label").text());
+                var reducePrice = reduce * num;
+                allReduce += reducePrice;
+
+                var count = parseFloat($(this).find(".shopping_product_list_2 label").text());
+                allCount += count;
+            });
+            $("#product_total").text(allPrice.toFixed(2));
+            $("#product_save").text(allReduce.toFixed(2));
+            $("#product_integral").text(allCount.toFixed(2));
         }
-
-        a {
-            text-decoration: none;
-            color: #333;
-        }
-
-        .clearfix:after {
-            content: ".";
-            visibility: hidden;
-            display: block;
-            height: .1px;
-            font-size: .1em;
-            line-height: 0;
-            clear: both;
-        }
-
-        .quantity-selector {
-            margin: 0 auto;
-            width: 8.571rem;
-            line-height: 30px;
-            border: 1px solid #d1d6e4;
-            border-radius: 3px;
-        }
-
-            .quantity-selector .reduce,
-            .quantity-selector .add {
-                float: left;
-                width: 33.33%;
-                border-right: 1px solid #d1d6e4;
-                text-align: center;
-                cursor: pointer;
-            }
-
-            .quantity-selector .number {
-                float: left;
-                width: 33.33%;
-                height: 30px;
-                border: none;
-                padding-left: 10px;
-                text-align: center;
-            }
-
-            .quantity-selector .add {
-                border-left: 1px solid #d1d6e4;
-                border-right: none;
-            }
-
-            .quantity-selector .disable {
-                color: #d2d2d2;
-                cursor: default;
-            }
-
-        label {
-            cursor: pointer;
-        }
-
-        .choose-all {
-            margin-left: 20px;
-        }
-
-        /*店铺开始*/
-        .store-item {
-            width: 600px;
-            margin: 30px auto;
-        }
-
-            .store-item th {
-                height: 40px;
-                background: #d2d2d2;
-                -webkit-text-stroke: 1px #ff7500;
-                font-size: 18px;
-            }
-
-            .store-item td {
-                height: 60px;
-                text-align: center;
-            }
-
-        .cal-store-box {
-            text-align: right;
-        }
-
-        .store-footer {
-            width: 600px;
-            margin: 50px auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        /*店铺结束*/
-    </style>
+    </script>
 </head>
 <body>
-    <div class="store-item" v-for="(index1, item) in goodsObj">
-        <p>
-            <span v-html="item.name"></span>
-            <label class="choose-all">
-                <input type="checkbox" name="all" v-on:click="chooseShopGoods(index1)" v-model="item.checked" />
-                <span>全选</span>
-            </label>
-        </p>
-        <table class="store-item">
-            <col width="10%"></col>
-            <col width="15%"></col>
-            <col width="15%"></col>
-            <col width="10%"></col>
-            <col width="40%"></col>
-            <col width="10%"></col>
-            <thead class="thead">
-                <tr>
-                    <th>选择</th>
-                    <th>商品</th>
-                    <th>单价</th>
-                    <th>运费</th>
-                    <th>数量</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(index, data) in item.list">
-                    <td>
-                        <input type="checkbox" name="all" v-model="data.checked" v-on:click="choose(index1, index)" />
-                    </td>
-                    <td>
-                        <p><span v-html="data.name"></span></p>
-                    </td>
-                    <td v-html="(data.price).toFixed(2)"></td>
-                    <td v-html="(data.fare).toFixed(2)"></td>
-                    <td>
-                        <div class="quantity-selector clearfix">
-                            <span class="reduce" v-on:click="numChange(index1, $index, -1)" v-bind:class="{ 'disable' : data.num==1 }">－</span>
-                            <input type="number" v-bind:value="data.num" class="number" v-bind:data-realStock="data.realStock" v-on:keyUp="numEntry(index1, $index)" v-on:keyDown="numEntry(index1, $index)" v-model="data.num" />
-                            <span class="add" v-on:click="numChange(index1, $index, 1)" v-bind:class="{ 'disable' : data.num==data.realStock }">＋</span>
-                        </div>
-                    </td>
-                    <td>
-                        <a href="javascript:;" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" v-on:click="delGoods(index1, index)">删除</a>
-                    </td>
-                </tr>
-            </tbody>
+    <div class="shopping_list_top">您已选购以下商品</div>
+    <div class="shopping_list_border">
+        <table width="100%" border="1px solid #ccc">
+            <tr class="shopping_list_title">
+                <td class="shopping_list_title_1">商品名</td>
+                <td class="shopping_list_title_2">单品积分</td>
+                <td class="shopping_list_title_3">市场价</td>
+                <td class="shopping_list_title_4">当当价</td>
+                <td class="shopping_list_title_5">数量</td>
+                <td class="shopping_list_title_6">删除</td>
+            </tr>
         </table>
-        <div class="cal-store-box">
-            <p>店铺总运费: <span v-html="calEveryFare(index1)"></span></p>
-            <p>店铺商品总金额: <span v-html="calEveryStore(index1)"></span></p>
+        <table width="100%" border="1px solid #ccc" id="myTableProduct">
+
+            <tr class="shopping_product_list" id="shoppingProduct_01">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">私募（首部披露资本博弈秘密的金融...</a></td>
+                <td class="shopping_product_list_2"><label>189</label></td>
+                <td class="shopping_product_list_3">￥<label>32.00</label></td>
+                <td class="shopping_product_list_4">￥<label>18.90 </label>(59折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="1" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+            <tr class="shopping_product_list" id="shoppingProduct_02">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue"> 小团圆（张爱玲最神秘小说遗稿）</a></td>
+                <td class="shopping_product_list_2"><label>173</label></td>
+                <td class="shopping_product_list_3">￥<label>28.00</label></td>
+                <td class="shopping_product_list_4">￥<label>17.30</label>(62折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="1" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+            <tr class="shopping_product_list" id="shoppingProduct_03">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">不抱怨的世界(畅销全球80国的世界...</a></td>
+                <td class="shopping_product_list_2"><label>154</label></td>
+                <td class="shopping_product_list_3">￥<label>24.80</label></td>
+                <td class="shopping_product_list_4">￥<label>15.40</label> (62折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="2" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+            <tr class="shopping_product_list" id="shoppingProduct_04">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">福玛特双桶洗衣机XPB20-07S</a></td>
+                <td class="shopping_product_list_2"><label>358</label></td>
+                <td class="shopping_product_list_3">￥<label>458.00</label></td>
+                <td class="shopping_product_list_4">￥<label>358.00</label> (78折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="1" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+            <tr class="shopping_product_list" id="shoppingProduct_05">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">PHP和MySQL Web开发 （原书第4版）</a></td>
+                <td class="shopping_product_list_2"><label>712</label></td>
+                <td class="shopping_product_list_3">￥<label>95.00</label></td>
+                <td class="shopping_product_list_4">￥<label>71.20</label> (75折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="1" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+            <tr class="shopping_product_list" id="shoppingProduct_06">
+                <td class="shopping_product_list_1"><a href="#" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">法布尔昆虫记</a>（再买￥68.30即可参加“满199元减10元现金”活动）</td>
+                <td class="shopping_product_list_2"><label>10</label></td>
+                <td class="shopping_product_list_3">￥<label>198.00</label></td>
+                <td class="shopping_product_list_4">￥<label>130.70</label> (66折)</td>
+                <td class="shopping_product_list_5"><input type="text" value="1" /></td>
+                <td class="shopping_product_list_6"><a href="javascript:void(0)" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" rel="external nofollow" class="blue">删除</a></td>
+            </tr>
+        </table>
+        <div class="shopping_list_end">
+            <div><a id="removeAllProduct" href="javascript:void(0);" rel="external nofollow">清空购物车</a></div>
+            <ul>
+                <li class="shopping_list_end_1"><input name="" type="image" src="images/shopping_balance.gif" /></li>
+                <li class="shopping_list_end_2">￥<label id="product_total"></label></li>
+                <li class="shopping_list_end_3">商品金额总计：</li>
+                <li class="shopping_list_end_4">
+                    您共节省金额：￥<label class="shopping_list_end_yellow" id="product_save"></label><br />
+                    可获商品积分：<label class="shopping_list_end_yellow" id="product_integral"></label>
+                </li>
+            </ul>
         </div>
     </div>
-
-    <div class="store-footer">
-        <label>
-            <input type="checkbox" v-on:click="chooseAllGoods($event)" v-model="allChecked" />
-            <span>全选</span>
-        </label>
-        <div class="cal-box">
-            <p>商品总运费:<span v-html="totalFare.toFixed(2)"></span></p>
-            <p>商品总金额:<span v-html="totalMoney.toFixed(2)"></span></p>
-        </div>
-    </div>
-
-    <script src="http://cdn.bootcss.com/vue/1.0.7/vue.js"></script>
-    <script>
-        var goodsObj = [
-            {
-                name: '大胖的店',
-                checked: false,
-                list: [
-                    {
-                        name: '麻辣二胖',
-                        price: 23.00,
-                        realStock: 10,
-                        fare: 1.5,
-                        num: 1,
-                        checked: false,
-                    },
-
-                    {
-                        name: '香辣二胖',
-                        price: 21.00,
-                        realStock: 2,
-                        fare: 1.5,
-                        num: 2,
-                        checked: false,
-                    },
-
-                    {
-                        name: '红烧二胖',
-                        price: 88.00,
-                        realStock: 8,
-                        fare: 1.5,
-                        num: 4,
-                        checked: false,
-                    }
-                ]
-            },  
-        ];
-        var vue = new Vue({
-            el: 'body',
-            data: {
-                goodsObj: goodsObj,
-                totalMoney: 0,
-                totalFare: 0,
-                allChecked: false
-            },
-            ready: function () { },
-            methods: {
-
-                // 全部商品全选
-                chooseAllGoods: function () {
-                    var flag = true;
-                    if (this.allChecked) {
-                        flag = false;
-                    }
-                    for (var i = 0, len = this.goodsObj.length; i < len; i++) {
-                        this.goodsObj[i]['checked'] = flag;
-                        var list = this.goodsObj[i]['list'];
-                        for (var k = 0, len1 = list.length; k < len1; k++) {
-                            list[k]['checked'] = flag;
-                        }
-                    }
-                    this.allChecked = !this.allChecked;
-                    this.calTotalMoney();
-                    this.calTotalFare();
-                },
-
-                // 每个店铺全选
-                chooseShopGoods: function (index) {
-                    var list = this.goodsObj[index]['list'],
-                        len = list.length;
-                    if (this.goodsObj[index]['checked']) {
-                        for (var i = 0; i < len; i++) {
-                            list[i]['checked'] = false;
-                        }
-                    } else {
-                        for (var i = 0; i < len; i++) {
-                            list[i]['checked'] = true;
-                        }
-                    }
-                    this.goodsObj[index]['checked'] = !this.goodsObj[index]['checked'];
-
-                    // 判断是否选择所有商品的全选
-                    this.isChooseAll();
-
-                    this.cal(index);
-                },
-
-                // 单个选择
-                choose: function (index1, index) {
-                    var list = this.goodsObj[index1]['list'],
-                        len = list.length;
-                    if (list[index]['checked']) {
-                        this.goodsObj[index1]['checked'] = false;
-                        this.allChecked = false;
-                        list[index]['checked'] = !list[index]['checked'];
-                    } else {
-                        list[index]['checked'] = !list[index]['checked'];
-
-                        // 判断是否选择当前店铺的全选
-                        var flag = true;
-                        for (var i = 0; i < len; i++) {
-                            if (list[i]['checked'] == false) {
-                                flag = false;
-                                break;
-                            }
-                        }
-                        flag == true ? this.goodsObj[index1]['checked'] = true : this.goodsObj[index1]['checked'] = false;
-                    }
-
-                    // 判断是否选择所有商品的全选
-                    this.isChooseAll();
-
-                    this.cal(index);
-                },
-
-                // 判断是否选择所有商品的全选
-                isChooseAll: function () {
-                    var flag1 = true;
-                    for (var i = 0, len = this.goodsObj.length; i < len; i++) {
-                        if (this.goodsObj[i]['checked'] == false) {
-                            flag1 = false;
-                            break;
-                        }
-                    }
-                    flag1 == true ? this.allChecked = true : this.allChecked = false;
-                },
-
-                // 商品数量控制
-                numChange: function (index1, index, numChange) {
-                    var goods = this.goodsObj[index1]['list'][index],
-                        oThis = this;
-                    if (numChange == 1) {
-                        goods.num++;
-                    } else if (numChange == -1) {
-                        goods.num--;
-                    }
-
-                    if (goods.num <= 1) {
-                        goods.num = 1;
-                    }
-
-                    if (goods.num >= goods.realStock) {
-                        goods.num = goods.realStock;
-                    }
-
-                    this.cal(index);
-                },
-
-                // 用户填写容错处理
-                numEntry: function (index1, index) {
-                    var goods = this.goodsObj[index1]['list'][index];
-                    if (goods.num <= 1) {
-                        goods.num = 1;
-                    }
-
-                    if (goods.num > goods.realStock) {
-                        goods.num = goods.realStock;
-                    }
-                    this.cal(index);
-                },
-
-                // 计算每个店铺的商品总额
-                calEveryStore: function (index) {
-                    var everyStoreMoney = 0,
-                        list = this.goodsObj[index]['list'];
-                    list.forEach(function (item, index, arr) {
-                        if (list[index]['checked']) {
-                            everyStoreMoney += parseFloat(item.price) * parseFloat(item.num);
-                        }
-                    });
-                    return everyStoreMoney.toFixed(2);
-                },
-
-                // 计算每个店铺的运费总额
-                calEveryFare: function (index) {
-                    var everyStoreFare = 0,
-                        list = this.goodsObj[index]['list'];
-                    list.forEach(function (item, index, arr) {
-                        if (list[index]['checked']) {
-                            everyStoreFare += parseFloat(item.fare) * parseFloat(item.num);
-                        }
-                    });
-                    return everyStoreFare.toFixed(2);
-                },
-
-                // 计算商品总金额
-                calTotalMoney: function () {
-                    var oThis = this;
-                    this.totalMoney = 0;
-                    for (var i = 0, len = this.goodsObj.length; i < len; i++) {
-                        var list = this.goodsObj[i]['list'];
-                        list.forEach(function (item, index, arr) {
-                            if (list[index]['checked']) {
-                                oThis.totalMoney += parseFloat(item.price) * parseFloat(item.num);
-                            }
-                        });
-                    }
-                },
-
-                // 计算商品总运费
-                calTotalFare: function () {
-                    var oThis = this;
-                    this.totalFare = 0;
-                    for (var i = 0, len = this.goodsObj.length; i < len; i++) {
-                        var list = this.goodsObj[i]['list'];
-                        list.forEach(function (item, index, arr) {
-                            if (list[index]['checked']) {
-                                oThis.totalFare += parseFloat(item.fare) * parseFloat(item.num);
-                            }
-                        });
-                    }
-                },
-
-                // 计算方法集合
-                cal: function (index) {
-                    this.calEveryStore(index);
-                    this.calEveryFare(index);
-                    this.calTotalMoney();
-                    this.calTotalFare();
-                },
-
-                // 删除操作
-                delGoods: function (index1, index) {
-                    console.log(index1);
-                    console.log(index);
-                    this.goodsObj[index1]['list'].splice(index, 1);
-                    this.cal(index);
-                }
-
-            }
-        })
-    </script>
 </body>
 </html>
-

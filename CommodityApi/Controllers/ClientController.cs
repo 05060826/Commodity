@@ -29,7 +29,6 @@ namespace CommodityApi.Controllers
 
         //获取所有已经放入购物车中的商品
         [HttpGet]
-        //可以查询全部订单，未付款订单，待确认收货订单和待评价订单等订单信息
         public Client_ShowModel ClientShow(int pageIndex = 1, int pageSize = 3)
         {
             var list = _business.GetOrders();
@@ -47,6 +46,32 @@ namespace CommodityApi.Controllers
             return pageShowlist;
         }
 
+        [HttpPost]
+        //添加订单
+        public int ADD(UserorderRecound ur)
+        {
+            var len = _business.ADD(ur);
+            return len; 
+        }
+        //修改转态
+        [HttpPost]
+        public  int UpPa(UserorderRecound ur)
+        {
+            
+            var PS = _business.Updata(ur);
+            return PS;
+        }
+
+        public  int XiuGai(string  id,string Zd)
+        {
+            UserorderRecound use = new UserorderRecound();
+            var list = _business.GetUserorderRecound();
+            use = list.Where(m => m.OrderId.Contains(id)).FirstOrDefault();
+            int n;
+            use.OrderStatue = Zd;
+             n = _business.Updata(use);
+            return n;
+        }
         [HttpGet]
         //可以查询全部订单，未付款订单，待确认收货订单和待评价订单等订单信息
         public string RecoundShowAll(int pageName = 0, int limitName = 0)
@@ -60,14 +85,12 @@ namespace CommodityApi.Controllers
             obj.Add("data", slist);
             return JsonConvert.SerializeObject(obj);
         }
-
-
         [HttpGet]
         //查询 未付款订单
         public string NonPayment(int pageName = 0, int limitName = 0)
         {
             var list = _business.GetUserorderRecound();
-            var Wlist = list.Where(m => m.PayStatues.Equals("未付款")).ToList();
+            var Wlist = list.Where(m => m.PayStatues.Equals("未支付")).ToList();
             List<UserorderRecound> slist = Wlist.Skip((pageName - 1) * limitName).Take(limitName).ToList();
             Dictionary<string, object> obj = new Dictionary<string, object>();
             obj.Add("code", 0);
@@ -108,6 +131,21 @@ namespace CommodityApi.Controllers
             obj.Add("count", Wlist.Count);
             obj.Add("data", slist);
             return JsonConvert.SerializeObject(obj);
+        }
+        //修改银行卡余额
+        [HttpPost]
+        public int UpBnak(BankInfo bank)
+        {
+            var count = _business.UpBnak(bank);
+            return count;
+        }
+        [HttpGet]
+        //测试VUE使用
+        public List<OrderItems> ClientShow1()
+        {
+            var list = _business.GetOrders();
+            
+            return list;
         }
     }
 
