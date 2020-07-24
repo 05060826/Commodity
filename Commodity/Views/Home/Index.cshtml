@@ -311,7 +311,7 @@
                         var body = top.layer.getChildFrame('body', index);
 
                         var table = body.find('#status').val();
-                        if (table == null) {
+                        if (table == null || table=="") {
                             alert("请选择你登录的身份！")
                             return;
                         }
@@ -357,7 +357,9 @@
                                     else if ($("#Quan").val() == "管理员") {
                                         location.href = "/supplier/Index";
                                     }
-                                    
+                                    else {
+                                        alert("未找到该用户，是否注册")
+                                    }
 
                                 }
 
