@@ -49,5 +49,9 @@ namespace Commodity.Controllers
         {
             return View();
         }
+        public IActionResult Model4()
+        {
+            return View();
+        }
     }
 }

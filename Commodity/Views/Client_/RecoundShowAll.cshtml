@@ -40,15 +40,21 @@
                 , totalRow: true
 
                 , cols: [[
-                    { type: 'checkbox', fixed: 'left' }
-                    , { field: 'Order_Id', title: '订单编号', width: 150, edit: 'text' }
-                    , { field: 'SupplierID', title: '商品编号', width: 150, edit: 'text' }
-                    , { field: 'ISBN', title: '图书ISBN', width: 150, sort: true, totalRow: true }
-                    , { field: 'BookName', title: '图书名称', width: 150, edit: 'text', sort: true }
-                    , { field: 'Book_Price', title: '图书价格', width: 150, sort: true, totalRow: true }
-                    , { field: 'Quantity', title: '图书数量', width: 150 }
-                    , { field: 'Statue', title: '状态', width: 150, templet: function (d) { return d.SystemNumber - d.CheckNumber } }
-
+                    { field: 'OrderId', title: '订单编号', width: 150 }
+                    , { field: 'ConsigName', title: '收货人姓名', width: 150 }
+                    , { field: 'ConsigAddress', title: '收货地址', width: 150 }
+                    , { field: 'ConsigTel', title: '收货电话', width: 150 }
+                    , { field: 'ClinchTime', title: '成交时间', width: 150 }
+                    , { field: 'BuyNum', title: '购买总数', width: 150 }
+                    , { field: 'SaledMoney', title: '应付金额', width: 150 }
+                    , { field: 'PayTime', title: '付款时间', width: 150 }
+                    , { field: 'ConfirmTime', title: '确认收货时间', width: 150 }
+                    , { field: 'DeliveryTime', title: '发货时间', width: 150 }
+                    , { field: 'BuyerFreebACK', title: '顾客留言', width: 150 }
+                    , { field: 'OrderStatue', title: '订单状态', width: 150 }
+                    , { field: 'PayStatues', title: '付款状态', width: 150 }
+                    , { field: 'DelivaeryStatue', title: '发货状态', width: 150 }
+                    , { field: 'ReplayStatue', title: '回复状态', width: 150 }
                 ]]
                 , done: function (res, curr, count) {
                     //如果是异步请求数据方式，res即为你接口返回的信息。
