@@ -83,6 +83,7 @@ namespace CommodityApi.Controllers
                     ret.AccountName = login.AccountName;
                     ret.AccountPwd = login.AccountPwd;
                     ret.Quan = "尊敬的供应商你好";
+
                     ret.Encipherment = jiami;
                     ret.Name = supplier[0].TrueName;
                 }
