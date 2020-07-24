@@ -54,7 +54,7 @@ namespace CommodityApi.Controllers
                     jiami = jwtHeader.GetToken(keys, 3000000); 
                     ret.AccountName = login.AccountName;
                     ret.AccountPwd = login.AccountPwd;
-                    ret.Quan = "尊敬的客户你好";
+                    ret.Quan = "顾客";
                     ret.Encipherment = jiami;
                     ret.Name = client[0].UserName;
                 }
@@ -73,7 +73,7 @@ namespace CommodityApi.Controllers
                 {
                     supplier = supplier.Where(s => s.SupplierPwd.Equals(login.AccountPwd.Trim())).ToList();
                 }
-                if (supplier.Count == 0)
+                if (supplier.Count == 1)
                 {
                     Dictionary<string, object> keys = new Dictionary<string, object>();
                     keys.Add("ContactName", supplier[0].ContactName);
@@ -83,7 +83,7 @@ namespace CommodityApi.Controllers
                     jiami = jwtHeader.GetToken(keys, 3000000);
                     ret.AccountName = login.AccountName;
                     ret.AccountPwd = login.AccountPwd;
-                    ret.Quan = "尊敬的供应商你好";
+                    ret.Quan = "供应商";
 
                     ret.Encipherment = jiami;
                     ret.Name = supplier[0].TrueName;
@@ -102,7 +102,7 @@ namespace CommodityApi.Controllers
                 {
                     Administrator = Administrator.Where(s => s.ManagerPwd.Equals(login.AccountPwd.Trim())).ToList();
                 }
-                if (supplier.Count == 0)
+                if (supplier.Count == 1)
                 {
                     Dictionary<string, object> keys = new Dictionary<string, object>();
                     keys.Add("ManagerUserName", Administrator[0].ManagerUserName);
@@ -112,7 +112,7 @@ namespace CommodityApi.Controllers
                     jiami = jwtHeader.GetToken(keys, 3000000);
                     ret.AccountName = login.AccountName;
                     ret.AccountPwd = login.AccountPwd;
-                    ret.Quan = "尊敬的管理员你好";
+                    ret.Quan = "管理员";
                     ret.Encipherment = jiami;
                     ret.Name = Administrator[0].ManagerUserName;
                 }
