@@ -311,6 +311,10 @@
                         var body = top.layer.getChildFrame('body', index);
 
                         var table = body.find('#status').val();
+                        if (table == null || table=="") {
+                            alert("请选择你登录的身份！")
+                            return;
+                        }
                         var username = body.find('#username').val();
                         var password = body.find('#password').val();
 
@@ -335,14 +339,27 @@
                             dataType: "json",
                             contentType: "application/json",
                             success: function (result) {
-
+                                
                                 console.log(result);
                                 if (result != null) {
 
                                     localStorage["Token"] = result.encipherment;
                                     $("#People").html(result.accountName);
-                                    $("#Quan").val(result.quan)
+                                    $("#Quan").val(result.quan);
+
                                     alert("登录成功！");
+                                    if ($("#Quan").val() == "供应商") {
+                                        location.href = "/supplier/Index";
+                                    }
+                                    else if ($("#Quan").val() == "顾客") {
+                                        location.href = "/supplier/Index";
+                                    }
+                                    else if ($("#Quan").val() == "管理员") {
+                                        location.href = "/supplier/Index";
+                                    }
+                                    else {
+                                        alert("未找到该用户，是否注册")
+                                    }
 
                                 }
 
