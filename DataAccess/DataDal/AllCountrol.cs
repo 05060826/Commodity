@@ -9,8 +9,6 @@ namespace DataAccess.DataDal
   public  class AllCountrol
     {
         EFHelper<Customer> cus = new EFHelper<Customer>();
-       // CommercedataContext db = new CommercedataContext();
-        //查询语句
-       
+      
     }
 }
