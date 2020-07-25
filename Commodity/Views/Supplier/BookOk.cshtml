@@ -194,6 +194,7 @@
                                 area: ['650px', '600px'],
                                 btn: ['入库', '取消'],
                                 yes: function (index, layero) {
+                                    var Token = localStorage["Token"];
                                     var obj = {};
                                     obj.NclassName = $("#NclassName").val();
                                     obj.Isbn = $("#Isbn").val();
@@ -209,7 +210,7 @@
                                     $.ajax({
                                         url: "http://localhost:54063/api/Supplier/InsertBook",
                                         type: "post",
-                                        data: JSON.stringify(obj),
+                                        data: JSON.stringify({ obj: obj, token: Token }),
                                         dataType: "json",
                                         contentType:"application/json",
                                         success: function (result) {
