@@ -239,28 +239,8 @@
             }
         });
     })
-    let Anum = document.getElementsByClassName("num");
-    let Areduce = document.getElementsByClassName("reduce");
-    let Aadd = document.getElementsByClassName("add");
-    let Aprice = document.getElementsByClassName("price");
-    let TotalPrice = document.getElementById('Total-price');
-    let TotalNumber = document.getElementById('Total-number');
-    let UnitPrice = document.getElementsByClassName('unit-price');
-    for (let i = 0; i < Aprice.length; i++) {
-        Areduce[i].onclick = function () {
-            if (Anum[i].innerText * 1) {//检查边界
-                Anum[i].innerText--;
-                Aprice[i].innerText -= UnitPrice[i].innerText;
-                TotalPrice.innerText -= UnitPrice[i].innerText;
-                TotalNumber.innerText--;
-            }
-        }
-        Aadd[i].onclick = function () {
-            Anum[i].innerText++;
-            Aprice[i].innerText = Aprice[i].innerText * 1 + UnitPrice[i].innerText * 1;
-            TotalPrice.innerText = TotalPrice.innerText * 1 + UnitPrice[i].innerText * 1;
-            TotalNumber.innerText++;
-        }
+    function AddCaer() {
+        location.href = "Client_/ADD";
     }
     
 </script>

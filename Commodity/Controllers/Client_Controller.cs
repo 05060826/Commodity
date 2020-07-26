@@ -16,6 +16,17 @@ namespace Commodity.Controllers
         {
             return View();
         }
+        public IActionResult ADD()
+        {
+            return View();
+        }
+        //结算
+        public IActionResult Account(int rid)
+        {
+            ViewBag.rid = rid;
+            return View();
+        }
+        
         //查询全部订单
         public IActionResult RecoundShowAll()
         {
@@ -36,6 +47,13 @@ namespace Commodity.Controllers
         {
             return View();
         }
+        public IActionResult UpdReceipt()
+        {
+            return View();
+        }
+        
+
+
         //模型
         public IActionResult Model()
         {
