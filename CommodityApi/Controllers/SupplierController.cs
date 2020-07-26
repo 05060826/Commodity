@@ -6,6 +6,7 @@ using DataAccess.DataDal;
 using DataAccess.DataModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace CommodityApi.Controllers
@@ -448,14 +449,15 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
-                var list = (from s in context.UserRoderInfo where s.SuppLierId == info.SuppLierId select s).FirstOrDefault();
-                list.ShopName = info.ShopName;
-                list.ShopAddress = info.ShopAddress;
-                list.ContactName = info.ContactName;
-                list.CortactPhone = info.CortactPhone;
-                list.Mail = info.Mail;
-                list.TrueName = info.TrueName;
-                context.UserRoderInfo.Update(list);
+                //var list = (from s in context.UserRoderInfo where s.SuppLierId == info.SuppLierId select s).FirstOrDefault();
+                //list.ShopName = info.ShopName;
+                //list.ShopAddress = info.ShopAddress;
+                //list.ContactName = info.ContactName;
+                //list.CortactPhone = info.CortactPhone;
+                //list.Mail = info.Mail;
+                //list.TrueName = info.TrueName;
+                //context.UserRoderInfo.Update(list);
+                context.Entry<UserRoderInfo>(info).State = EntityState.Modified;
                 return context.SaveChanges();
             }
         }
