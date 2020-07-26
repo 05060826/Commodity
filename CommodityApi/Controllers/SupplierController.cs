@@ -6,6 +6,7 @@ using DataAccess.DataDal;
 using DataAccess.DataModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace CommodityApi.Controllers
@@ -79,16 +80,28 @@ namespace CommodityApi.Controllers
         }
         //添加到仓库
         [HttpPost]
-        public int InsertBook(SupplierBookInfo info)
+        public int InsertBook(Dictionary<string,object> dic)
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                SupplierBookInfo info =JsonConvert.DeserializeObject<SupplierBookInfo>(dic["obj"].ToString());
+                string token = dic["token"].ToString();
+                JWTHelper jWT = new JWTHelper();
+                UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
+                var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                if (ue == null)
+                {
+                    return 0;
+                }
+                
+                string SupplierId = ue.SuppLierId;
                 var list = (from s in context.SupplierBookInfo where s.Isbn == info.Isbn select s).FirstOrDefault();
-                if (list==null)
+                if (list == null)
                 {
                     info.Score = 0;
                     info.SaledQuantity = 0;
                     info.BookStues = "未出售";
+                    info.SupplierId = SupplierId;
                     context.SupplierBookInfo.Add(info);
                     return context.SaveChanges();
                 }
@@ -106,7 +119,12 @@ namespace CommodityApi.Controllers
             {
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user=JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(Token));
-                var ue = context.UserRoderInfo.Where(n => n.TrueName.Equals(user.TrueName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                if (ue == null)
+                {
+                    return "";
+                }
+                
                 string SupplierId = ue.SuppLierId;
                 var list = (from da in context.BookInfo
                             join du in context.AuthorInfo
@@ -180,10 +198,21 @@ namespace CommodityApi.Controllers
         }
         //更新仓库
         [HttpPost]
-        public int UpdBook(SupplierBookInfo info)
+        public int UpdBook(Dictionary<string, object> dic)
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                SupplierBookInfo info = JsonConvert.DeserializeObject<SupplierBookInfo>(dic["obj"].ToString());
+                string token = dic["token"].ToString();
+                JWTHelper jWT = new JWTHelper();
+                UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
+                var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                if (ue == null)
+                {
+                    return 0;
+                }
+                
+                string SupplierId = ue.SuppLierId;
                 var list = (from s in context.SupplierBookInfo where s.Isbn == info.Isbn select s).FirstOrDefault();
                 list.Price = info.Price;
                 list.Discount = info.Discount;
@@ -195,16 +224,25 @@ namespace CommodityApi.Controllers
         }
         //获取仓库出售中图书
         [HttpGet]
-        public string GetCkZBookInfo(string authorName = "", string title = "", string pubish = "", int pageName = 1, int limitName = 10)
+        public string GetCkZBookInfo(string token="",string authorName = "", string title = "", string pubish = "", int pageName = 1, int limitName = 10)
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                JWTHelper jWT = new JWTHelper();
+                UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
+                var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                if (ue == null)
+                {
+                    return "";
+                }
+
+                string SupplierId = ue.SuppLierId;
                 var list = (from da in context.BookInfo
                             join du in context.AuthorInfo
                             on da.AuthorId equals du.AuthorId
                             join dd in context.SupplierBookInfo
                             on da.Isbn equals dd.Isbn
-                            where dd.BookStues == "出售中"
+                            where dd.BookStues == "出售中" && dd.SupplierId==SupplierId
                             select new { da.Isbn, da.Title, da.Publish, da.PublishTime, dd.Price, dd.TotalQuantity, dd.Discount, dd.BookType, dd.SaledQuantity, dd.BookStues, du.AuthorId, du.Aname }).ToList();
                 if (!string.IsNullOrEmpty(authorName))
                 {
@@ -231,10 +269,19 @@ namespace CommodityApi.Controllers
         }
         //图书下架
         [HttpGet]
-        public int UpdxBookSate(string Isbn)
+        public int UpdxBookSate(string token,string Isbn)
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                JWTHelper jWT = new JWTHelper();
+                UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
+                var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                if (ue == null)
+                {
+                    return 0;
+                }
+
+                string SupplierId = ue.SuppLierId;
                 var list = (from s in context.SupplierBookInfo where s.Isbn == Isbn select s).FirstOrDefault();
                 list.BookStues = "未出售";
                 context.SupplierBookInfo.Update(list);
@@ -243,17 +290,26 @@ namespace CommodityApi.Controllers
         }
         //已卖出商品
         [HttpGet]
-        public string GetGoodMC(string SupplierId="", int pageName = 1, int limitName = 10)
+        public string GetGoodMC(string token="", int pageName = 1, int limitName = 10)
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                JWTHelper jWT = new JWTHelper();
+                UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
+                var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                if (ue == null)
+                {
+                    return "";
+                }
+
+                string SupplierId = ue.SuppLierId;
                 var list = (from da in context.OrderItems
                             join du in context.UserorderRecound
                             on da.OrderId equals du.OrderId
                             join dd in context.SupplierBookInfo
                             on da.SupplierId equals dd.SupplierId
                             where da.SupplierId==SupplierId
-                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice,da.Quantity,da.Statue, du.OrderId, du.ConsigName,du.ClinchTime }).ToList();
+                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice,da.Quantity,da.Statue, du.OrderId, du.BuyNum, du.ConsigName,du.ClinchTime }).ToList();
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("data",list);
                 dic.Add("count",list.Count);
@@ -261,14 +317,129 @@ namespace CommodityApi.Controllers
             }
         }
 
-
-        //商家信息
+        //待付款商品
         [HttpGet]
-        public string GetUserRoder(string SupperId)
+        public string GetGoodDF(string token = "", int pageName = 1, int limitName = 10)
         {
             using (CommercedataContext context = new CommercedataContext())
             {
-                var list = (from s in context.UserRoderInfo where s.SuppLierId == SupperId select s).FirstOrDefault();
+                JWTHelper jWT = new JWTHelper();
+                UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
+                var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                if (ue == null)
+                {
+                    return "";
+                }
+
+                string SupplierId = ue.SuppLierId;
+                var list = (from da in context.OrderItems
+                            join du in context.UserorderRecound
+                            on da.OrderId equals du.OrderId
+                            join dd in context.SupplierBookInfo
+                            on da.SupplierId equals dd.SupplierId
+                            where da.SupplierId == SupplierId && du.PayStatues=="未支付"
+                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId, du.BuyNum, du.ConsigName, du.ClinchTime,du.PayStatues }).ToList();
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("data", list);
+                dic.Add("count", list.Count);
+                return JsonConvert.SerializeObject(dic);
+            }
+        }
+        //待发货商品
+        [HttpGet]
+        public string GetGoodFH(string token = "", int pageName = 1, int limitName = 10)
+        {
+            using (CommercedataContext context = new CommercedataContext())
+            {
+                JWTHelper jWT = new JWTHelper();
+                UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
+                var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                if (ue == null)
+                {
+                    return "";
+                }
+
+                string SupplierId = ue.SuppLierId;
+                var list = (from da in context.OrderItems
+                            join du in context.UserorderRecound
+                            on da.OrderId equals du.OrderId
+                            join dd in context.SupplierBookInfo
+                            on da.SupplierId equals dd.SupplierId
+                            where da.SupplierId == SupplierId && du.OrderStatue == "未发货"
+                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId, du.BuyNum,du.ConsigName, du.ClinchTime, du.PayStatues,du.OrderStatue }).ToList();
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("data", list);
+                dic.Add("count", list.Count);
+                return JsonConvert.SerializeObject(dic);
+            }
+        }
+        //修改发货状态
+        [HttpGet]
+        public int UpdGoodFH(string token="", string orderId="")
+        {
+            using (CommercedataContext context = new CommercedataContext())
+            {
+                JWTHelper jWT = new JWTHelper();
+                UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
+                var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                if (ue == null)
+                {
+                    return 0;
+                }
+                var list = context.UserorderRecound.Where(n=>n.OrderId.Equals(orderId)).FirstOrDefault();
+
+                list.OrderStatue = "已发货";
+                context.UserorderRecound.Update(list);
+                return context.SaveChanges();
+            }
+        }
+
+        //待确认商品
+        [HttpGet]
+        public string GetGoodSH(string token = "", int pageName = 1, int limitName = 10)
+        {
+            using (CommercedataContext context = new CommercedataContext())
+            {
+                JWTHelper jWT = new JWTHelper();
+                UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
+                var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                if (ue == null)
+                {
+                    return "";
+                }
+
+                string SupplierId = ue.SuppLierId;
+                var list = (from da in context.OrderItems
+                            join du in context.UserorderRecound
+                            on da.OrderId equals du.OrderId
+                            join dd in context.SupplierBookInfo
+                            on da.SupplierId equals dd.SupplierId
+                            where da.SupplierId == SupplierId && du.DelivaeryStatue == "待确认收货"
+                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId,du.BuyNum, du.ConsigName, du.ClinchTime, du.PayStatues, du.OrderStatue,du.DelivaeryStatue }).ToList();
+                Dictionary<string, object> dic = new Dictionary<string, object>();
+                dic.Add("data", list);
+                dic.Add("count", list.Count);
+                return JsonConvert.SerializeObject(dic);
+            }
+        }
+
+        //商家信息
+        [HttpGet]
+        public string GetUserRoder(string token="")
+        {
+
+            using (CommercedataContext context = new CommercedataContext())
+            {
+                JWTHelper jWT = new JWTHelper();
+                UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
+                var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
+                if (ue == null)
+                {
+                    return "";
+                }
+
+                string SupplierId = ue.SuppLierId;
+                var list = (from s in context.UserRoderInfo where s.SuppLierId == SupplierId select s).FirstOrDefault();
                 return JsonConvert.SerializeObject(list);
             }
         }
@@ -278,14 +449,15 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
-                var list = (from s in context.UserRoderInfo where s.SuppLierId == info.SuppLierId select s).FirstOrDefault();
-                list.ShopName = info.ShopName;
-                list.ShopAddress = info.ShopAddress;
-                list.ContactName = info.ContactName;
-                list.CortactPhone = info.CortactPhone;
-                list.Mail = info.Mail;
-                list.TrueName = info.TrueName;
-                context.UserRoderInfo.Update(list);
+                //var list = (from s in context.UserRoderInfo where s.SuppLierId == info.SuppLierId select s).FirstOrDefault();
+                //list.ShopName = info.ShopName;
+                //list.ShopAddress = info.ShopAddress;
+                //list.ContactName = info.ContactName;
+                //list.CortactPhone = info.CortactPhone;
+                //list.Mail = info.Mail;
+                //list.TrueName = info.TrueName;
+                //context.UserRoderInfo.Update(list);
+                context.Entry<UserRoderInfo>(info).State = EntityState.Modified;
                 return context.SaveChanges();
             }
         }

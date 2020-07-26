@@ -30,7 +30,18 @@ namespace Commodity.Controllers
         {
             return View();
         }
-
+        public IActionResult OrderD()
+        {
+            return View();
+        }
+        public IActionResult OrderF()
+        {
+            return View();
+        }
+        public IActionResult OrderQ()
+        {
+            return View();
+        }
 
 
 
