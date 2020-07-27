@@ -8,7 +8,7 @@ using DataAccess.Login;
 using JWT.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json;
 
 namespace CommodityApi.Controllers
 {
@@ -51,7 +51,7 @@ namespace CommodityApi.Controllers
                     keys.Add("TouMoney", client[0].AccountPwd);
                     keys.Add("AccountId", client[0].AccountId);
 
-                    jiami = jwtHeader.GetToken(keys, 3000000); 
+                    jiami = jwtHeader.GetToken(keys, 3000000);
                     ret.AccountName = login.AccountName;
                     ret.AccountPwd = login.AccountPwd;
                     ret.Quan = "顾客";
@@ -132,6 +132,70 @@ namespace CommodityApi.Controllers
             //context.BankInfo.Add(bank);
             //context.SaveChanges();
         }
+
+        [Route("show")]
+        [HttpGet]
+        public string Show(string type)
+        {
+            CommercedataContext context = new CommercedataContext();
+
+
+            var list = (from f in context.SupplierBookInfo
+                        join
+                        s in context.BookInfo on f.Isbn equals s.Isbn
+                        join
+                        t in context.NextClassType on s.NclassId equals t.NclassId
+                        join
+                        fs in context.AuthorInfo on s.AuthorId equals fs.AuthorId
+                        select new { bookName = s.Title, actoreName = fs.Aname, chuBan = s.Publish, time =Convert.ToDateTime(s.PublishTime), price = s.Price, zhe = f.Discount,shangJia=f.SupplierId,bookBian=f.Isbn }).ToList();
+
+            if (type != null)
+            {
+                list.Where(s => s.actoreName.Equals(type)).ToList();
+            }
+           
+            string str = "";
+            Dictionary<string, object> obje = new Dictionary<string, object>();
+            obje.Add("data", list);
+            obje.Add("count", list.Count);
+            str = JsonConvert.SerializeObject(obje);
+
+            return str;
+        }
+
+        [HttpPost]
+        [Route("addOrder")]
+        public int AddOrder(OrderItems addOrder) {
+
+            int count = 0;
+            CommercedataContext context = new CommercedataContext();
+            OrderItems item = new OrderItems();
+
+            item.BookName = addOrder.BookName;
+            item.BookPrice = addOrder.BookPrice;
+            item.Isbn = addOrder.Isbn;
+            item.OrderId = addOrder.OrderId;
+            item.OrderitemId = addOrder.OrderitemId;
+            item.Quantity = 1;
+            item.Statue = "未支付";
+            item.SupplierId = addOrder.SupplierId;
+
+            List<OrderItems> list = context.OrderItems.ToList();
+
+            list=list.Where(s => s.OrderitemId.Equals(addOrder.OrderitemId) && s.OrderId.Equals(addOrder.OrderId)).ToList();
+            if (list.Count != 0)
+            {
+                return 0;
+            }
+
+            context.OrderItems.Add(item);
+            count = context.SaveChanges();
+            
+            return count;
+
+        }
+
+
 
     }
 }

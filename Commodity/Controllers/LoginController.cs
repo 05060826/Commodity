@@ -21,7 +21,11 @@ namespace Commodity.Controllers
         {
             return View();
         }
-
+        public IActionResult Show(string type=null)
+        {
+            ViewBag.type = type;
+            return View();
+        }
 
     }
 }

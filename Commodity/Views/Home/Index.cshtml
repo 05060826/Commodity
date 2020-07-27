@@ -31,42 +31,44 @@
     <input hidden id="TrueName" />
 
     @*注册弹窗*@
-    <div id="Towpopup" style="display:none">
 
-        <div style="height:50px;width:400px">
-            <button id="TCustomer" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Gu()">顾客</button>
-            <button id="TUserRoderInfo" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Gong()">供应商</button>
-            <button id="TManageInfo" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Guan()">管理员</button>
-        </div>
+    <div style="padding:300px,300px,300px,300px">
+        <div id="Towpopup" style="display:none">
 
-        <input id="Tstatus" hidden type="button" />
+            @*<div style="height:50px;width:400px">
+                <button id="TCustomer" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Gu()">顾客</button>
+                <button id="TUserRoderInfo" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Gong()">供应商</button>
+                <button id="TManageInfo" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Guan()">管理员</button>
+            </div>*@
 
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label" id="Tname" style="height:40px;width:150px">用户名：</label>
-                <div class="layui-input-inline" style="margin-top:10px">
-                    <input type="text" id="Tusername" placeholder="请输入用户名" class="input_long" />
-                    <i id="Txing1" style="color:red">*</i>
-                </div>
+            <input id="Tstatus" hidden type="button" />
 
-            </div>
-        </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label" id="Tname" style="height:40px;width:150px">用户名：</label>
+                    <div class="layui-input-inline" style="margin-top:10px">
+                        <input type="text" id="Tusername" placeholder="请输入用户名" class="input_long" />
+                        <i id="Txing1" style="color:red">*</i>
+                    </div>
 
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label" id="Tpass" style="height:40px;width:150px">密码：</label>
-                <div class="layui-input-inline" style="margin-top:10px">
-                    <input type="password" id="Tpassword" placeholder="请输入密码" class="input_long" />
-                    <i id="Txing2" style="color:red">*</i>
                 </div>
             </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label" id="Tpass" style="height:40px;width:150px">密码：</label>
+                    <div class="layui-input-inline" style="margin-top:10px">
+                        <input type="password" id="Tpassword" placeholder="请输入密码" class="input_long" />
+                        <i id="Txing2" style="color:red">*</i>
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+
 
     </div>
-
-
-
-
 
     <div id="LAY_app">
         <div class="layui-layout layui-layout-admin">
@@ -150,14 +152,21 @@
                         <li data-name="home" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" target="main_self_frame" lay-tips="主页" lay-direction="2">
                                 <i class="layui-icon layui-icon-home"></i>
-                                <cite>主页</cite>
+                                <cite>前台信息管理</cite>
                             </a>
                             <dl class="layui-nav-child">
                                 <dd>
-                                    <a href="/outStock/Index" target="main_self_frame">出货列表</a>
+                                    <a href="/Login/Show" target="main_self_frame">所有图书信息</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a href="/outStock/Create" target="main_self_frame">新增出货</a></dd>
+                                        <dd><a href="/Login/Show/?type='小说'" target="main_self_frame">小说</a></dd>
                                     </dl>
+                                    <dl class="layui-nav-child">
+                                        <dd><a href="/Login/Show/?type='科幻'" target="main_self_frame">科幻</a></dd>
+                                    </dl>
+                                    <dl class="layui-nav-child">
+                                        <dd><a href="/Login/Show/?type='其他'" target="main_self_frame">其他</a></dd>
+                                    </dl>
+
                                 </dd>
                                 <dd>
                                     <a href="/outStock/AllTui" target="main_self_frame">出货退货列表</a>
@@ -170,60 +179,7 @@
                                 </dd>
                             </dl>
                         </li>
-                        @*采购页面*@
-                        <li data-name="component" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="商品采购" lay-direction="2">
-                                <i class="layui-icon layui-icon-component"></i>
-                                <cite>商品采购</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="show">
-                                    <a href="/PurchaseInfo/Purchas" target="main_self_frame">采购列表</a>
-                                    <dl class="layui-nav-child">
-                                        <dd data-name="adds">
-                                            <a href="/PurchaseInfo/AddPurchas" target="main_self_frame">新增采购</a>
-                                        </dd>
-                                    </dl>
-                                    <dl class="layui-nav-child">
-                                        <dd data-name="adds">
-                                            <a href="/PurchaseInfo/BaoBiaoPurchas" target="main_self_frame">采购报表</a>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                                <dd data-name="backs">
-                                    <a href="/PurchaseInfo/ShowUpdatePurchas" target="main_self_frame">购货退货单</a>
-                                    <dl class="layui-nav-child">
-                                        <dd data-name="addback">
-                                            <a href="/PurchaseInfo/UpdatePurchas" target="main_self_frame">新增退货单</a>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-                        </li>
-                        @*出货页面*@
-                        <li data-name="template" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="出货" lay-direction="2">
-                                <i class="layui-icon layui-icon-template"></i>
-                                <cite>出货</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd>
-                                    <a href="/outStock/Index" target="main_self_frame">出货列表</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a href="/outStock/Create" target="main_self_frame">新增出货</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd>
-                                    <a href="/outStock/AllTui" target="main_self_frame">出货退货列表</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a href="/outStock/Tui" target="main_self_frame">新增销售退货单</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd>
-                                    <a href="/outStock/Biao" target="main_self_frame">出货退货报表</a>
-                                </dd>
-                            </dl>
-                        </li>
+                                             
                         @*顾客后台*@
                         <li data-name="app" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" lay-tips="仓库" lay-direction="2">
@@ -231,42 +187,21 @@
                                 <cite>购物车</cite>
                             </a>
                             <dl class="layui-nav-child">
-                                
-                                    <dd data-name="list"><a href="/Client_/Index" target="main_self_frame">商品显示</a></dd>
-                                    <dd data-name="tags"><a href="/Client_/Model4" target="main_self_frame">购物车测试</a></dd>
-                                    <dd data-name="tags"><a href="/Client_/RecoundShowAll" target="main_self_frame">全部订单</a></dd>
-                                    <dd data-name="tags"><a href="/Client_/Non_Payment" target="main_self_frame">未付款订单</a></dd>
-                                    <dd data-name="tags"><a href="/Client_/Affirm" target="main_self_frame">待确认订单</a></dd>
-                                    <dd data-name="tags"><a href="/Client_/Evaluate" target="main_self_frame">待评价订单</a></dd>
-                                
+
+                                <dd data-name="list"><a href="/Client_/Index" target="main_self_frame">商品显示</a></dd>
+                                <dd data-name="tags"><a href="/Client_/Model4" target="main_self_frame">购物车测试</a></dd>
+                                <dd data-name="tags"><a href="/Client_/RecoundShowAll" target="main_self_frame">全部订单</a></dd>
+                                <dd data-name="tags"><a href="/Client_/Non_Payment" target="main_self_frame">未付款订单</a></dd>
+                                <dd data-name="tags"><a href="/Client_/Affirm" target="main_self_frame">待确认订单</a></dd>
+                                <dd data-name="tags"><a href="/Client_/Evaluate" target="main_self_frame">待评价订单</a></dd>
+
                                 <dd data-name="content">
 
                                 </dd>
 
                             </dl>
                         </li>
-                        @*资金页面*@
-                        <li data-name="senior" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="资金管理" lay-direction="2">
-                                <i class="layui-icon layui-icon-rmb"></i>
-                                <cite>资金管理</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd>
-                                    <a href="/Capital/Receipt" target="main_self_frame">收款单列表</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a href="/Capital/Add" target="main_self_frame">新增收款单</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd>
-                                    <a href="/Capital/PayMent" target="main_self_frame">付款单列表</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a href="/Capital/AddPayMent" target="main_self_frame">新增付款单</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd><a href="/Capital/CapitalStatement" target="main_self_frame">资金报表</a></dd>
-                            </dl>
-                        </li>
+                       
                     </ul>
                 </div>
             </div>
@@ -328,6 +263,64 @@
 
     </script>
     <script type="text/javascript">
+        $("#People").change(function () {
+            if ($("#People").html() != "你好陌生人") {
+                $("#btn").hide()
+            }
+            else {
+                $("#btn").show()
+            }
+        })
+
+        $("#btns").click(function () {
+            $("#People").html("你好陌生人");
+            $("#btn").show();
+
+        })
+
+        function Gu() {
+
+            document.getElementById('Tname').innerText = "顾客用户名：";
+            document.getElementById('Tpass').innerText = "顾客密码：";
+            $("#Tstatus").val("Customer")
+
+        }
+
+        //$("#username").blur(function () {
+
+        //}
+
+        $("#Tusername").change(function () {
+            if ($("#Tusername").val().length > 0) {
+
+                $("#Txing1").hide()
+            }
+            else {
+                $("#Txing1").show()
+            }
+        })
+        $("#Tpassword").change(function () {
+            if ($("#Tpassword").val().length > 4) {
+                $("#Txing2").hide()
+            }
+            else {
+                $("#Txing2").show()
+            }
+        })
+
+        function Gong() {
+            document.getElementById('Tname').innerText = "供应商用户名：";
+            document.getElementById('Tpass').innerText = "供应商密码：";
+            $("#Tstatus").val("UserRoderInfo")
+            //$("#status").val($("#UserRoderInfo"))
+        }
+
+        function Guan() {
+            document.getElementById('Tname').innerText = "管理员用户名：";
+            document.getElementById('Tpass').innerText = "管理员密码：";
+            $("#Tstatus").val("ManageInfo")
+            //$("#status").val($("#ManageInfo"))
+        }
 
         $(function () {
 
@@ -351,6 +344,7 @@
                             alert("请选择你登录的身份！")
                             return;
                         }
+
                         var username = body.find('#username').val();
                         var password = body.find('#password').val();
 
@@ -400,26 +394,29 @@
                     },
                     btn2: function (index, layero) {
 
-                        $(".layui-layer-close1").trigger('click');    // 关闭弹出层
+                        var body = top.layer.getChildFrame('body', index);
+
+                        var table = body.find('#status').val();
+                        if (table == null || table == "") {
+                            alert("请选择你注册的身份！")
+                            return;
+                        }
+
+                        //$(".layui-layer-close1").trigger('click');    // 关闭弹出层
                         layer.open({
-                            type: 2,
+                            type: 1,
                             title: '用户注册',
                             maxmin: true,
                             skin: 'layui-layer-lan',
                             btn: ['确定', '取消'],
                             btnAlign: 'c', //按钮居中对齐
                             shadeClose: true, //点击遮罩关闭层
-                            area: ['400px', '280px'],
-                            content: 'http://localhost:54057/Login/ZhuCe',/*'http://localhost:54057/Login/Login'*///弹框显示的url
+                            area: ['500px', '300px'],
+                            content: $("#Towpopup"),/*'http://localhost:54057/Login/Login'*///弹框显示的url
                             btn1: function (index, layero) {
 
-                                //var body = top.layer.getChildFrame('body', index);
 
-                                //var table = body.find('#status').val();
-                                //if (table == null || table == "") {
-                                //    alert("请选择你登录的身份！")
-                                //    return;
-                                //}
+                             
                                 //var username = body.find('#username').val();
                                 //var password = body.find('#password').val();
 
@@ -430,6 +427,7 @@
 
                                 ////alert(body.find('#status').val())
                                 ////alert(body.find('#username').val());
+
                                 //$.ajax({
                                 //    url: "http://localhost:54063/api/login",
                                 //    data: JSON.stringify(list),
@@ -466,21 +464,14 @@
 
                                 //})
 
-
-
-
                             },
-                           
+
                             cancel: function (layero, index) {
                                 layer.closeAll();
                             }
 
                         });
 
-
-
-                        alert("2222");
-                        return false;
                     },
                     cancel: function (layero, index) {
                         layer.closeAll();
