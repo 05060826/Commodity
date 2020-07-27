@@ -96,8 +96,8 @@
         //alert($("#type").val());
         var actor = $("#acter").val();
         var bookname = $("#bookName").val();
-        //Show(actor, bookname)
-        location.href = "/Client_/ADD/?price=1.0&count=1";/* " + price + "*/
+        Show(actor, bookname)
+      
     })
 
     function Show(actor, bookname) {
@@ -171,7 +171,8 @@
 
         var price = parseFloat($("#e" + index).html());
       
-        location.href = "/Client_ / ADD/?price=" + price + "&count=1";
+        //location.href = "/Client_ / ADD/?price=" + price + "&count=1";
+        location.href = "/Client_/ADD/?price="+price+"count=1";/* " + price + "*/
         //if (result == 1) {
         //    alert("加入购物车成功");
         //    location.href = "/Client_/Index";

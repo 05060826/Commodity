@@ -31,19 +31,13 @@
     <input hidden id="TrueName" />
 
     @*注册弹窗*@
-    <div id="Towpopup" style="display:none">
+    <div id="Onepopup" style="display:none">
 
-        <div style="height:50px;width:400px">
-            <button id="TCustomer" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Gu()">顾客</button>
-            <button id="TUserRoderInfo" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Gong()">供应商</button>
-            <button id="TManageInfo" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Guan()">管理员</button>
-        </div>
-
-        <input id="Tstatus" hidden type="button" />
+        <input id="Tstatus1" hidden type="button" />
 
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label" id="Tname" style="height:40px;width:150px">用户名：</label>
+                <label class="layui-form-label" id="Tname" style="height:40px;width:150px">1：</label>
                 <div class="layui-input-inline" style="margin-top:10px">
                     <input type="text" id="Tusername" placeholder="请输入用户名" class="input_long" />
                     <i id="Txing1" style="color:red">*</i>
@@ -63,10 +57,14 @@
         </div>
 
     </div>
+    <div id="Twopopup" style="display:none">
+       <input type="button" value="2" />
 
+    </div>
+    <div id="Threepopup" style="display:none">
+        <input type="button" value="3" />
 
-
-
+    </div>
 
     <div id="LAY_app">
         <div class="layui-layout layui-layout-admin">
@@ -167,11 +165,11 @@
                                     <dl class="layui-nav-child">
                                         <dd><a href="/Login/Show/?type='天文'" target="main_self_frame">天文</a></dd>
                                     </dl>
-                                </dd>                               
+                                </dd>
                             </dl>
                         </li>
-                      
-                       
+
+
                         @*顾客后台*@
                         <li data-name="app" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" lay-tips="仓库" lay-direction="2">
@@ -179,21 +177,21 @@
                                 <cite>购物车</cite>
                             </a>
                             <dl class="layui-nav-child">
-                                
-                                    <dd data-name="list"><a href="/Client_/Index" target="main_self_frame">商品显示</a></dd>
-                                    <dd data-name="tags"><a href="/Client_/Model3" target="main_self_frame">购物车测试</a></dd>
-                                    <dd data-name="tags"><a href="/Client_/RecoundShowAll" target="main_self_frame">全部订单</a></dd>
-                                    <dd data-name="tags"><a href="/Client_/Non_Payment" target="main_self_frame">未付款订单</a></dd>
-                                    <dd data-name="tags"><a href="/Client_/Affirm" target="main_self_frame">待确认订单</a></dd>
-                                    <dd data-name="tags"><a href="/Client_/Evaluate" target="main_self_frame">待评价订单</a></dd>
-                                
+
+                                <dd data-name="list"><a href="/Client_/Index" target="main_self_frame">商品显示</a></dd>
+                                <dd data-name="tags"><a href="/Client_/Model3" target="main_self_frame">购物车测试</a></dd>
+                                <dd data-name="tags"><a href="/Client_/RecoundShowAll" target="main_self_frame">全部订单</a></dd>
+                                <dd data-name="tags"><a href="/Client_/Non_Payment" target="main_self_frame">未付款订单</a></dd>
+                                <dd data-name="tags"><a href="/Client_/Affirm" target="main_self_frame">待确认订单</a></dd>
+                                <dd data-name="tags"><a href="/Client_/Evaluate" target="main_self_frame">待评价订单</a></dd>
+
                                 <dd data-name="content">
 
                                 </dd>
 
                             </dl>
                         </li>
-                       
+
                     </ul>
                 </div>
             </div>
@@ -255,7 +253,7 @@
 
     </script>
     <script type="text/javascript">
-        
+
         $(function () {
 
             $('#btn,#btns').on('click', function () {
@@ -326,10 +324,29 @@
 
                     },
                     btn2: function (index, layero) {
+                        var tanId = "";
+                        var body = top.layer.getChildFrame('body', index);
+                        var table = body.find('#status').val();
+                        if (table == null || table == "") {
+                            alert("请选择你注册的身份！")
+                            return;
+                        }
+                        if (table == "Customer") {
+                            tanId = "Onepopup";
+                            alert(tanId)
+                        }
+                        else if (table == "UserRoderInfo") {
+                            tanId = "Twopopup"
+                            alert(tanId)
+                        }
+                        else {
+                            tanId = "Threepopup"
+                            alert(tanId)
+                        }
 
                         $(".layui-layer-close1").trigger('click');    // 关闭弹出层
                         layer.open({
-                            type: 2,
+                            type: 1,
                             title: '用户注册',
                             maxmin: true,
                             skin: 'layui-layer-lan',
@@ -337,16 +354,14 @@
                             btnAlign: 'c', //按钮居中对齐
                             shadeClose: true, //点击遮罩关闭层
                             area: ['400px', '280px'],
-                            content: 'http://localhost:54057/Login/ZhuCe',/*'http://localhost:54057/Login/Login'*///弹框显示的url
+                            content: $("#" + tanId),/*'http://localhost:54057/Login/Login'*///弹框显示的url
                             btn1: function (index, layero) {
 
-                                //var body = top.layer.getChildFrame('body', index);
+                                var body = top.layer.getChildFrame('body', index);
 
-                                //var table = body.find('#status').val();
-                                //if (table == null || table == "") {
-                                //    alert("请选择你登录的身份！")
-                                //    return;
-                                //}
+                                var table = body.find('#status').val();
+                                alert(table);
+
                                 //var username = body.find('#username').val();
                                 //var password = body.find('#password').val();
 
@@ -397,7 +412,7 @@
 
 
                             },
-                           
+
                             cancel: function (layero, index) {
                                 layer.closeAll();
                             }
@@ -406,8 +421,7 @@
 
 
 
-                        alert("2222");
-                        return false;
+
                     },
                     cancel: function (layero, index) {
                         layer.closeAll();
