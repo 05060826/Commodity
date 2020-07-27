@@ -1,93 +1,157 @@
 ﻿
 @{
-    ViewData["Title"] = "Evaluate";
+    Layout = null;
 }
 
-<script src="~/layuiadmin/layui/layui.js"></script>
-<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
-<script src="~/lib/jquery/dist/jquery.js"></script>
 <!DOCTYPE html>
 
-<div class="layui-form">
-    <table class="layui-hide" id="test" lay-filter="test"></table>
-    <div id="laypage"></div>
-</div>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Purchas</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+
+</head>
+<body>
+    <div class="layui-form">
+        <table class="layui-table">
+            <tr>
+                <td>订单编号</td>
+                <td>收货人姓名</td>
+                <td>收货地址</td>
+                <td>收货电话</td>
+                <td>成交时间</td>
+                <td>购买总数</td>
+                <td>应付金额</td>
+                <td>付款时间</td>
+                <td>回复状态</td>
+            </tr>
+            <tbody id="tab1">
+            </tbody>
+        </table>
+        <div style="text-align:center" class="border-white : 5000px">
+            <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('first')">首页</button>
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('prv')"><i class="layui-icon"></i></button>
+            当前第<label id="pageindex">1</label>页/总共<label id="totalPage"></label>页
+            /每页<label id="pagesize">4</label>条/总共<label id="totalCount"></label>条
+
+
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('next')"><i class="layui-icon"></i></button>
+            <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('last')">尾页</button>
+
+
+        </div>
+    </div>
+
+</body>
+</html>
 <script>
-    //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
-    layui.use('element', function () {
-        var element = layui.element;
-    });
-
-    layui.use(['form', 'layer'], function () {
-        var form = layui.form;
-        form.render(); //渲染页面
-    });
-
+    //首次加载
     $(function () {
-        var pageSize = 10; //每页显示的数据条数
-        var currentPageNo = 1; //当前页数
-        //初始化获取值
-        GetReceiptData(pageSize, currentPageNo);
-    })
+        btnCha();
+        showpage();
+    });
     //显示数据
-    function GetReceiptData(pageSize, currentPageNo ) {
-        layui.use(['table','laypage'], function () {
-            var table = layui.table;
-            var laypage = layui.laypage;
-            table.render({
-                elem: '#test'
-                , url: "http://localhost:54063/api/Client/Evaluate?pageName=" + currentPageNo + "&&limitName=" + pageSize +  ''
-                , title: '待评价订单'
-                , totalRow: true
+    function btnCha() {
+        //当前第几页
+        var indes = $("#pageindex").text();
+        //每页多少条
+        var sizes = $("#pagesize").text();
+        $.ajax({
+            url: "http://localhost:54063/api/Client/Evaluate?pageIndex=" + indes + "&&pageSize=" + sizes,
+            type: "get",
+            dataType: "json",
+            success: function (data) {
+                $("#totalCount").text(data.toTalCount);
+                $("#totalPage").text(data.pageTotal);
+                $("#tab1").empty();
+                $(data.showList).each(function () {
+                    var str = '<tr>' +
+                        '<td>' + this.orderId + '</td>' +
+                        '<td>' + this.consigName + '</td>' +
+                        '<td>' + this.consigAddress + '</td>' +
+                        '<td>' + this.consigTel + '</td>' +
+                        '<td>' + this.clinchTime + '</td>' +
+                        '<td>' + this.buyNum + '</td>' +
+                        '<td>' + this.saledMoney + '</td>' +
+                        '<td>' + this.payTime + '</td>' +
+                        '<td>' + this.replayStatue + '</td>' +
+                        '<td><button type="button" onclick="deleteInfo(' + this.orderId + ')" class="layui-btn layui-btn-normal layui-btn-sm"><i class="layui-icon"> 去收货</i></button>    </td > '
+                        + '</tr>';
+                    $("#tab1").append(str);
 
-                , cols: [[
-                    { field: 'OrderId', title: '订单编号', width: 150 }
-                    , { field: 'ConsigName', title: '收货人姓名', width: 150 }
-                    , { field: 'ConsigAddress', title: '收货地址', width: 150 }
-                    , { field: 'ConsigTel', title: '收货电话', width: 150 }
-                    , { field: 'ClinchTime', title: '成交时间', width: 150 }
-                    , { field: 'BuyNum', title: '购买总数', width: 150 }
-                    , { field: 'SaledMoney', title: '应付金额', width: 150 }
-                    , { field: 'PayTime', title: '付款时间', width: 150 }
-                    , { field: 'ConfirmTime', title: '确认收货时间', width: 150 }
-                    , { field: 'DeliveryTime', title: '发货时间', width: 150 }
-                    , { field: 'BuyerFreebACK', title: '顾客留言', width: 150 }
-                    , { field: 'OrderStatue', title: '订单状态', width: 150 }
-                    , { field: 'PayStatues', title: '付款状态', width: 150 }
-                    , { field: 'DelivaeryStatue', title: '发货状态', width: 150 }
-                    , { field: 'ReplayStatue', title: '回复状态', width: 150 }
-                    , { field: 'ReplayStatue', title: '去评价', width: 150 }
-                ]]
-                , done: function (res, curr, count) {
-                    //如果是异步请求数据方式，res即为你接口返回的信息。
-                    //如果是直接赋值的方式，res即为：{data: [], count: 99} data为当前页数据、count为数据总长度
-                    laypage.render({
-                        elem: 'laypage'
-                        , count: count
-                        , curr: currentPageNo
-                        , limit: pageSize
-                        , layout: ['prev', 'page', 'next', 'skip', 'count', 'limit']
-                        , jump: function (obj, first) {
-                            if (!first) {
-                                currentPageNo = obj.curr;
-                                pageSize = obj.limit;
-                                GetReceiptData(pageSize, currentPageNo);
-                            }
-                        }
-                    })
-                }
-            });
-        });
+                })
+            }
+        })
     }
+
+    //分页
+    function showpage(name) {
+        //当前第几页
+        var index = Number($("#pageindex").text());
+        //每页多少条
+        //var size = Number($("#pagesize").text());
+        ////总条数
+        //var tatal = Number($("#totalCount").text());
+        //总页数
+        var pagetatal = Number($("#totalPage").text());
+        switch (name) {
+            case 'first':
+                index = 1
+                break;
+            case 'prv':
+                if (index > 1) {
+                    index--;
+                }
+                else {
+                    $("#pageindex").text(1);
+                }
+                break;
+            case 'next':
+                if (index < pagetatal) {
+                    index++;
+                }
+                else {
+
+                    $("#pageindex").text(pagetatal);
+                }
+                break;
+            case 'last':
+                index = pagetatal;
+                break;
+            default:
+                break;
+        }
+        $("#pageindex").text(index);
+
+        btnCha();
+    };
+    //页面删除
+    function deleteInfo(rid) {
+        if (confirm("您确认要回复么？")) {
+            $.ajax({
+
+                url: "http://localhost:54063/api/Client/Uprs?ur=" + rid,
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+
+                    if (data > 0) {
+                        alert("回复成功");
+                        btnCha();
+                    }
+                    else {
+                        alert("回复失败");
+                    }
+                }
+            })
+
+        }
+
+    }
+
 </script>
-
-
-
-
-
-
-
-
-
 
 
