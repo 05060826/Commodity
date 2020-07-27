@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Business;
+using com.sun.org.apache.xpath.@internal.operations;
 using DataAccess.DataModels;
 using DataAccess.Model;
 using Microsoft.AspNetCore.Http;
@@ -29,9 +30,22 @@ namespace CommodityApi.Controllers
 
         //获取所有已经放入购物车中的商品
         [HttpGet]
-        public Client_ShowModel ClientShow(int pageIndex = 1, int pageSize = 3)
+        public string ClientShow(int pageName = 1, int limitName = 3)
         {
             var list = _business.GetOrders();
+            List<OrderItems> slist = list.Skip((pageName - 1) * limitName).Take(limitName).ToList();
+            Dictionary<string, object> obj = new Dictionary<string, object>();
+            obj.Add("code", 0);
+            obj.Add("msg", "");
+            obj.Add("count", list.Count);
+            obj.Add("data", slist);
+            return JsonConvert.SerializeObject(obj);
+        }
+        //获取所有已经放入购物车中的商品
+        [HttpGet]
+        public Client_ShowModel ClientShowOne(int pageIndex = 1, int pageSize = 3)
+        {
+            var list = _business.GetOrders().ToList();
             //总条数
             var totalCount = list.Count();
             //总页数
@@ -45,13 +59,31 @@ namespace CommodityApi.Controllers
             pageShowlist.PageTotal = totalPage;
             return pageShowlist;
         }
-
+        //查询ID
+         [HttpGet]
+         public OrderItems GetId(string id)
+        {
+            var list = _business.GetOrders();
+            OrderItems items = new OrderItems();
+            items = list.Where(m => m.OrderId.Contains(id)).FirstOrDefault();
+            return items;
+        }
         [HttpPost]
         //添加订单
         public int ADD(UserorderRecound ur)
         {
             var len = _business.ADD(ur);
             return len; 
+        }
+        [HttpGet]
+        //删除订单
+        public int Delete(string id)
+        {
+            OrderItems items = new OrderItems();
+            var list = _business.GetOrders();
+            items = list.Where(m => m.OrderitemId.Contains(id)).FirstOrDefault();
+            var de = _business.Delete(items);
+            return de;
         }
         //修改转态
         [HttpPost]

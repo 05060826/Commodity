@@ -15,39 +15,39 @@
 </head>
 <body>
     @*<div class="layui-collapse" lay-accordion="">
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title">查询</h2>
-            <div class="layui-colla-content layui-show">
-                <div class="layui-input-inline">
-                    <label>作者</label>
-                </div>
-                <div class="layui-input-inline">
-                    <input type="text" id="AuthorName" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-input-inline">
-                    <label>书名</label>
-                </div>
-                <div class="layui-input-inline">
-                    <input type="text" id="Title" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-input-inline">
-                    <label>出版社</label>
-                </div>
-                <div class="layui-input-inline">
-                    <input type="text" id="Pubish" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-input-inline">
-                    <label>分类</label>
-                </div>
-                <div class="layui-input-inline">
-                    <select id="Type" class="layui-form-select"></select>
-                </div>
-                <div class="layui-inline" style="width:100px;float:right">
-                    <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnSelect">查询</button>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">查询</h2>
+                <div class="layui-colla-content layui-show">
+                    <div class="layui-input-inline">
+                        <label>作者</label>
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" id="AuthorName" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline">
+                        <label>书名</label>
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" id="Title" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline">
+                        <label>出版社</label>
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" id="Pubish" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline">
+                        <label>分类</label>
+                    </div>
+                    <div class="layui-input-inline">
+                        <select id="Type" class="layui-form-select"></select>
+                    </div>
+                    <div class="layui-inline" style="width:100px;float:right">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnSelect">查询</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
     <div>
         <div class="w" id="shopping">
             <div class="cart-warp">
@@ -65,55 +65,55 @@
 
                 </div>
 
-                 @*商品详细模块 
-                <div class="cart-item-list">
-                    <div class="cart-item check-cart-item">
-                        <div class="p-checkbox">
-                            <input type="checkbox" name="" id="" checked class="j-checkbox">
-
-                        </div>
-                        <div class="p-goods">
-                            <div class="p-img">
-                                <img src="img/p1.jpg" alt="">
+                <!-- 商品详细模块 -->
+                @*<div class="cart-item-list">
+                        <div class="cart-item check-cart-item">
+                            <div class="p-checkbox">
+                                <input type="checkbox" name="" id="" checked class="j-checkbox">
 
                             </div>
-                            <div class="p-msg">【5本26.8元】经典儿童文学彩图青少版八十天环游地球中学生语文教学大纲</div>
+                            <div class="p-goods">
+                                <div class="p-img">
+                                    <img src="img/p1.jpg" alt="">
 
-                        </div>
-                        <div class="p-price">￥12.60</div>
-                        <div class="p-num">
-                            <div class="quantity-form">
-                                <a href="javascript:;" class="decrement">-</a>
-                                <input type="text" class="itxt" value="1">
-                                <a href="javascript:;" class="increment">+</a>
+                                </div>
+                                <div class="p-msg">【5本26.8元】经典儿童文学彩图青少版八十天环游地球中学生语文教学大纲</div>
 
                             </div>
+                            <div class="p-price">￥12.60</div>
+                            <div class="p-num">
+                                <div class="quantity-form">
+                                    <a href="javascript:;" class="decrement">-</a>
+                                    <input type="text" class="itxt" value="1">
+                                    <a href="javascript:;" class="increment">+</a>
+
+                                </div>
+
+                            </div>
+                            <div class="p-sum">￥12.60</div>
+                            <div class="p-action"><a href="javascript:;">删除</a></div>
 
                         </div>
-                        <div class="p-sum">￥12.60</div>
-                        <div class="p-action"><a href="javascript:;">删除</a></div>
-
-                    </div>
-                </div>*@
+                    </div>*@
                 <!-- 结算模块 -->
                 @*<div class="cart-floatbar">
-                    <div class="select-all">
-                        <input type="checkbox" name="" id="" class="checkall">全选
+                        <div class="select-all">
+                            <input type="checkbox" name="" id="" class="checkall">全选
 
-                    </div>
-                    <div class="operation">
-                        <a href="javascript:;" class="remove-batch"> 删除选中的商品</a>
-                        <a href="javascript:;" class="clear-all">清理购物车</a>
+                        </div>
+                        <div class="operation">
+                            <a href="javascript:;" class="remove-batch"> 删除选中的商品</a>
+                            <a href="javascript:;" class="clear-all">清理购物车</a>
 
-                    </div>
-                    <div class="toolbar-right">
-                        <div class="amount-sum">已经选<em>1</em>件商品</div>
-                        <div class="price-sum">总价： <em>￥12.60</em></div>
-                        <div class="btn-area">去结算</div>
+                        </div>
+                        <div class="toolbar-right">
+                            <div class="amount-sum">已经选<em>1</em>件商品</div>
+                            <div class="price-sum">总价： <em>￥12.60</em></div>
+                            <div class="btn-area">去结算</div>
 
-                    </div>
+                        </div>
 
-                </div>*@  <!-- cart-floatbar end -->
+                    </div>*@  <!-- cart-floatbar end -->
 
             </div>  <!-- cart-warp end -->
 
@@ -145,19 +145,19 @@
         //    GetBookInfo(pageSize,currentPageNo);
         //});
 
-        
+
     })
 
     //显示数据
     function GetBookInfo(pageSize,currentPageNo) {
         var Token = localStorage["Token"];
         $.ajax({
-            url: "http://localhost:54063/api/Supplier/GetGoodMC?token=" + Token + "&pageName=" + currentPageNo + "&limitName=" + pageSize + "",
+            url: "http://localhost:54063/api/Supplier/GetGoodSH?token=" + Token + "&pageName=" + currentPageNo + "&limitName=" + pageSize + "",
             type: "get",
             dataType: "json",
             success: function (result) {
                 var str = "";
-                $.each(result.data, function (i,n) {
+                $.each(result.data, function (i, n) {
                     str+= '<div class="cart-item-list">'
                         +'<div class="cart-item check-cart-item">'
                         //+'<div class="p-checkbox">'
@@ -176,7 +176,7 @@
                         +'</div>'
                         +'</div>'
                         +'<div class="p-sum">￥'+n.BookPrice+'</div>'
-                        +'<div class="p-action"><a href="javascript:;">'+n.Statue+'</a></div>'
+                        +'<div class="p-action"><a href="javascript:;">'+n.DelivaeryStatue+'</a></div>'
                         +'</div>'
                         +'</div>';
                 })
@@ -194,7 +194,7 @@ $(".checkall").change(function () {
           // 判断是否是选中状态，是的话添加check-cart-item类，没有就移除
           if ($(this).prop("checked")) {
                   $(".cart-item").addClass("check-cart-item");
-         
+
         } else {
         $(".cart-item").removeClass("check-cart-item");
 
@@ -276,18 +276,18 @@ $(".checkall").change(function () {
      $(".p-action a").click(function () {
             $(this).parents(".cart-item").remove();
             getSum();
-       
+
     })
      // 删除选中商品
      $(".remove-batch").click(function () {
             $(".j-checkbox:checked").parents(".cart-item").remove();
             getSum();
-        
+
     })
      // 清理购物车
      $(".clear-all").click(function () {
              $(".cart-item").remove();
              getSum();
-        
+
      })
 </script>

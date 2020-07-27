@@ -1,61 +1,292 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/cartStyle.css">
-    <title>Document</title>
-</head>
+    <title>购物车</title>
+    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/js/site.js"></script>
 
+    <style>
+        * {
+            margin: 0;
+            padding: 0
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        ul li {
+            float: left;
+            list-style: none;
+        }
+
+        #wrapper {
+            max-width: 640px;
+            min-width: 320px;
+            font-size: 12px;
+            font-family: "微软雅黑";
+            height: 370px;
+            margin: 50px auto;
+        }
+
+            #wrapper #content {
+                width: 100%;
+                float: left;
+            }
+
+                #wrapper #content .goods_lists {
+                    width: 100%;
+                    float: left;
+                }
+
+                    #wrapper #content .goods_lists .list {
+                        width: 96%;
+                        padding: 0 2%;
+                    }
+
+                        #wrapper #content .goods_lists .list li {
+                            width: 100%;
+                            height: 100px;
+                            border: 1px solid #c7000a;
+                            margin-top: 15px;
+                            float: left;
+                            background: #fffefe;
+                        }
+
+        .goods_lists .list li .checkbox {
+            width: 12px;
+            height: 12px;
+            position: relative;
+            border: 1px solid #999;
+            float: left;
+            margin-top: 45px;
+            margin-left: 2%;
+            z-index: 1
+        }
+
+            .goods_lists .list li .checkbox .c_xz {
+                position: absolute;
+                top: -1px;
+                left: 0px;
+                width: 12px;
+                height: 12px;
+                display: none;
+            }
+
+        .goods_lists .list li .door {
+            float: left;
+            width: 74px;
+            height: 74px;
+            margin: 12px 0 0 3%;
+            border: 1px solid #999;
+        }
+
+        .goods_lists .list li .l_right {
+            width: 62%;
+            height: 74px;
+            float: left;
+            margin-top: 12px;
+            padding-left: 2%
+        }
+
+            .goods_lists .list li .l_right .l_r_desc {
+                max-width: 100%;
+                overflow: hidden;
+                color: #555;
+                line-height: 22px;
+                height: 22px;
+            }
+
+            .goods_lists .list li .l_right .price {
+                color: #555;
+            }
+
+                .goods_lists .list li .l_right .price span {
+                    color: #c7000a;
+                }
+
+            .goods_lists .list li .l_right .old_price {
+                text-decoration: line-through;
+                float: left;
+                width: 100%;
+                color: #555
+            }
+
+            .goods_lists .list li .l_right .l_bot {
+                width: 66%;
+                height: 20px;
+                float: right;
+                color: #555;
+            }
+
+                .goods_lists .list li .l_right .l_bot p {
+                    float: left;
+                    padding-top: 2px;
+                }
+
+                .goods_lists .list li .l_right .l_bot input {
+                    float: left;
+                    width: 17%;
+                    height: 14px;
+                    text-align: center;
+                    border: 1px solid #999;
+                    margin-top: 3px;
+                }
+
+                .goods_lists .list li .l_right .l_bot a {
+                    float: left;
+                    margin: 3px 3%;
+                }
+
+                .goods_lists .list li .l_right .l_bot .rubbish {
+                    margin-left: 5%;
+                }
+
+        #wrapper #content .checkout {
+            float: left;
+            width: 100%;
+            height: 50px;
+            background: #fffefe;
+            border-top: 1px solid #999;
+            border-bottom: 1px solid #999;
+            margin-top: 20px;
+        }
+
+            #wrapper #content .checkout .c_left {
+                float: left;
+                width: 47%;
+                height: 35px;
+                font-size: 12px;
+                color: #555;
+                padding-left: 3%;
+                line-height: 50px;
+            }
+
+                #wrapper #content .checkout .c_left span {
+                    color: #c7000a;
+                }
+
+            #wrapper #content .checkout .c_right {
+                float: left;
+                width: 50%;
+                height: 50px;
+                background: #c7000a;
+                color: #fefdfd;
+                text-align: center;
+                font-size: 14px;
+                line-height: 50px;
+            }
+    </style>
+</head>
 <body>
-    <div class="content">
-        <div class="logo">
-            <img src="image/dd_logo.jpg" alt=""><span>关闭</span>
+    <div id="wrapper">
+        <div id="content">
+            <div class="goods_lists">
+                <ul id="listbox" class="list">
+                    <li>
+                        <div class='checkbox'>
+                            <div class='c_xz'><img src='images/checkbox.png' width='12' height='12'></div>
+                        </div>
+                        <a class='door' href='javascript:void(0);'><img src='images/list1.jpg' width='74' height='74' alt='阿迪达斯男鞋' /></a>
+                        <div class='l_right'>
+                            <p class='l_r_desc'>ADIDAS阿迪达斯 三叶草经典板鞋 ZX700跑步鞋</p>
+                            <p class='price'>价格：<span>￥<span class='money' data-money='461'>461.00</span></span></p>
+                            <p class='old_price'>885.00</p>
+                            <div class='l_bot'>
+                                <p>数量 :</p>
+                                <a class='remove' href='javascript:void(0);'><img src='images/remove.png' width='15' height='15'></a>
+                                <input type='text' data-max='10' class='num' value='1' />
+                                <a class='add' href='javascript:void(0);'><img src='images/add.png' width='15' height='15'></a>
+                                <a class='rubbish' href='javascript:void(0);'><img src='images/rubbish.png' width='14' height='16'></a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <div class='checkbox'>
+                            <div class='c_xz'><img src='images/checkbox.png' width='12' height='12'></div>
+                        </div>
+                        <a class='door' href='javascript:void(0);'><img src='images/list2.jpg' width='74' height='74' alt='iphone6s plus' /></a>
+                        <div class='l_right'>
+                            <p class='l_r_desc'>Apple/苹果 iPhone 6s Plus Android6.0操作系统</p>
+                            <p class='price'>价格：<span>￥<span class='money' data-money='3999.99'>3999.99</span></span></p>
+                            <p class='old_price'>5768.00</p>
+                            <div class='l_bot'>
+                                <p>数量 :</p>
+                                <a class='remove' href='javascript:void(0);'><img src='images/remove.png' width='15' height='15'></a>
+                                <input type='text' data-max='10' class='num' value='1' />
+                                <a class='add' href='javascript:void(0);'><img src='images/add.png' width='15' height='15'></a>
+                                <a class='rubbish' href='javascript:void(0);'><img src='images/rubbish.png' width='14' height='16'></a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="checkout">
+                <div class="c_left">
+                    合计(不含运费): <span>￥<span id="sum">0.00</span></span>
+                </div>
+                <a href="javascript:">
+                    <div class="c_right">
+                        单子（<span id="count">0</span>）
+                    </div>
+                </a>
+            </div>
         </div>
-        <div class="cartList">
-            <ul>
-                <li>¥<input type="text" name="price" value="21.90"></li>
-                <li><input type="button" name="minus" value="-"><input type="text" name="amount" value="2"><input type="button" name="plus" value="+"></li>
-                <li id="price0">¥21.90</li>
-                <li>
-                    <p>移入收藏</p>
-                    <p>删除</p>
-                </li>
-            </ul>
-            <ul>
-                <li>¥<input type="text" name="price" value="24.00"></li>
-                <li><input type="button" name="minus" value="-"><input type="text" name="amount" value="3"><input type="button" name="plus" value="+"></li>
-                <li id="price1">¥24.00</li>
-                <li>
-                    <p>移入收藏</p>
-                    <p>删除</p>
-                </li>
-            </ul>
-            <ol>
-                <li id="totalPrice">&nbsp;</li>
-                <li onclick="jiesuan()"><span>结 算</span></li>
-            </ol>
-        </div>
-        <p id="c1"></p>
     </div>
 
-    <script>
-        function jiesuan() {
-            const show = document.getElementById("c1");
-            const elobj = document.getElementsByClassName("cartList")[0];
-            const price = elobj.firstElementChild.firstElementChild.firstElementChild.value;
-            const number = elobj.firstElementChild.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.value;
-            const totalPrice = parseFloat(price * number);
-            const price1 = elobj.firstElementChild.nextElementSibling.firstElementChild.firstElementChild.value;
-            const number1 = elobj.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.firstElementChild.nextElementSibling.value;
-            const totalPrice1 = parseFloat(price1 * number1);
-            show.innerHTML = `白岩松 白说：${totalPrice}<br>
-                                  岛上书店：${totalPrice1}<br>
-                                  总价：${totalPrice + totalPrice1}<br>`;
-        }
-    </script>
-</body>
+    <script type="text/javascript">
+        $(function () {
+            //删除商品
+            $("#listbox").on("click", ".rubbish", function () {
+                $(this).parents("li").remove();
+                tm_total();
+            });
 
+            //商品复选框的选中和不选中
+            $("#listbox").on("click", ".checkbox", function () {
+                $(this).find(".c_xz").toggle();
+                tm_total();
+            });
+
+            //商品数量的添加和减少
+            $("#listbox").on("click", ".add", function () {
+                var $input = $(this).prev();
+                var value = $input.val();
+                var max = $input.data("max");
+                value++;
+                if (value > max) value = max;
+                $input.val(value);
+                tm_total();
+            }).on("click", ".remove", function () {
+                var $input = $(this).next();
+                var value = $input.val();
+                value--;
+                if (value <= 0) value = 1;
+                $input.val(value);
+                tm_total();
+            });
+        });
+
+        //求总和
+        function tm_total() {
+            var total = 0;
+            $("#listbox").find("li").each(function () {
+                var flag = $(this).find(".c_xz").is(":visible");
+                if (flag) {
+                    var money = $(this).find(".money").data("money");
+                    var number = $(this).find(".num").val();
+                    total += money * number;
+                }
+            });
+            //求用户购买了多少个商品
+            var length = $("#listbox").find(".c_xz:visible").length;
+            $("#count").text(length);
+            $("#sum").text(total);
+        };
+
+    </script>
+
+</body>
 </html>
