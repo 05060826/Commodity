@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewData["Title"] = "ZhuCe";
+}
+
+<h1>你好</h1>
+
+<script src="../layuiadmin/layui/lay/modules/jquery.js"></script>
+<script src="../lib/jquery/dist/jquery.js"></script>
+<script src="../layuiadmin/layui/layui.js"></script>
+
+<link href="../layuiadmin/layui/css/layui.css" rel="stylesheet" />
+<div id="Towpopup" >
+    <div style="height:50px;width:400px">
+        <button id="TCustomer" class="layui-btn layui-btn-normal layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Gu()">顾客</button>
+        <button id="TUserRoderInfo" class="layui-btn layui-btn-warm layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Gong()">供应商</button>
+        <button id="TManageInfo" class="layui-btn layui-btn-danger layui-btn-radius layui-btn-xs" style="margin-left:50px;margin-top:20px" onclick="Guan()">管理员</button>
+    </div>
+
+    <input id="Tstatus" hidden type="button" />
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" id="Tname" style="height:40px;width:150px">用户名：</label>
+            <div class="layui-input-inline" style="margin-top:10px">
+                <input type="text" id="Tusername" placeholder="请输入用户名" class="input_long" />
+                <i id="Txing1" style="color:red">*</i>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label" id="Tpass" style="height:40px;width:150px">密码：</label>
+            <div class="layui-input-inline" style="margin-top:10px">
+                <input type="password" id="Tpassword" placeholder="请输入密码" class="input_long" />
+                <i id="Txing2" style="color:red">*</i>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script>
+
+    function Gu() {
+
+        document.getElementById('Tname').innerText = "顾客用户名：";
+        document.getElementById('Tpass').innerText = "顾客密码：";
+        $("#Tstatus").val("Customer")
+
+    }
+
+    //$("#username").blur(function () {
+
+    //}
+
+    $("#Tusername").change(function () {
+        if ($("#Tusername").val().length > 0) {
+
+            $("#Txing1").hide()
+        }
+        else {
+            $("#Txing1").show()
+        }
+    })
+    $("#Tpassword").change(function () {
+        if ($("#Tpassword").val().length > 4) {
+            $("#Txing2").hide()
+        }
+        else {
+            $("#Txing2").show()
+        }
+    })
+
+    function Gong() {
+        document.getElementById('Tname').innerText = "供应商用户名：";
+        document.getElementById('Tpass').innerText = "供应商密码：";
+        $("#Tstatus").val("UserRoderInfo")
+        //$("#status").val($("#UserRoderInfo"))
+    }
+
+    function Guan() {
+        document.getElementById('Tname').innerText = "管理员用户名：";
+        document.getElementById('Tpass').innerText = "管理员密码：";
+        $("#Tstatus").val("ManageInfo")
+        //$("#status").val($("#ManageInfo"))
+    }
+
+</script>
+
+

@@ -23,6 +23,13 @@ namespace Business
             var add = Ur.Add(ur);
             return add;
         }
+
+        //删除订单
+        public int Delete( OrderItems id)
+        {
+            var de = Od.Delete(id);
+            return de;
+        }
         //查询转态
         public List<UserorderRecound> GetUserorderRecound()
         {

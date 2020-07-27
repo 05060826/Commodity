@@ -1,0 +1,330 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UpdatePurchas</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+</head>
+<body>
+    <h3 style="text-align:center">新增退货采购</h3>
+    <input id="HiddenRId" type="hidden" value="@ViewBag.rid" />
+
+    <div>
+        <h4>单据编号</h4>
+        <select id="selDropCode" style="width:100px;height:20px;background-color:aliceblue">
+        </select>
+
+    </div>
+    <div class="layui-form">
+        <table class="layui-table">
+            <tr>
+                <td>采购退货单编号：</td>
+                <td>
+                    <label id="cgtubian"></label>
+                </td>
+            </tr>
+            <tr>
+                <td>供应商：</td>
+                <td>
+                    <input id="TextGong" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>单据日期：</td>
+                <td><input id="TextTime" type="text" /></td>
+            </tr>
+            <tr>
+                <td>商品：</td>
+                <td>
+                    <input id="TextGoods" type="text" />
+                </td>
+            </tr>
+            <tr>
+                <td>单位</td>
+                <td><label id="da"></label></td>
+            </tr>
+            <tr>
+                <td>仓库</td>
+                <td><label id="cu"></label></td>
+            </tr>
+            <tr>
+                <td>商品单价</td>
+                <td><label id="pr"></label>元</td>
+            </tr>
+            <tr>
+                <td>折扣率</td>
+                <td><input id="TextZL" type="text" /></td>
+            </tr>
+            <tr>
+                <td>折扣额</td>
+                <td><label id="mony"></label>元</td>
+            </tr>
+            <tr>
+                <td>采购数量</td>
+                <td><input id="TextNum" type="text" /><label id="daw"></label></td>
+            </tr>
+            <tr>
+                <td>采购金额</td>
+                <td><label id="cmony"></label>元</td>
+            </tr>
+            <tr>
+                <td>备注</td>
+                <td><input id="TextTask" type="text" /></td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h4>退货结算账户：</h4> <select id="account" style="width:100px;height:20px;background-color:aliceblue">
+        </select>
+
+        <input id="Button1" style="margin-left:200px;" type="button" class="layui-btn layui-btn-normal" value="新增退货" onclick="btntui()" />
+        <input id="Button1" style="margin-left:100px;" type="button" class="layui-btn layui-btn-normal" value="返回退货列表" onclick="btnselup()" />
+    </div>
+
+
+</body>
+</html>
+<script>
+    $(function () {
+
+        dajubian();
+        FanTians();
+        dropaccount();
+        dropCode();
+
+    });
+
+    //反填数据
+    function FanTians() {
+        var rid = parseInt($("#HiddenRId").val());
+        //判断退货Id是否为空
+        if (rid != 0) {
+            $.ajax({
+                url: "http://49.234.34.192:7086/api/Purchase/FanTian?rid=" + rid,
+                type: "get",
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    $(data).each(function () {
+                        $("#selDropCode").val(data.receIptsId);
+                        $("#TextGong").val(data.gname);
+                        $("#TextTime").val(data.datetime);
+                        $("#TextGoods").val(data.sName);
+                        $("#da").text(data.units);
+                        $("#cu").text(data.wName);
+                        $("#pr").text(data.price);
+                        $("#TextZL").val(data.rate);
+                        $("#mony").text(data.discount);
+                        $("#TextNum").val(data.number);
+                        $("#cmony").text(data.cMoney);
+                        $("#TextTask").val(data.remark);
+                        $("#daw").text(data.units);
+
+                    });
+
+                }
+            });
+
+        }
+        //下拉框内容改变事件
+
+        else {
+            $("#selDropCode").change(function () {
+                var droprid = parseInt($("#selDropCode").val());
+
+
+                $.ajax({
+                    url: "http://49.234.34.192:7086/api/Purchase/FanTian?rid=" + droprid,
+                    type: "get",
+                    dataType: "json",
+                    success: function (data) {
+
+                        $(data).each(function () {
+                            $("#selDropCode").val(data.receIptsId);
+                            $("#TextGong").val(data.gname);
+                            $("#TextTime").val(data.datetime);
+                            $("#TextGoods").val(data.sName);
+                            $("#da").text(data.units);
+                            $("#cu").text(data.wName);
+                            $("#pr").text(data.price);
+                            $("#TextZL").val(data.rate);
+                            $("#mony").text(data.discount);
+                            $("#TextNum").val(data.number);
+                            $("#cmony").text(data.cMoney);
+                            $("#TextTask").text(data.remark);
+                        });
+
+                    }
+
+                });
+
+
+            });
+        }
+
+    }
+
+    //退货结算账户
+    function dropaccount() {
+        $.ajax({
+
+            url: "http://49.234.34.192:7086/api/Purchase/AccountModels",
+            type: "get",
+            success: function (data) {
+                $("#account").empty();
+                $("#account").append('<option value=0>请选择</option>')
+                $(data).each(function () {
+
+                    $("#account").append('<option value="' + this.aId + '">' + this.accountName + '</option>')
+
+                });
+
+            }
+        });
+
+
+
+    }
+    //单据编号下拉框
+    function dropCode() {
+
+        $.ajax({
+
+            url: "http://49.234.34.192:7086/api/Purchase/ShowInfo",
+            type: "get",
+            success: function (data) {
+                $("#selDropCode").empty();
+                $("#selDropCode").append('<option value=0>请选择</option>')
+                $(data).each(function () {
+
+                    $("#selDropCode").append('<option value="' + this.receIptsId + '">' + this.receIptsCode + '</option>')
+
+                });
+
+            }
+        });
+
+    }
+
+
+    //退货保存事件
+    function btntui() {
+
+        //显示页面直接获取Id
+        var rid = parseInt($("#HiddenRId").val());
+        //下拉框获取Id
+        var rids = $("#selDropCode").val();
+
+
+        //退款结算账户
+        var jiesaun = parseInt($("#account").val());
+
+        //判断是否是直接进入退货页面
+        if (rid == 0) {
+            if (jiesaun != 0) {
+                UpdateYi(rids);
+            }
+            else {
+                UpdateWEI(rids);
+
+            }
+        }
+        else {
+            if (jiesaun != 0) {
+                UpdateYi(rid);
+            }
+            else {
+                UpdateWEI(rid);
+
+            }
+        }
+    }
+
+    //修改状态为已退款
+    function UpdateYi(rid) {
+        //单据编号
+        dajubian();
+
+        var cgthcode = $("#cgtubian").text();
+
+        $.ajax({
+            url: "http://49.234.34.192:7086/api/Purchase/UpdatePaMent?rid=" + rid + "&cgthCode=" + cgthcode,
+            type: "put",
+            dataType: "json",
+            success: function (data) {
+                if (data > 0) {
+                    alert("退货成功");
+                    location.href = "/PurchaseInfo/ShowUpdatePurchas/";
+                }
+                else {
+                    alert("退货失败");
+                }
+            }
+
+        });
+    }
+
+    //修改状态为未退款
+    function UpdateWEI(rid) {
+        dajubian();
+
+        var cgthcode = $("#cgtubian").text();
+        $.ajax({
+            url: "http://49.234.34.192:7086/api/Purchase/UpdatePaMents?rid=" + rid + "&cgthCode=" + cgthcode,
+            type: "put",
+            dataType: "json",
+            success: function (data) {
+                if (data > 0) {
+                    alert("退货成功");
+                    location.href = "/PurchaseInfo/ShowUpdatePurchas/";
+                }
+                else {
+                    alert("退货失败");
+                }
+            }
+
+        });
+
+    }
+
+    //单据编号随机生成
+    function dajubian() {
+
+        var myDate = new Date();
+
+        var year = myDate.getFullYear();//获取当前年
+        var month = myDate.getMonth() + 1; //获取当前月
+        var date = myDate.getDate();    //获取当前日
+
+        var hour = myDate.getHours();       //获取当前小时数（0-23）
+        var mintue = myDate.getMinutes();  //获取当前分钟数
+        //  var secound = myDate.getSeconds();
+
+        var now = year + getNow(month) + getNow(date) + getNow(hour) + getNow(mintue);
+
+        var nums = Math.random();
+        //生成四位随机数
+        out = Math.floor(Math.random() * 10000);
+
+        $("#cgtubian").text("CGTH" + now + out);
+    }
+    //判断是否在前面加0
+    function getNow(s) {
+        return s < 10 ? '0' + s : s;
+    }
+
+
+    //返回退货列表
+    function btnselup() {
+
+        location.href = "/PurchaseInfo/ShowUpdatePurchas";
+    }
+</script>

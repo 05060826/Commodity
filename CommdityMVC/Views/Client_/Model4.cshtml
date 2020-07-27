@@ -1,0 +1,246 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mariner_zp</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+
+    <link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <style>
+
+        body {
+            user-select: none;
+        }
+
+        table {
+            width: 800px;
+            margin: 30px auto 0;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        thead {
+            background-color: rgb(207, 36, 64);
+            color: white;
+        }
+
+        tr:nth-of-type(1) {
+            height: 40px;
+        }
+
+        table img {
+            width: 120px;
+            height: 110px;
+        }
+
+        table .product {
+            width: 200px;
+        }
+
+        .number span {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+        }
+
+        .reduce, .add {
+            background-color: gray;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .foot {
+            width: 800px;
+            height: 30px;
+            background-color: rgb(207, 36, 64);
+            color: white;
+            line-height: 30px;
+            margin: 20px auto;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        #Total-number, #Total-price {
+            display: inline-block;
+            color: yellow;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <td>订单编号</td>
+                <td>商品编号</td>
+                <td>图书名称</td>
+                <td>图书价格</td>
+                <td>图书数量</td>
+            </tr>
+            
+        </thead>
+        <tbody id="tab1">
+
+        </tbody>
+    </table>
+    <div class="foot">
+        <span>已选中商品<span id="Total-number">1</span>个,合计费用<span id="Total-price">1</span>￥</span>
+        <br />
+        <button type="button" class="layui-btn layui-btn-normal" onclick="AddCaer()">结算购物车</button>
+    </div>
+    
+    <div style="text-align:center">
+        <br />
+        <br />
+        <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('first')">首页</button>
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('prv')"><i class="layui-icon"></i>上一页</button>
+        当前第<label id="pageindex">1</label>页/总共<label id="totalPage"></label>页
+        /每页<label id="pagesize">4</label>条/总共<label id="totalCount"></label>条
+
+
+        <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('next')"><i class="layui-icon"></i>下一页</button>
+        <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('last')">尾页</button>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    //首次加载
+    $(function () {
+        btnCha();
+        showpage();
+    });
+    //显示数据
+    function btnCha() {
+        //当前第几页
+        var indes = $("#pageindex").text();
+        //每页多少条
+        var sizes = $("#pagesize").text();
+        $.ajax({
+            url: "http://localhost:54063/api/Client/ClientShow?pageIndex=" + indes + "&&pageSize =" + sizes,
+            type: "get",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+                $("#totalCount").text(data.toTalCount);
+                $("#totalPage").text(data.pageTotal);
+                $("#tab1").empty();
+                $(data.showList).each(function () {
+                    //    <td class="product"></td>
+                    //    <td class="unit-price">15</td>
+                    //    <td class="number">
+                    //        <span class="reduce">-</span>
+                    //        <span class="num">1</span>
+                    //        <span class="add">+</span>
+                    //    </td>
+                    //    <td class="price">15</td>
+                    //    <td class="price">15</td>
+                    //    <td class="price">未付款</td>
+                    //<p class="num_box">
+                    //    <a class="J_jia">+</a><label>
+                    //        <input type="text" class="num" value="1" />
+                    //    </label><a class="J_jian">-</a>
+                    //</p>
+                    var str = '<tr>' +
+                        '<td class="product" >' + this.orderitemId + '</td>' +
+                        '<td class="unit-price" >' + this.supplierId + '</td>' +
+                        '<td class="number" >' + this.bookName +
+                        '<td class="price">' + this.bookPrice + '</td>' +
+                        '<td class="num_box">'+
+                            '<a class="J_jia">'+ '+' +'</a>'+
+                            '<input type="text" class="num" value='+ this.quantity +' >'+
+                            '<a class="J_jian">'+ '-' +'</a>'+
+                        '</td>';
+                    $("#tab1").append(str);
+                })
+            }
+        })
+    }
+
+    //分页
+    function showpage(name) {
+        //当前第几页
+        var index = Number($("#pageindex").text());
+        //总页数
+        var pagetatal = Number($("#totalPage").text());
+        switch (name) {
+            case 'first':
+                index = 1
+                break;
+            case 'prv':
+                if (index > 1) {
+                    index--;
+                }
+                else {
+                    $("#pageindex").text(1);
+                }
+                break;
+            case 'next':
+                if (index < pagetatal) {
+                    index++;
+                }
+                else {
+
+                    $("#pageindex").text(pagetatal);
+                }
+                break;
+            case 'last':
+                index = pagetatal;
+                break;
+            default:
+                break;
+        }
+        $("#pageindex").text(index);
+
+        btnCha();
+    };
+    $(document).ready(function () {
+        var add, reduce, num, num_txt;
+        add = $(".J_jia");//添加数量
+        reduce = $(".J_jian");//减少数量
+        num = "";//数量初始值
+        num_txt = $(".num");//接受数量的文本框
+        //var num_val=num_txt.val();//给文本框附上初始值
+
+        /*添加数量的方法*/
+        add.click(function () {
+            num = $(".num").val();
+            num++;
+            num_txt.val(num);
+            //ajax代码可以放这里传递到数据库实时改变总价
+        });
+
+        /*减少数量的方法*/
+        reduce.click(function () {
+            //如果文本框的值大于0才执行减去方法
+            num = $(".num").val();
+            if (num > 0) {
+                //并且当文本框的值为1的时候，减去后文本框直接清空值，不显示0
+                if (num == 1) {
+                    num--;
+                    num_txt.val("");
+                    if (num_txt.val("")) {
+                        alert("不能输入为0");
+                    }
+                }
+                //否则就执行减减方法
+                else {
+                    num--;
+                    num_txt.val(num);
+                }
+
+            }
+        });
+    })
+    function AddCaer() {
+        location.href = "Client_/ADD";
+    }
+    
+</script>
