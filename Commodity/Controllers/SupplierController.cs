@@ -30,5 +30,26 @@ namespace Commodity.Controllers
         {
             return View();
         }
+        public IActionResult OrderD()
+        {
+            return View();
+        }
+        public IActionResult OrderF()
+        {
+            return View();
+        }
+        public IActionResult OrderQ()
+        {
+            return View();
+        }
+
+
+
+
+        //查看我的信息
+        public IActionResult UserOrder()
+        {
+            return View();
+        }
     }
 }

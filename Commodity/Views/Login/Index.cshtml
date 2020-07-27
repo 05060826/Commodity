@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script src="~/layer/layer.js"></script>
+<script src="~/layuiadmin/layui/layui.js"></script>
+<link href="~/layuiadmin/layui/css/layui.css" rel="stylesheet" />
+
+
+<div class="site-demo-button" id="layerDemo" style="margin-bottom: 0;">
+    <div style="height:50px;width:100%;background-color:darkcyan">
+
+
+        @* style="padding:8px 0px 8px 600px"*@
+       
+        <div style="height:38px;width:200px;background-color:darkcyan;text-align:center;float:right;margin-top:5px ">
+            <a href="#" style="color: white;font-size: 18px;padding-top:30px">欢迎张三登录 </a>
+        </div>
+
+        <div style="height:38px;width:200px;background-color:darkcyan;text-align:center;float:right;margin-top:5px">         
+            <a id="btn" href="#" style="color:white;font-size:18px;padding-top:30px">请点击登录</a>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $('#btn').on('click', function () {
+            layer.open({
+                type: 2,
+                title: '用户登录',
+                maxmin: true,
+                skin: 'layui-layer-lan',
+                btn: ['登录', '注册', '取消'],
+                btnAlign: 'c',
+                shadeClose: true, //点击遮罩关闭层
+                area: ['400px', '280px'],
+                content: 'http://localhost:54057/layer/Login.html',//弹框显示的url
+                btn1: function (index, layero) {
+                    //login();
+                    var body = top.layer.getChildFrame('body', index);
+                   
+
+                    var username = $("#username").val();
+                    alert(body.find('#username').val());
+                },
+                btn2: function (index, layero) {
+                    alert("2222");
+                    return false;
+                },
+                cancel: function (layero, index) {
+                    layer.closeAll();
+                }
+
+            });
+        });
+
+    })
+
+    $('.layui-layer-btn0').on('click', function () {
+        login();
+    });
+
+
+    function login() {
+
+        var username = $.trim($("#username").val());//获取用户名
+        var password = $.trim($("#password").val());
+        var validateCode = $.trim($("#validateCode").val());
+
+        var url = '登录请求的url路径';
+        var param = { "username": username, "password": password, "validateCode": validateCode };
+
+        $.post(url, param, function (data) {
+            if (data == "0") {
+                //调用父窗口的function addPersonalCenter(){}方法，在父窗口右上角增加一个个人中心按钮
+                window.parent.addPersonalCenter();
+                // 先获取窗口索引，才能关闭窗口
+                var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+            } else {
+                alert("登录失败！");
+            }
+        });
+
+    }
+</script>
+
