@@ -154,76 +154,24 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd>
-                                    <a href="/outStock/Index" target="main_self_frame">出货列表</a>
+                                    <a href="#" target="main_self_frame">请选择图书类型</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a href="/outStock/Create" target="main_self_frame">新增出货</a></dd>
+                                        <dd><a href="/Login/Show/?type='小说'" target="main_self_frame">小说</a></dd>
                                     </dl>
-                                </dd>
-                                <dd>
-                                    <a href="/outStock/AllTui" target="main_self_frame">出货退货列表</a>
                                     <dl class="layui-nav-child">
-                                        <dd><a href="/outStock/Tui" target="main_self_frame">新增销售退货单</a></dd>
+                                        <dd><a href="/Login/Show/?type='历史'" target="main_self_frame">历史</a></dd>
                                     </dl>
-                                </dd>
-                                <dd>
-                                    <a href="/outStock/Biao" target="main_self_frame">出货退货报表</a>
-                                </dd>
+                                    <dl class="layui-nav-child">
+                                        <dd><a href="/Login/Show/?type='文学'" target="main_self_frame">文学</a></dd>
+                                    </dl>
+                                    <dl class="layui-nav-child">
+                                        <dd><a href="/Login/Show/?type='天文'" target="main_self_frame">天文</a></dd>
+                                    </dl>
+                                </dd>                               
                             </dl>
                         </li>
-                        @*采购页面*@
-                        <li data-name="component" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="商品采购" lay-direction="2">
-                                <i class="layui-icon layui-icon-component"></i>
-                                <cite>商品采购</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd data-name="show">
-                                    <a href="/PurchaseInfo/Purchas" target="main_self_frame">采购列表</a>
-                                    <dl class="layui-nav-child">
-                                        <dd data-name="adds">
-                                            <a href="/PurchaseInfo/AddPurchas" target="main_self_frame">新增采购</a>
-                                        </dd>
-                                    </dl>
-                                    <dl class="layui-nav-child">
-                                        <dd data-name="adds">
-                                            <a href="/PurchaseInfo/BaoBiaoPurchas" target="main_self_frame">采购报表</a>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                                <dd data-name="backs">
-                                    <a href="/PurchaseInfo/ShowUpdatePurchas" target="main_self_frame">购货退货单</a>
-                                    <dl class="layui-nav-child">
-                                        <dd data-name="addback">
-                                            <a href="/PurchaseInfo/UpdatePurchas" target="main_self_frame">新增退货单</a>
-                                        </dd>
-                                    </dl>
-                                </dd>
-                            </dl>
-                        </li>
-                        @*出货页面*@
-                        <li data-name="template" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="出货" lay-direction="2">
-                                <i class="layui-icon layui-icon-template"></i>
-                                <cite>出货</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd>
-                                    <a href="/outStock/Index" target="main_self_frame">出货列表</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a href="/outStock/Create" target="main_self_frame">新增出货</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd>
-                                    <a href="/outStock/AllTui" target="main_self_frame">出货退货列表</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a href="/outStock/Tui" target="main_self_frame">新增销售退货单</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd>
-                                    <a href="/outStock/Biao" target="main_self_frame">出货退货报表</a>
-                                </dd>
-                            </dl>
-                        </li>
+                      
+                       
                         @*顾客后台*@
                         <li data-name="app" class="layui-nav-item layui-nav-itemed">
                             <a href="javascript:;" lay-tips="仓库" lay-direction="2">
@@ -245,28 +193,7 @@
 
                             </dl>
                         </li>
-                        @*资金页面*@
-                        <li data-name="senior" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" lay-tips="资金管理" lay-direction="2">
-                                <i class="layui-icon layui-icon-rmb"></i>
-                                <cite>资金管理</cite>
-                            </a>
-                            <dl class="layui-nav-child">
-                                <dd>
-                                    <a href="/Capital/Receipt" target="main_self_frame">收款单列表</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a href="/Capital/Add" target="main_self_frame">新增收款单</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd>
-                                    <a href="/Capital/PayMent" target="main_self_frame">付款单列表</a>
-                                    <dl class="layui-nav-child">
-                                        <dd><a href="/Capital/AddPayMent" target="main_self_frame">新增付款单</a></dd>
-                                    </dl>
-                                </dd>
-                                <dd><a href="/Capital/CapitalStatement" target="main_self_frame">资金报表</a></dd>
-                            </dl>
-                        </li>
+                       
                     </ul>
                 </div>
             </div>
