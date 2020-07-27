@@ -17,7 +17,6 @@ namespace DataAccess.DataDal
         public List<T> GetAll()
         {
             return db.Set<T>().ToList();
-
         }
         //添加数据
         public int Add(T t)
