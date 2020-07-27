@@ -47,6 +47,8 @@ namespace Commodity.Controllers
         {
             return View();
         }
+
+
         public IActionResult UpdReceipt()
         {
             return View();
