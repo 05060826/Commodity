@@ -46,7 +46,7 @@ namespace Commodity
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=AdminsInfo}/{action=AllShow}/{id?}");
             });
         }
     }
