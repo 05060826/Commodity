@@ -135,7 +135,7 @@ namespace CommodityApi.Controllers
 
         [Route("show")]
         [HttpGet]
-        public string Show(string type)
+        public string Show(string type,string actor, string bookname)
         {
             CommercedataContext context = new CommercedataContext();
 
@@ -147,13 +147,20 @@ namespace CommodityApi.Controllers
                         t in context.NextClassType on s.NclassId equals t.NclassId
                         join
                         fs in context.AuthorInfo on s.AuthorId equals fs.AuthorId
-                        select new { bookName = s.Title, actoreName = fs.Aname, chuBan = s.Publish, time =Convert.ToDateTime(s.PublishTime), price = s.Price, zhe = f.Discount,shangJia=f.SupplierId,bookBian=f.Isbn }).ToList();
+                        select new { bookName = s.Title, actoreName = fs.Aname, chuBan = s.Publish, time =Convert.ToDateTime(s.PublishTime), price = s.Price, zhe = f.Discount,shangJia=f.SupplierId,bookBian=f.Isbn,bookType=t.NclassName }).ToList();
 
             if (type != null)
             {
-                list.Where(s => s.actoreName.Equals(type)).ToList();
+                list=list.Where(s => s.bookType.Equals(type)).ToList();
             }
-           
+            if (actor != null)
+            {
+                list=list.Where(s => s.actoreName.Equals(actor)).ToList();
+            }
+            if (bookname != null)
+            {
+                list=list.Where(s => s.bookName.Equals(bookname)).ToList();
+            }
             string str = "";
             Dictionary<string, object> obje = new Dictionary<string, object>();
             obje.Add("data", list);
@@ -187,7 +194,6 @@ namespace CommodityApi.Controllers
             {
                 return 0;
             }
-
             context.OrderItems.Add(item);
             count = context.SaveChanges();
             

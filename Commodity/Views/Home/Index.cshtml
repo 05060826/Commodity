@@ -154,7 +154,7 @@
                             </a>
                             <dl class="layui-nav-child">
                                 <dd>
-                                    <a href="#" target="main_self_frame">请选择图书类型</a>
+                                    <a href="#">请选择图书类型</a>@*target="main_self_frame"*@
                                     <dl class="layui-nav-child">
                                         <dd><a href="/Login/Show/?type='小说'" target="main_self_frame">小说</a></dd>
                                     </dl>
@@ -225,7 +225,7 @@
             <!-- 主体内容 -->
             <div class="layui-body" id="LAY_app_body">
                 <div class="layadmin-tabsbody-item layui-show">
-                    <iframe name="main_self_frame" frameborder="0" class="layadmin-iframe" src="/Home/MaxZhu"></iframe>
+                    <iframe name="main_self_frame" frameborder="0" class="layadmin-iframe" src="/Login/Show"></iframe>
                 </div>
             </div>
             <!-- 辅助元素，一般用于移动设备下遮罩 -->
@@ -255,7 +255,7 @@
 
     </script>
     <script type="text/javascript">
-
+        
         $(function () {
 
             $('#btn,#btns').on('click', function () {
