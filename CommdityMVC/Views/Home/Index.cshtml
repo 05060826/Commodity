@@ -30,94 +30,6 @@
     <input hidden id="Quan" />
     <input hidden id="TrueName" />
 
-    @*注册弹窗*@
-
-    <div style="padding: 300px 200px 200px 600px;">
-        <div id="Onepopup" style="display:none">
-
-            <form class="layui-form" action="">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">客户名称：</label>
-                    <div class="layui-input-block">
-                        <input type="text" id="AccountName" name="title" lay-verify="title" autocomplete="off" placeholder="请输入客户名称" class="layui-input" style="width:400px">
-                    </div>
-                </div>
-                <div class="layui-form-item" pane="">
-                    <label class="layui-form-label">是否为会员</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" checked="" name="open" lay-skin="switch" lay-filter="switchTest" title="开关">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">验证必填项</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="username" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" placeholder="请输入" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">验证手机</label>
-                        <div class="layui-input-inline">
-                            <input type="tel" name="phone" lay-verify="required|phone" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">验证邮箱</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="email" lay-verify="email" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">多规则验证</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="number" lay-verify="required|number" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">验证日期</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="date" id="date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">验证链接</label>
-                        <div class="layui-input-inline">
-                            <input type="tel" name="url" lay-verify="url" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="layui-form-item">
-                    <label class="layui-form-label">验证身份证</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="identity" lay-verify="identity" placeholder="" autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">自定义验证</label>
-                    <div class="layui-input-inline">
-                        <input type="password" name="password" lay-verify="pass" placeholder="请输入密码" autocomplete="off" class="layui-input">
-                    </div>
-                    <div class="layui-form-mid layui-word-aux">请填写6到12位密码</div>
-                </div>
-            </form>
-        </div>
-        <div id="Twopopup" style="display:none">
-            <input type="button" value="2" />
-
-        </div>
-        <div id="Threepopup" style="display:none">
-            <input type="button" value="3" />
-
-        </div>
-
-    </div>
-
 
     <div id="LAY_app">
         <div class="layui-layout layui-layout-admin">
@@ -199,7 +111,7 @@
                         <!--登录页面-->
                         @*前台操作*@
                         <li data-name="home" class="layui-nav-item layui-nav-itemed">
-                            <a href="javascript:;" target="main_self_frame" lay-tips="主页" lay-direction="2">
+                            <a href="/Login/Show" target="main_self_frame" lay-tips="主页" lay-direction="2">
                                 <i class="layui-icon layui-icon-home"></i>
                                 <cite>主页</cite>
                             </a>
