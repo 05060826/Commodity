@@ -1,0 +1,122 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AuthorInfoAdd</title>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td>作者代号</td>
+                <td><input id="TextAId" type="text" value="@ViewBag.aid" /></td>
+            </tr>
+            <tr>
+                <td>作者名称</td>
+                <td><input id="TextAName" type="text"  /></td>
+            </tr>
+            <tr>
+                <td>作者年龄</td>
+                <td><input id="TextAge" type="text"  /></td>
+            </tr>
+            <tr>
+                <td>作者性别</td>
+                <td><input id="TextSex" type="text"  /></td>
+            </tr>
+            <tr>
+                <td>作者国家</td>
+                <td><input id="TextNation" type="text"  /></td>
+            </tr>
+            <tr>
+                <td>作者介绍</td>
+                <td><input id="TextTake" type="text"  /></td>
+            </tr>
+            <tr>
+                <td>作者图书销售量</td>
+                <td><input id="TextSelNum" type="text"  /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input id="Button1" type="button" value="保存" onclick="btnadd()" /></td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>
+<script>
+
+    function btnadd()
+    {
+        //作者代号
+        var aId = $("#TextAId").val();
+        //作者名称
+        var aname = $("#TextAName").val();
+        //作者年龄
+        var sauthoAge = $("#TextAge").val();
+        //作者性别
+        var authoSex = $("#TextSex").val();
+        //作者国家
+        var authnation = $("#TextNation").val();
+        //作者介绍
+                     
+        var authdeson = $("#TextTake").val();
+        //作者图书销售量
+
+        var saleNum = $("#TextSelNum").val();
+
+
+        // public string AuthorId { get; set; }
+        //public string Aname { get; set; }
+        //public int ? Age { get; set; }
+        //public string Sex { get; set; }
+        //public string Nation { get; set; }
+        //public string Introduction { get; set; }
+        //public int ? AllSaledNum { get; set; }
+        var obj = {};
+        obj.AuthorId = aId;
+        obj.Aname = aname;
+        obj.Age = sauthoAge;
+        obj.Sex = authoSex;
+        obj.Nation = authnation;
+        obj.Introduction = authdeson;
+        obj.AllSaledNum = saleNum;
+       
+
+        $.ajax({
+
+            url: "http://localhost:54063/api/AdminControl/AddAuthorInfo?obj=" + JSON.stringify(obj),
+            type: "post",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+
+                if (data > 0) {
+                    alert("添加成功");
+                    location.href = "/AdminsInfo/BookShow";
+
+                }
+                else {
+                    alert("添加失败");
+                }
+            }
+        })
+
+
+
+
+
+    }
+
+
+
+
+
+
+</script>

@@ -103,8 +103,9 @@ namespace Commodity.Controllers
         /// 供应商信息修改
         /// </summary>
         /// <returns></returns>
-        public IActionResult SupplierUpdate()
+        public IActionResult SupplierUpdate(string supplierId)
         {
+            ViewBag.supplierId = supplierId;
             return View();
         }
 
@@ -132,6 +133,41 @@ namespace Commodity.Controllers
         /// </summary>
         /// <returns></returns>
         public IActionResult ClientUpdate()
+        {
+            return View();
+        }
+
+
+
+
+
+
+        //--------------------------------------------------------------------------
+
+
+        /// <summary>
+        /// 作者信息列表管理
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult AuthorInfoShow()
+        {
+            return View();
+        }
+        /// <summary>
+        /// 添加作者信息
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult AuthorInfoAdd(string authoId)
+        {
+            ViewBag.aid = authoId;
+
+            return View();
+        }
+        /// <summary>
+        /// 作者信息修改
+        /// </summary>
+        /// <returns></returns>
+        public IActionResult AuthorInfoUpdate()
         {
             return View();
         }
