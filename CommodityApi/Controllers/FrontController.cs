@@ -52,7 +52,7 @@ namespace CommodityApi.Controllers
                     keys.Add("TouMoney", client[0].AccountPwd);
                     keys.Add("AccountId", client[0].AccountId);
 
-                    jiami = jwtHeader.GetToken(keys, 3000000);
+                    jiami = jwtHeader.GetToken(keys, 600000);
                     ret.AccountName = login.AccountName;
                     ret.AccountPwd = login.AccountPwd;
                     ret.Quan = "顾客";
@@ -81,7 +81,7 @@ namespace CommodityApi.Controllers
                     keys.Add("SupplierPwd", supplier[0].SupplierPwd);
                     keys.Add("SuppLierID", supplier[0].SuppLierId);
 
-                    jiami = jwtHeader.GetToken(keys, 3000000);
+                    jiami = jwtHeader.GetToken(keys, 600000);
                     ret.AccountName = login.AccountName;
                     ret.AccountPwd = login.AccountPwd;
                     ret.Quan = "供应商";
@@ -91,7 +91,7 @@ namespace CommodityApi.Controllers
                 }
                 return ret;
             }
-            if (login.Table == "Administrator")
+            if (login.Table == "ManageInfo")
             {
                 Administrator = context.ManageInfo.ToList();
                 if (!string.IsNullOrEmpty(login.AccountName))
@@ -103,14 +103,14 @@ namespace CommodityApi.Controllers
                 {
                     Administrator = Administrator.Where(s => s.ManagerPwd.Equals(login.AccountPwd.Trim())).ToList();
                 }
-                if (supplier.Count == 1)
+                if (Administrator.Count == 1)
                 {
                     Dictionary<string, object> keys = new Dictionary<string, object>();
                     keys.Add("ManagerUserName", Administrator[0].ManagerUserName);
                     keys.Add("ManagerPwd", Administrator[0].ManagerPwd);
                     keys.Add("ManageId", Administrator[0].ManageId);
 
-                    jiami = jwtHeader.GetToken(keys, 3000000);
+                    jiami = jwtHeader.GetToken(keys, 600000);
                     ret.AccountName = login.AccountName;
                     ret.AccountPwd = login.AccountPwd;
                     ret.Quan = "管理员";
@@ -124,14 +124,7 @@ namespace CommodityApi.Controllers
                 return ret;
             }
 
-            //BankInfo bank = new BankInfo();
-            //bank.BankCardMoney = 2;
-            //bank.BankCardNum = "2";
-            //bank.BankPwd = "2";
-            //List<BankInfo> bb = context.BankInfo.ToList();
-
-            //context.BankInfo.Add(bank);
-            //context.SaveChanges();
+         
         }
 
         [Route("show")]
