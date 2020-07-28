@@ -10,7 +10,7 @@
     <script src="~/lib/jquery/dist/jquery.js"></script>
 </head>
 <body>
-    <div id="reply">
+    <div id="reply" >
 
     </div>
 </body>
@@ -31,9 +31,9 @@
                 var zz = "";
                 $.each(result, function (i, n) {
                     $.each(n.ReplyA, function(x,y) {
-                        zz +="<div>"+y+"</br></div>";
+                        zz +="<div style='margin-top:10px'>"+y+"</br></div>";
                     })
-                    str += "<div style='background-color:skyblue' ><div>"+n.Isbn+"</div>"+zz+"</div>";
+                    str += "<div  style='background-color:skyblue' style='margin-top:20px'><div>"+n.Isbn+"</div>"+zz+"</div>";
                 })
                 $("#reply").append(str);
             }
