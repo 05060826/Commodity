@@ -13,10 +13,19 @@ namespace Commodity.Controllers
         {
             return View();
         }
-        public IActionResult ZhuCe()
+        public IActionResult ZhuCeGu()
         {
             return View();
         }
+        public IActionResult ZhuCeGong()
+        {
+            return View();
+        }
+        public IActionResult ZhuCeGuan()
+        {
+            return View();
+        }
+
         public IActionResult Login()
         {
             return View();

@@ -201,7 +201,28 @@ namespace CommodityApi.Controllers
 
         }
 
+        [HttpGet]
+        [Route("addGu")]
+        public int AddGu(string gu)
+        {
 
+            int count = 0;
+            CommercedataContext context = new CommercedataContext();
+            OrderItems item = new OrderItems();
+
+            List<Customer> list = context.Customer.ToList();
+
+            //list = list.Where(s => s.OrderitemId.Equals(addOrder.OrderitemId) && s.OrderId.Equals(addOrder.OrderId)).ToList();
+            if (list.Count != 0)
+            {
+                return 0;
+            }
+            context.OrderItems.Add(item);
+            count = context.SaveChanges();
+
+            return count;
+
+        }
 
     }
 }
