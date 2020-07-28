@@ -16,12 +16,14 @@ namespace Commodity.Controllers
         {
             return View();
         }
-        public IActionResult ADD()
+        //结算
+        public IActionResult ADD(string rid)
         {
+            ViewBag.rid = rid;
             return View();
         }
-        //结算
-        public IActionResult Account(int rid)
+        //结算2
+        public IActionResult Account(string rid)
         {
             ViewBag.rid = rid;
             return View();
@@ -47,6 +49,8 @@ namespace Commodity.Controllers
         {
             return View();
         }
+
+
         public IActionResult UpdReceipt()
         {
             return View();

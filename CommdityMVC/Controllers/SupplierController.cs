@@ -43,8 +43,11 @@ namespace Commodity.Controllers
             return View();
         }
 
-
-
+        //评价
+        public IActionResult ReplyAll()
+        {
+            return View();
+        }
 
         //查看我的信息
         public IActionResult UserOrder()
