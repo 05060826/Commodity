@@ -31,8 +31,8 @@
             <tr>
                 <td>书名：</td>
                 <td><input id="TextBookName" type="text" /></td>
-                <td>作者名称：</td>
-                <td><input id="TextAuthor" type="text" /></td>
+                <td>作者名称代号：</td>
+                <td><input id="TextAuthor" type="text" /><input id="Button1" type="button" value="添加作者" onclick="addauthor()"/></td>
             </tr>
             <tr>
                 <td>出版社：</td>
@@ -53,22 +53,24 @@
                 <td><input id="TextPrice" type="text" /></td>
             </tr>
             <tr>
+                <td>销售量：</td>
+                <td><input id="Textselnum" type="text" /></td>
                 <td>图片：</td>
                 <td>
                     <div style="position: relative;">
                         <input id="User_Photo" style="position: absolute; top: 0; bottom: 0; left: 0;right: 0; opacity: 0;" type="file" accept="image/gif, image/jpg, image/png" onchange="showImg(this)" />
                         <div style="text-align:right">
-                            <img id="upload" src="/wwwroot/img/0.jpg" style="width: 80px; height: 80px; vertical-align: middle;" />
+                            <img id="upload" src="/wwwroot/Image/0.png" style="width: 80px; height: 80px; vertical-align: middle;" />
                         </div>
                     </div>
                 </td>
-                <td colspan="2">
-                         
-                
+
+
+
             </tr>
             <tr>
                 <td>简介：</td>
-                <td colspan="4"></td>
+                <td colspan="4"><textarea id="TextJie" rows="2" cols="20"></textarea></td>
             </tr>
             <tr>
                 <td><input id="Button1" class="btn btn-warning btn-sm" type="button" value="提交" onclick="save()" /></td>
@@ -92,20 +94,126 @@
 
     })
 
-
-    //添加
-    function save()
+    function addauthor()
     {
+        var authoId = $("#TextAuthor").val();
 
-
-
+       // location.href = "AdminsInfo/AuthorInfoAdd?authoId=" + authoId;
+        location.href = "/AdminsInfo/AuthorInfoAdd?authoId=" + authoId;
+        
 
 
 
 
     }
-    
 
+
+
+
+
+
+
+    //添加
+    function save()
+    {
+        var fileUpload = $("#User_Photo").get(0);
+        var file = fileUpload.files[0];
+        var data = new FormData();
+        data.append(file.name, file);
+
+
+        //图书类别
+        var booktype = $("#bookType").val();
+        //图书ISBN
+        var bookisbn = $("#TextISBN").val();
+        //书名
+        var bookname = $("#TextBookName").val();
+        //作者名称
+        var authorname = $("#TextAuthor").val();
+        //出版社
+        var bookchu = $("#TextShe").val();
+        //出版时间
+        var booktime = $("#TextTime").val();
+        //版次
+        var bookci = $("#TextCI").val();
+        //页数
+        var bookpage = $("#TextPage").val();
+        //国家
+        var nation = $("#TextNation").val();
+        //定价
+        var dprice = $("#TextPrice").val();
+        //简介
+        var taxt = $("#TextJie").val();
+        //销售量
+        var selnum = $("#Textselnum").val();
+
+        // public string Isbn { get; set; }
+        //public string AuthorId { get; set; }
+
+        
+        //public string NclassId { get; set; }
+         
+        //public string Title { get; set; }
+        //public string Publish { get; set; }
+        //public DateTime ? PublishTime { get; set; }
+        //public int ? Revision { get; set; }
+        //public int ? Page { get; set; }
+        //public double ? Price { get; set; }
+        //public string Image { get; set; }
+        //public string Introduction { get; set; }
+        //public string Country { get; set; }
+        //public int ? SaledNum { get; set; }
+
+        var obj = {};
+        obj.NclassId = booktype;
+        obj.Isbn = bookisbn;
+        obj.Title = bookname;
+        obj.Publish = bookchu;
+        obj.PublishTime = booktime;
+        obj.Revision = bookci;
+        obj.AuthorId = authorname;
+        obj.Page = bookpage;
+        obj.Price = dprice;
+        obj.Introduction = taxt;
+        obj.Country = nation;
+        obj.SaledNum = selnum;
+
+        $.ajax({
+
+            url: "http://localhost:54063/api/AdminControl/AddBookInfo?obj=" + JSON.stringify(obj),
+            type: "post",
+            data: data,
+            dataType: "json",
+            contentType: false,
+            processData: false,
+            success: function (data) {
+
+                if (data > 0) {
+                    alert("添加成功，请添加作者信息");
+                   // location.href = "/AdminsInfo/BookShow";
+
+                }
+                else {
+                    alert("添加失败");
+                }
+            }
+        })
+
+
+
+    }
+
+    function showImg(input)
+    {
+        var file = input.files[0];
+        var reader = new FileReader()
+        // 图片读取成功回调函数
+        reader.onload = function (e) {
+            document.getElementById('upload').src = e.target.result
+        }
+        reader.readAsDataURL(file)
+
+    }
 
 
 

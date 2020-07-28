@@ -9,6 +9,9 @@ using DataAccess.DataModels;
 using CommodityApi.ModelsInfo;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Logging;
+using System.IO;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
 
 namespace CommodityApi.Controllers
 {
@@ -18,7 +21,14 @@ namespace CommodityApi.Controllers
     public class AdminControlController : ControllerBase
     {
 
-        AllCountrol dal = new AllCountrol();
+       AllCountrol dal = new AllCountrol();
+
+        private IWebHostEnvironment _hostEnvironment;
+        public AdminControlController(IWebHostEnvironment hostEnvironment)
+        {
+            
+            _hostEnvironment = hostEnvironment;
+        }
 
         [HttpGet]
         /// <summary>
@@ -43,8 +53,7 @@ namespace CommodityApi.Controllers
                            select new BooksInfoAll
                            {
                                Isbn=b.Isbn,
-                            
-                               Aname=a.Aname,
+                               Aname = a.Aname,
                                NclassId=t.NclassId,
                                NclassName =t.NclassName,
                                Title=b.Title,
@@ -163,18 +172,63 @@ namespace CommodityApi.Controllers
         /// 添加新的图书信息
         /// </summary>
         /// <returns></returns>
-        public int AddBookInfo(BookInfo mode)
+        public int AddBookInfo(string obj)
+        {
+            BookInfo b = JsonConvert.DeserializeObject<BookInfo>(obj);
+            var s = b.Image;
+            if (Request.Form.Files.Count > 0)
+            {
+                //获取物理路径 webtootpath
+                string path = _hostEnvironment.ContentRootPath + "\\wwwroot\\Image";
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+                var file = Request.Form.Files[0];
+                string fileExt = file.FileName.Split('.')[file.FileName.Split('.').Length - 1];
+                string filename = Guid.NewGuid().ToString() + "." + fileExt;
+                string fileFullName = path + "\\" + filename;
+                using (FileStream fs = System.IO.File.Create(fileFullName))
+                {
+                    file.CopyTo(fs);
+                    fs.Flush();
+                }
+                b.Image = "/img/" + filename;
+            }
+
+            return dal.AddBookInfo(b);
+
+        }
+
+
+        [HttpPost]
+        /// <summary>
+        /// 删除图书信息
+        /// </summary>
+        /// <returns></returns>
+
+        public int DeleteBook(string isbn)
         {
 
+            var listbook =dal.GetAllInfo();
 
-            return dal.AddBookInfo(mode);
+
+            BookInfo mode = listbook.Where(m => m.Isbn.Contains(isbn)).FirstOrDefault();
+
+            return dal.DeleteBookInfo(mode);
+
+
+
+
+
 
         }
 
 
 
-        //-------------------------------------------------------------------------------------------------------------------
 
+        //-------------------------------------------------------------------------------------------------------------------
+        [HttpGet]
         /// <summary>
         /// 显示作者信息详情
         /// </summary>
@@ -185,25 +239,59 @@ namespace CommodityApi.Controllers
 
             return list;
         }
-
+        [HttpPost]
         /// <summary>
         /// 作者信息添加
         /// </summary>
         /// <param name="mode"></param>
         /// <returns></returns>
-        public int AddAuthorInfo(AuthorInfo mode)
+        public int AddAuthorInfo(string obj)
         {
+            AuthorInfo mode = JsonConvert.DeserializeObject<AuthorInfo>(obj);
+
 
             return dal.AddAuthorInfo(mode);
 
 
         }
+       
 
+        [HttpGet]
+        /// <summary>
+        /// 显示作者信息列表
+        /// </summary>
+        /// <returns></returns>
+        
+        
+        public List<AuthorBook> GetAuthorInfo()
+        {
+            var booklist = dal.GetAllInfo().ToList();
+            var authorlist = dal.GetAllAuthorInfo().ToList();
 
+            var list = (from s in booklist
+                        join a in authorlist on s.AuthorId equals a.AuthorId
+                        select new AuthorBook
+                        {
+                            AuthorId=a.AuthorId,
+                            Aname=a.Aname,
+                            Age=a.Age,
+                            Sex=a.Sex,
+                            Nation=a.Nation,
+                            Introduction=a.Introduction,
+                            AllSaledNum=a.AllSaledNum,
+                            Isbn=s.Isbn,
+                            Title=s.Title,
+
+                        }).ToList();
+            return list;
+        
+        
+        
+        }
 
 
         /// <summary>
-        /// ---------------------------------------------------------------------------------------------------------------
+        ///图书类别 ---------------------------------------------------------------------------------------------------------------
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -278,7 +366,7 @@ namespace CommodityApi.Controllers
         }
 
 
-
+        [HttpPost]
         /// <summary>
         /// 删除图书分类
         /// </summary>
@@ -294,6 +382,78 @@ namespace CommodityApi.Controllers
 
 
 
+        //---------------------------------------------------------------------------------------------------------
+
+
+
+        [HttpGet]
+        /// <summary>
+        /// 显示注册商家信息
+        /// </summary>
+        /// <returns></returns>
+        public List<UserRoderInfo> AllRoderInfo()
+        {
+
+            var list= dal.AllRoderInfo();
+
+            return list;
+                
+        }
+        [HttpGet]
+        /// <summary>
+        /// 修改商家权限
+        /// </summary>
+        /// <returns></returns>
+        public int ModifySupplier(string suppliserid)
+        {
+
+            var listsupplier = dal.AllRoderInfo().ToList();
+
+            UserRoderInfo mode = listsupplier.Where(m => m.SuppLierId.Contains(suppliserid)).FirstOrDefault();
+
+            if (mode.AllSaledAccount >= 1000 && mode.AllSaledAccount <= 2000)
+            {
+                mode.QuanTity = 40;
+                mode.SuoolierType = "会员商家";
+            }
+            else if (mode.AllSaledAccount < 1000)
+            {
+                mode.QuanTity = 20;
+                mode.SuoolierType = "普通商家";
+            }
+            else
+            {
+                mode.QuanTity = 60;
+                mode.SuoolierType = "超级商家";
+
+
+            }
+
+
+            return dal.ModifyRoderInfo(mode);
+        
+        
+        }
+
+
+
+
+
+
+        [HttpGet]
+
+        /// <summary>
+        /// 显示顾客信息
+        /// </summary>
+        /// <returns></returns>
+        public List<Customer> ShowCustor()
+        {
+
+
+            var listcu = dal.ShowCustor();
+
+            return listcu;
+        }
 
     }
 }

@@ -17,7 +17,18 @@
     <div>
 
         <input id="Button1" type="button" value="添加图书分类" onclick="addtype()" />
-        <table>
+        <table class="container;tab table-bordered" style="margin-top:10px">
+            <thead>
+                <tr>
+                    <td>图书分类编号</td>
+                    <td>图书分类名称</td>
+                    <td></td>
+                </tr>
+            </thead>
+            <tbody id="tabA">
+            </tbody>
+        </table>
+        <table class="container;tab table-bordered">
             <thead>
                 <tr>
                     <td>图书次级分类Id</td>
@@ -30,16 +41,7 @@
         </table>
 
 
-        <table>
-            <thead>
-                <tr>
-                    <td>图书分类编号</td>
-                    <td>图书分类名称</td>
-                </tr>
-            </thead>
-            <tbody id="tabA">
-            </tbody>
-        </table>
+
     </div>
 
 
