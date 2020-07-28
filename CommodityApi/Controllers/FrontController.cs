@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DataAccess.DataDal;
 using DataAccess.DataModels;
 using DataAccess.Login;
+using java.sql;
 using JWT.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -201,28 +202,75 @@ namespace CommodityApi.Controllers
 
         }
 
-        [HttpGet]
+        //添加顾客
+        [HttpPost]
         [Route("addGu")]
-        public int AddGu(string gu)
+        public int AddGu(Customer customer)
         {
 
             int count = 0;
             CommercedataContext context = new CommercedataContext();
-            OrderItems item = new OrderItems();
-
+            
+            customer.UserReddate = DateTime.Now;
             List<Customer> list = context.Customer.ToList();
 
-            //list = list.Where(s => s.OrderitemId.Equals(addOrder.OrderitemId) && s.OrderId.Equals(addOrder.OrderId)).ToList();
+            list = list.Where(s => s.AccountId.Equals(customer.AccountId)).ToList();
             if (list.Count != 0)
             {
                 return 0;
             }
-            context.OrderItems.Add(item);
+            context.Customer.Add(customer);
             count = context.SaveChanges();
 
             return count;
 
         }
 
+        //添加供应商
+        [HttpPost]
+        [Route("addGong")]
+        public int AddGong(UserRoderInfo userRoder)
+        {
+
+            int count = 0;
+            CommercedataContext context = new CommercedataContext();
+
+            userRoder.RegDate = DateTime.Now;
+            List<UserRoderInfo> list = context.UserRoderInfo.ToList();
+
+            list = list.Where(s => s.SuppLierId.Equals(userRoder.SuppLierId)).ToList();
+            if (list.Count != 0)
+            {
+                return 0;
+            }
+            context.UserRoderInfo.Add(userRoder);
+            count = context.SaveChanges();
+
+            return count;
+
+        }
+
+        //添加管理员
+        [HttpPost]
+        [Route("addGuan")]
+        public int AddGuan(ManageInfo manageInfo)
+        {
+
+            int count = 0;
+            CommercedataContext context = new CommercedataContext();
+
+            List<ManageInfo> list = context.ManageInfo.ToList();
+
+            list = list.Where(s => s.ManageId.Equals(manageInfo.ManageId)).ToList();
+            if (list.Count != 0)
+            {
+                return 0;
+            }
+            context.ManageInfo.Add(manageInfo);
+            count = context.SaveChanges();
+
+            return count;
+
+        }
     }
 }
