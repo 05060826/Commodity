@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DataAccess.DataDal;
 using DataAccess.DataModels;
 using DataAccess.Login;
+using java.sql;
 using JWT.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -135,7 +136,7 @@ namespace CommodityApi.Controllers
 
         [Route("show")]
         [HttpGet]
-        public string Show(string type)
+        public string Show(string type,string actor, string bookname)
         {
             CommercedataContext context = new CommercedataContext();
 
@@ -147,13 +148,20 @@ namespace CommodityApi.Controllers
                         t in context.NextClassType on s.NclassId equals t.NclassId
                         join
                         fs in context.AuthorInfo on s.AuthorId equals fs.AuthorId
-                        select new { bookName = s.Title, actoreName = fs.Aname, chuBan = s.Publish, time =Convert.ToDateTime(s.PublishTime), price = s.Price, zhe = f.Discount,shangJia=f.SupplierId,bookBian=f.Isbn }).ToList();
+                        select new { bookName = s.Title, actoreName = fs.Aname, chuBan = s.Publish, time =Convert.ToDateTime(s.PublishTime), price = s.Price, zhe = f.Discount,shangJia=f.SupplierId,bookBian=f.Isbn,bookType=t.NclassName }).ToList();
 
             if (type != null)
             {
-                list.Where(s => s.actoreName.Equals(type)).ToList();
+                list=list.Where(s => s.bookType.Equals(type)).ToList();
             }
-           
+            if (actor != null)
+            {
+                list=list.Where(s => s.actoreName.Equals(actor)).ToList();
+            }
+            if (bookname != null)
+            {
+                list=list.Where(s => s.bookName.Equals(bookname)).ToList();
+            }
             string str = "";
             Dictionary<string, object> obje = new Dictionary<string, object>();
             obje.Add("data", list);
@@ -187,7 +195,6 @@ namespace CommodityApi.Controllers
             {
                 return 0;
             }
-
             context.OrderItems.Add(item);
             count = context.SaveChanges();
             
@@ -195,7 +202,75 @@ namespace CommodityApi.Controllers
 
         }
 
+        //添加顾客
+        [HttpPost]
+        [Route("addGu")]
+        public int AddGu(Customer customer)
+        {
 
+            int count = 0;
+            CommercedataContext context = new CommercedataContext();
+            
+            customer.UserReddate = DateTime.Now;
+            List<Customer> list = context.Customer.ToList();
 
+            list = list.Where(s => s.AccountId.Equals(customer.AccountId)).ToList();
+            if (list.Count != 0)
+            {
+                return 0;
+            }
+            context.Customer.Add(customer);
+            count = context.SaveChanges();
+
+            return count;
+
+        }
+
+        //添加供应商
+        [HttpPost]
+        [Route("addGong")]
+        public int AddGong(UserRoderInfo userRoder)
+        {
+
+            int count = 0;
+            CommercedataContext context = new CommercedataContext();
+
+            userRoder.RegDate = DateTime.Now;
+            List<UserRoderInfo> list = context.UserRoderInfo.ToList();
+
+            list = list.Where(s => s.SuppLierId.Equals(userRoder.SuppLierId)).ToList();
+            if (list.Count != 0)
+            {
+                return 0;
+            }
+            context.UserRoderInfo.Add(userRoder);
+            count = context.SaveChanges();
+
+            return count;
+
+        }
+
+        //添加管理员
+        [HttpPost]
+        [Route("addGuan")]
+        public int AddGuan(ManageInfo manageInfo)
+        {
+
+            int count = 0;
+            CommercedataContext context = new CommercedataContext();
+
+            List<ManageInfo> list = context.ManageInfo.ToList();
+
+            list = list.Where(s => s.ManageId.Equals(manageInfo.ManageId)).ToList();
+            if (list.Count != 0)
+            {
+                return 0;
+            }
+            context.ManageInfo.Add(manageInfo);
+            count = context.SaveChanges();
+
+            return count;
+
+        }
     }
 }

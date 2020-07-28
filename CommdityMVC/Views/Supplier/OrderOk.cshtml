@@ -15,48 +15,48 @@
 </head>
 <body>
     @*<div class="layui-collapse" lay-accordion="">
-        <div class="layui-colla-item">
-            <h2 class="layui-colla-title">查询</h2>
-            <div class="layui-colla-content layui-show">
-                <div class="layui-input-inline">
-                    <label>作者</label>
-                </div>
-                <div class="layui-input-inline">
-                    <input type="text" id="AuthorName" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-input-inline">
-                    <label>书名</label>
-                </div>
-                <div class="layui-input-inline">
-                    <input type="text" id="Title" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-input-inline">
-                    <label>出版社</label>
-                </div>
-                <div class="layui-input-inline">
-                    <input type="text" id="Pubish" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-input-inline">
-                    <label>分类</label>
-                </div>
-                <div class="layui-input-inline">
-                    <select id="Type" class="layui-form-select"></select>
-                </div>
-                <div class="layui-inline" style="width:100px;float:right">
-                    <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnSelect">查询</button>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">查询</h2>
+                <div class="layui-colla-content layui-show">
+                    <div class="layui-input-inline">
+                        <label>作者</label>
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" id="AuthorName" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline">
+                        <label>书名</label>
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" id="Title" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline">
+                        <label>出版社</label>
+                    </div>
+                    <div class="layui-input-inline">
+                        <input type="text" id="Pubish" required lay-verify="required" placeholder="" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-input-inline">
+                        <label>分类</label>
+                    </div>
+                    <div class="layui-input-inline">
+                        <select id="Type" class="layui-form-select"></select>
+                    </div>
+                    <div class="layui-inline" style="width:100px;float:right">
+                        <button class="layui-btn" lay-submit lay-filter="formDemo" id="btnSelect">查询</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
     <div>
         <div class="w" id="shopping">
             <div class="cart-warp">
                 <!-- 头部全选模块 -->
                 <div class="cart-thead">
                     @*<div class="t-checkbox">
-                        <input type="checkbox" name="" id="" class="checkall"> 全选
+                            <input type="checkbox" name="" id="" class="checkall"> 全选
 
-                    </div>*@
+                        </div>*@
                     <div class="t-goods">商品</div>
                     <div class="t-price">单价</div>
                     <div class="t-num">数量</div>
@@ -65,62 +65,73 @@
 
                 </div>
 
-                 @*商品详细模块 
-                <div class="cart-item-list">
-                    <div class="cart-item check-cart-item">
-                        <div class="p-checkbox">
-                            <input type="checkbox" name="" id="" checked class="j-checkbox">
-
-                        </div>
-                        <div class="p-goods">
-                            <div class="p-img">
-                                <img src="img/p1.jpg" alt="">
+                @*商品详细模块
+                    <div class="cart-item-list">
+                        <div class="cart-item check-cart-item">
+                            <div class="p-checkbox">
+                                <input type="checkbox" name="" id="" checked class="j-checkbox">
 
                             </div>
-                            <div class="p-msg">【5本26.8元】经典儿童文学彩图青少版八十天环游地球中学生语文教学大纲</div>
+                            <div class="p-goods">
+                                <div class="p-img">
+                                    <img src="img/p1.jpg" alt="">
 
-                        </div>
-                        <div class="p-price">￥12.60</div>
-                        <div class="p-num">
-                            <div class="quantity-form">
-                                <a href="javascript:;" class="decrement">-</a>
-                                <input type="text" class="itxt" value="1">
-                                <a href="javascript:;" class="increment">+</a>
+                                </div>
+                                <div class="p-msg">【5本26.8元】经典儿童文学彩图青少版八十天环游地球中学生语文教学大纲</div>
 
                             </div>
+                            <div class="p-price">￥12.60</div>
+                            <div class="p-num">
+                                <div class="quantity-form">
+                                    <a href="javascript:;" class="decrement">-</a>
+                                    <input type="text" class="itxt" value="1">
+                                    <a href="javascript:;" class="increment">+</a>
+
+                                </div>
+
+                            </div>
+                            <div class="p-sum">￥12.60</div>
+                            <div class="p-action"><a href="javascript:;">删除</a></div>
 
                         </div>
-                        <div class="p-sum">￥12.60</div>
-                        <div class="p-action"><a href="javascript:;">删除</a></div>
-
-                    </div>
-                </div>*@
+                    </div>*@
                 <!-- 结算模块 -->
                 @*<div class="cart-floatbar">
-                    <div class="select-all">
-                        <input type="checkbox" name="" id="" class="checkall">全选
+                        <div class="select-all">
+                            <input type="checkbox" name="" id="" class="checkall">全选
 
-                    </div>
-                    <div class="operation">
-                        <a href="javascript:;" class="remove-batch"> 删除选中的商品</a>
-                        <a href="javascript:;" class="clear-all">清理购物车</a>
+                        </div>
+                        <div class="operation">
+                            <a href="javascript:;" class="remove-batch"> 删除选中的商品</a>
+                            <a href="javascript:;" class="clear-all">清理购物车</a>
 
-                    </div>
-                    <div class="toolbar-right">
-                        <div class="amount-sum">已经选<em>1</em>件商品</div>
-                        <div class="price-sum">总价： <em>￥12.60</em></div>
-                        <div class="btn-area">去结算</div>
+                        </div>
+                        <div class="toolbar-right">
+                            <div class="amount-sum">已经选<em>1</em>件商品</div>
+                            <div class="price-sum">总价： <em>￥12.60</em></div>
+                            <div class="btn-area">去结算</div>
 
-                    </div>
+                        </div>
 
-                </div>*@  <!-- cart-floatbar end -->
+                    </div>*@  <!-- cart-floatbar end -->
 
             </div>  <!-- cart-warp end -->
 
         </div>  <!-- w end -->
 
     </div>
+    @*<div style="text-align:center" class="border-white : 5000px">
+            <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('first')">首页</button>
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('prv')"><i class="layui-icon"></i></button>
+            当前第<label id="pageindex">1</label>页
+            /每页<label id="pagesize">10</label>条/总共<label id="totalCount"></label>条
 
+
+            <button type="button" class="layui-btn layui-btn-xs layui-btn-normal" onclick="showpage('next')"><i class="layui-icon"></i></button>
+            <button type="button" class="layui-btn layui-btn-radius layui-btn-xs layui-btn-normal" onclick="showpage('last')">尾页</button>
+
+
+        </div>*@
 </body>
 </html>
 
@@ -165,7 +176,7 @@
                         //+'</div>'
                         +'<div class="p-goods">'
                         +'<div class="p-img">'
-                        +'<img src="" alt="">'
+                        +'<img style="height:80px;width:100px;" src="/Picture/1.jpg" alt="">'
                         + '</div>'
                         + '<div class="p-msg">' + n.BookName + '</div>'
                         +'</div>'
@@ -185,6 +196,47 @@
         })
     }
 
+    //function showpage(name) {
+    //    //当前第几页
+    //    var currentPageNo = Number($("#pageindex").text());
+    //    var pageSize = 10;
+    //    //每页多少条
+    //    //var size = Number($("#pagesize").text());
+    //    ////总条数
+    //    //var tatal = Number($("#totalCount").text());
+    //    //总页数
+    //    var pagetatal = Number($("#totalPage").text());
+    //    switch (name) {
+    //        case 'first':
+    //            index = 1
+    //            break;
+    //        case 'prv':
+    //            if (index > 1) {
+    //                index--;
+    //            }
+    //            else {
+    //                $("#pageindex").text(1);
+    //            }
+    //            break;
+    //        case 'next':
+    //            if (index < pagetatal) {
+    //                index++;
+    //            }
+    //            else {
+
+    //                $("#pageindex").text(pagetatal);
+    //            }
+    //            break;
+    //        case 'last':
+    //            index = pagetatal;
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //    $("#pageindex").text(index);
+
+    //    GetBookInfo(pageSize, currentPageNo);
+    //};
 
 $(".checkall").change(function () {
           // 当全选按钮改变时，让小复选框按钮和全选按钮保持一致（隐式迭代，不需要循环遍历）

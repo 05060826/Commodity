@@ -21,26 +21,12 @@ namespace CommodityApi.Controllers
     {
 
         Client_Business _business = null;
-       
+
         public ClientController()
         {
             _business = new Client_Business();
         }
 
-
-        //获取所有已经放入购物车中的商品
-        [HttpGet]
-        public string ClientShow(int pageName = 1, int limitName = 3)
-        {
-            var list = _business.GetOrders();
-            List<OrderItems> slist = list.Skip((pageName - 1) * limitName).Take(limitName).ToList();
-            Dictionary<string, object> obj = new Dictionary<string, object>();
-            obj.Add("code", 0);
-            obj.Add("msg", "");
-            obj.Add("count", list.Count);
-            obj.Add("data", slist);
-            return JsonConvert.SerializeObject(obj);
-        }
         //获取所有已经放入购物车中的商品
         [HttpGet]
         public Client_ShowModel ClientShowOne(int pageIndex = 1, int pageSize = 3)
@@ -60,8 +46,8 @@ namespace CommodityApi.Controllers
             return pageShowlist;
         }
         //查询ID
-         [HttpGet]
-         public OrderItems GetId(string id)
+        [HttpGet]
+        public OrderItems GetId(string id)
         {
             var list = _business.GetOrders();
             OrderItems items = new OrderItems();
@@ -73,7 +59,7 @@ namespace CommodityApi.Controllers
         public int ADD(UserorderRecound ur)
         {
             var len = _business.ADD(ur);
-            return len; 
+            return len;
         }
         [HttpGet]
         //删除订单
@@ -87,22 +73,52 @@ namespace CommodityApi.Controllers
         }
         //修改转态
         [HttpPost]
-        public  int UpPa(UserorderRecound ur)
+        public int UpPa(UserorderRecound ur)
         {
-            
+
             var PS = _business.Updata(ur);
             return PS;
         }
-
-        public  int XiuGai(string  id,string Zd)
+        //修改
+        public int XiuGai(string id, string Zd)
         {
             UserorderRecound use = new UserorderRecound();
             var list = _business.GetUserorderRecound();
             use = list.Where(m => m.OrderId.Contains(id)).FirstOrDefault();
             int n;
             use.OrderStatue = Zd;
-             n = _business.Updata(use);
+            n = _business.Updata(use);
             return n;
+        }
+
+        //修改付款转态
+        [HttpPost]
+        public int UpPa(string ur)
+        {
+            var list = _business.GetUserorderRecound();
+            var id = list.Where(m => m.PayStatues.Contains(ur)).FirstOrDefault();
+            var PS = _business.Updata(id);
+            return PS;
+        }
+
+        //修改发货转态
+        [HttpPost]
+        public int UpDs(string ur)
+        {
+            var list = _business.GetUserorderRecound();
+            var id = list.Where(m => m.DelivaeryStatue.Contains(ur)).FirstOrDefault();
+            var PS = _business.Updata(id);
+            return PS;
+        }
+
+        //修改回复货转态
+        [HttpPost]
+        public int Uprs(string ur)
+        {
+            var list = _business.GetUserorderRecound();
+            var id = list.Where(m => m.ReplayStatue.Contains(ur)).FirstOrDefault();
+            var PS = _business.Updata(id);
+            return PS;
         }
         [HttpGet]
         //可以查询全部订单，未付款订单，待确认收货订单和待评价订单等订单信息
@@ -117,52 +133,75 @@ namespace CommodityApi.Controllers
             obj.Add("data", slist);
             return JsonConvert.SerializeObject(obj);
         }
+        
         [HttpGet]
         //查询 未付款订单
-        public string NonPayment(int pageName = 0, int limitName = 0)
+        public UserShowModel NonPaymentOne(int pageIndex = 1, int pageSize = 3)
         {
             var list = _business.GetUserorderRecound();
-            var Wlist = list.Where(m => m.PayStatues.Equals("未支付")).ToList();
-            List<UserorderRecound> slist = Wlist.Skip((pageName - 1) * limitName).Take(limitName).ToList();
-            Dictionary<string, object> obj = new Dictionary<string, object>();
-            obj.Add("code", 0);
-            obj.Add("msg", "");
-            obj.Add("count", Wlist.Count);
-            obj.Add("data", slist);
-            return JsonConvert.SerializeObject(obj);
+            var Wlist = list.Where(m => m.PayStatues.Equals("未支付")&m.PayStatues.Contains(null)).ToList();
+            //总条数
+            var totalCount = Wlist.Count();
+            //总页数
+            var totalPage = totalCount / pageSize + (totalCount % pageSize > 0 ? 1 : 0);
+
+
+            Wlist = Wlist.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            UserShowModel pageShowlist = new UserShowModel();
+            pageShowlist.ShowList = Wlist;
+            pageShowlist.ToTalCount = totalCount;
+            pageShowlist.PageTotal = totalPage;
+            return pageShowlist;
         }
+
 
 
         [HttpGet]
         //查询 待确认收货订单
-        public string Affirm(int pageName = 0, int limitName = 0)
+        public UserShowModel Affirm(int pageIndex = 1, int pageSize = 3)
         {
             var list = _business.GetUserorderRecound();
-            var Wlist = list.Where(m => m.DelivaeryStatue.Equals("待确认收货")).ToList();
-            List<UserorderRecound> slist = Wlist.Skip((pageName - 1) * limitName).Take(limitName).ToList();
-            Dictionary<string, object> obj = new Dictionary<string, object>();
-            obj.Add("code", 0);
-            obj.Add("msg", "");
-            obj.Add("count", Wlist.Count);
-            obj.Add("data", slist);
-            return JsonConvert.SerializeObject(obj);
+
+            var Wlist = list.Where(m => m.DelivaeryStatue.Contains("待确认收货")).ToList();
+
+            //总条数
+            var totalCount = Wlist.Count();
+            //总页数
+            var totalPage = totalCount / pageSize + (totalCount % pageSize > 0 ? 1 : 0);
+
+
+            Wlist = Wlist.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            UserShowModel pageShowlist = new UserShowModel();
+            pageShowlist.ShowList = Wlist;
+            pageShowlist.ToTalCount = totalCount;
+            pageShowlist.PageTotal = totalPage;
+            return pageShowlist;
         }
 
         [HttpGet]
         //查询 待评价订单
-        public string Evaluate(int pageName = 0, int limitName = 0)
+        public UserShowModel Evaluate(int pageIndex = 1, int pageSize = 3)
         {
             var list = _business.GetUserorderRecound();
-           
-            var Wlist = list.Where(m => m.ReplayStatue.Equals("待评价")).ToList();
 
-            List<UserorderRecound> slist = Wlist.Skip((pageName - 1) * limitName).Take(limitName).ToList();
-            Dictionary<string, object> obj = new Dictionary<string, object>();
-            obj.Add("code", 0);
-            obj.Add("msg", "");
-            obj.Add("count", Wlist.Count);
-            obj.Add("data", slist);
-            return JsonConvert.SerializeObject(obj);
+
+            var Wlist = list.Where(m => m.ReplayStatue.Contains("待评价")).ToList();
+
+            //总条数
+            var totalCount = Wlist.Count();
+            //总页数
+            var totalPage = totalCount / pageSize + (totalCount % pageSize > 0 ? 1 : 0);
+
+
+            Wlist = Wlist.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+
+            UserShowModel pageShowlist = new UserShowModel();
+            pageShowlist.ShowList = Wlist;
+            pageShowlist.ToTalCount = totalCount;
+            pageShowlist.PageTotal = totalPage;
+            return pageShowlist;
         }
         //修改银行卡余额
         [HttpPost]
@@ -171,16 +210,9 @@ namespace CommodityApi.Controllers
             var count = _business.UpBnak(bank);
             return count;
         }
-        [HttpGet]
-        //测试VUE使用
-        public List<OrderItems> ClientShow1()
-        {
-            var list = _business.GetOrders();
-            
-            return list;
-        }
+      
     }
-
-
-
 }
+
+
+
