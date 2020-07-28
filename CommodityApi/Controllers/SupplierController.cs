@@ -312,8 +312,9 @@ namespace CommodityApi.Controllers
                             on da.SupplierId equals dd.SupplierId
                             where da.SupplierId == SupplierId
                             select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId, du.BuyNum, du.ConsigName, du.ClinchTime }).ToList();
+                var slist = list.Skip((pageName - 1) * limitName).Take(limitName).ToList();
                 Dictionary<string, object> dic = new Dictionary<string, object>();
-                dic.Add("data", list);
+                dic.Add("data", slist);
                 dic.Add("count", list.Count);
                 return JsonConvert.SerializeObject(dic);
             }
