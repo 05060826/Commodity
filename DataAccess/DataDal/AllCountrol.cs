@@ -82,6 +82,20 @@ namespace DataAccess.DataDal
         
         }
 
+
+        /// <summary>
+        /// 删除图书信息
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        public int DeleteBookInfo(BookInfo mode)
+        {
+
+
+            return Book.Delete(mode);
+
+        }
+
         /// <summary>
         /// 作者信息表
         /// </summary>
@@ -134,6 +148,20 @@ namespace DataAccess.DataDal
 
 
         }
+
+        /// <summary>
+        /// 删除作者信息
+        /// </summary>
+        /// <param name="mode"></param>
+        /// <returns></returns>
+        public int DeleteAuthorInfo(AuthorInfo mode)
+        {
+
+            return auth.Delete(mode);
+
+
+        }
+
         /// <summary>
         /// 商家信息表
         /// </summary>
