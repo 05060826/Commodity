@@ -88,6 +88,10 @@ namespace CommodityApi.Controllers
             {
                 SupplierBookInfo info = JsonConvert.DeserializeObject<SupplierBookInfo>(dic["obj"].ToString());
                 string token = dic["token"].ToString();
+                if (token == "undefined")
+                {
+                    return 0;
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -119,6 +123,10 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                if (Token == "undefined")
+                {
+                    return "";
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(Token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -206,6 +214,10 @@ namespace CommodityApi.Controllers
             {
                 SupplierBookInfo info = JsonConvert.DeserializeObject<SupplierBookInfo>(dic["obj"].ToString());
                 string token = dic["token"].ToString();
+                if (token == "undefined")
+                {
+                    return 0;
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -230,6 +242,10 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                if (token == "undefined")
+                {
+                    return "";
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -275,6 +291,10 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                if (token == "undefined")
+                {
+                    return 0;
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -296,6 +316,10 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                if (token == "undefined")
+                {
+                    return "";
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -326,6 +350,10 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                if (token == "undefined")
+                {
+                    return "";
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -354,6 +382,10 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                if (token == "undefined")
+                {
+                    return "";
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -382,6 +414,10 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                if (token == "undefined")
+                {
+                    return 0;
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -403,6 +439,10 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                if (token == "undefined")
+                {
+                    return "";
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -443,6 +483,10 @@ namespace CommodityApi.Controllers
         {
             using (CommercedataContext context = new CommercedataContext())
             {
+                if (token == "undefined")
+                {
+                    return "";
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -492,9 +536,12 @@ namespace CommodityApi.Controllers
         [HttpGet]
         public string GetUserRoder(string token = "")
         {
-
             using (CommercedataContext context = new CommercedataContext())
             {
+                if (token == "undefined")
+                {
+                    return "";
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
@@ -516,6 +563,10 @@ namespace CommodityApi.Controllers
             {
                 UserRoderInfo info = JsonConvert.DeserializeObject<UserRoderInfo>(dic["obj"].ToString());
                 string token = dic["token"].ToString();
+                if (token== "undefined")
+                {
+                    return 0;
+                }
                 JWTHelper jWT = new JWTHelper();
                 UserRoderInfo user = JsonConvert.DeserializeObject<UserRoderInfo>(jWT.GetPayload(token));
                 var ue = context.UserRoderInfo.Where(n => n.ContactName.Equals(user.ContactName) && n.SupplierPwd.Equals(user.SupplierPwd)).FirstOrDefault();
