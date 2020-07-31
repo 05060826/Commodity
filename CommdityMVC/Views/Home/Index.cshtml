@@ -86,7 +86,7 @@
                             <cite id="People">你好陌生人</cite>
                         </a>
                         <dl class="layui-nav-child">
-                            <dd><a href="set/user/info.html" target="main_self_frame">详细信息</a></dd>
+                            @*<dd><a href="set/user/info.html" target="main_self_frame">详细信息</a></dd>*@
                             @*<dd><a href="set/user/password.html" target="main_self_frame">修改密码</a></dd>*@
                             <dd style="text-align: center;"><a href="#" id="btns">退出</a></dd>
                         </dl>
@@ -119,16 +119,25 @@
                                 <dd>
                                     <a href="#">请选择图书类型</a>@*target="main_self_frame"*@
                                     <dl class="layui-nav-child">
-                                        <dd><a href="/Login/Show/?type='小说'" target="main_self_frame">小说</a></dd>
+                                        <dd><a href="/Login/Show/?type=小说" target="main_self_frame">小说</a></dd>
                                     </dl>
                                     <dl class="layui-nav-child">
-                                        <dd><a href="/Login/Show/?type='历史'" target="main_self_frame">历史</a></dd>
+                                        <dd><a href="/Login/Show/?type=初级类" target="main_self_frame">初学</a></dd>
                                     </dl>
                                     <dl class="layui-nav-child">
-                                        <dd><a href="/Login/Show/?type='文学'" target="main_self_frame">文学</a></dd>
+                                        <dd><a href="/Login/Show/?type=高中类" target="main_self_frame">高中</a></dd>
                                     </dl>
                                     <dl class="layui-nav-child">
-                                        <dd><a href="/Login/Show/?type='天文'" target="main_self_frame">天文</a></dd>
+                                        <dd><a href="/Login/Show/?type=大学类" target="main_self_frame">大学</a></dd>
+                                    </dl>
+                                    <dl class="layui-nav-child">
+                                        <dd><a href="/Login/Show/?type=历史" target="main_self_frame">历史</a></dd>
+                                    </dl>
+                                    <dl class="layui-nav-child">
+                                        <dd><a href="/Login/Show/?type=文学" target="main_self_frame">文学</a></dd>
+                                    </dl>
+                                    <dl class="layui-nav-child">
+                                        <dd><a href="/Login/Show/?type=天文" target="main_self_frame">天文</a></dd>
                                     </dl>
                                 </dd>
                             </dl>
@@ -219,18 +228,10 @@
     </script>
     <script type="text/javascript">
 
-        //$("#people").change(function () {
-        //    if ($("#people").html()=="你好陌生人") {
-        //        $("#btn").show()
-        //    }
-        //    else {
-        //        $("#btn").hide()
-        //    }
-        //})
-
-        //$("#btns").click(function () {
-        //    $("#people").html("你好陌生人");
-        //})
+        $("#btns").click(function () {
+            $("#People").html("你好陌生人");
+            $("#btn").show()
+        })
 
         $(function () {
 
@@ -280,6 +281,8 @@
                                     $("#Quan").val(result.quan);
 
                                     alert("登录成功！");
+                                    $("#btn").hide();
+                                     $(".layui-layer-close1").trigger('click');    // 关闭弹出层
                                     if ($("#Quan").val() == "供应商") {
                                         location.href = "/supplier/Index";
                                     }
@@ -288,7 +291,7 @@
                                     }
                                     //管理员
                                     else {
-                                        //$(".layui-layer-close1").trigger('click');    // 关闭弹出层
+                                        
                                         location.href = "/AdminsInfo/AllShow";
                                     }
 
@@ -321,30 +324,24 @@
                         else {
                             line = "http://localhost:54057/Login/ZhuCeGuan"
                             
-                        }
-
-                        //$(".layui-layer-close1").trigger('click');    // 关闭弹出层
+                        }                        
                         layer.open({
                             type: 2,
                             title: '用户注册',
                             maxmin: true,
-                            skin: 'layui-layer-lan',
-                            //btn: ['确定', '取消'],
+                            skin: 'layui-layer-lan',                          
                             btnAlign: 'c', //按钮居中对齐
                             shadeClose: true, //点击遮罩关闭层
                             area: ['900px', '500px'],
-                            content:line/*'http://localhost:54057/Login/Login'*///弹框显示的url
+                            content:line//弹框显示的url
                        
                         });
-
                     },
                     cancel: function (layero, index) {
                         layer.closeAll();
                     }
-
                 });
             });
-
         })
 
     </script>

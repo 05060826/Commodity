@@ -62,10 +62,6 @@
        
     }
 
-    //$("#username").blur(function () {
-
-    //}
-
     $("#username").change(function () {
         if ($("#username").val().length > 0) {
             
@@ -87,15 +83,13 @@
     function Gong() {
         document.getElementById('name').innerText = "供应商用户名：";
         document.getElementById('pass').innerText = "供应商密码：";
-        $("#status").val("UserRoderInfo")
-        //$("#status").val($("#UserRoderInfo"))
+        $("#status").val("UserRoderInfo")       
     }
 
     function Guan() {
         document.getElementById('name').innerText = "管理员用户名：";
         document.getElementById('pass').innerText = "管理员密码：";
         $("#status").val("ManageInfo")
-        //$("#status").val($("#ManageInfo"))
     }
 
 </script>

@@ -43,57 +43,15 @@
 
     <div style="height:1000px;width:100%;background-color:white" id=All>
 
-        @*<div id="item" style="height:150px;width:1100px;margin:5px,10px,5px,10px;border:solid">
-
-                <div id="first" style="height:150px;width:180px;background-color:darkslategray;float:left;">
-                    <img src="~/Picture/1.jpg" style="height:80px;width:100px;margin-top:15px;margin-left:40px" />
-
-                    <div class="p" style="margin-top:5px; background-color:aqua;height:30px;width:180px;text-align:center;line-height:30px"> <a style="margin:2px 1px">书的名字很长很长的</a></div>
-
-                </div>
-
-
-                <div id="Second" style="height:120px;width:400px;margin-top:17px;margin-left:40px;float:left">
-                    <div style="height:120px;width:200px;float:left">
-                        <p style="margin: 5px auto"><span style="color:lightgray">作     者：</span><a href="#">张三</a></p>
-                        <p style="margin: 5px auto"><span style="color:lightgray">出版社：</span><a href="#">临汾西城出版社</a></p>
-                        <p style="margin:5px auto"><span style="color:lightgray">出版时间：</span>2020-01-01</p>
-                        <p style="margin:5px auto"><span style="color:lightgray">定     价：</span> ￥28.6</p>
-
-                    </div>
-                    <div style="height: 120px; width: 200px; float: left">
-                        <p style="margin: 58px auto 5px auto"><span style="color:lightgray">顾客评价：</span></p>
-                        <p style="margin: 5px auto"><span style="color:orangered;font-weight:bold">折     扣：</span>  5.9</p>
-                    </div>
-
-                </div>
-
-
-                <div id="first" style="height:100px;width:100px;margin-top:25px;margin-left:60px;float:left">
-                    <div style="margin-top:30px;height:30px;width:100px">
-                        <a href="#" style="color:dodgerblue">德云社</a>
-                    </div>
-
-                </div>
-                <div id="first" style="height:100px;width:200px;margin-top:25px;margin-left:60px;float:left">
-                    <input id="Button1" type="button" value="立即购买" style="background-color:crimson;color:white ;margin-top:20px;margin-left:55px" />
-                    <input id="Button2" type="button" value="加入购物车" style="background-color:crimson;color:white;margin-top:2px;margin-left:55px" />
-
-                </div>
-
-            </div>*@
-
     </div>
-    @*<input type="button" onclick="buy(i)" />*@
-
+   
 </body>
 </html>
 
 <script>
 
 
-    $(function () {
-        //alert($("#type").val());
+    $(function () {       
         var actor = $("#acter").val();
         var bookname = $("#bookName").val();
         Show(actor, bookname)
@@ -149,7 +107,7 @@
 
             str += '<div id="Thread' + i + '" style="height:100px;width:100px;margin-top:25px;margin-left:50px;float:left">'
             str += '<div style="margin-top:30px;height:30px;width:100px">'
-            str += '<a href="#" id="d' + i + '">德云社</a>'
+            str += '<a href="#" id="d' + i + '">' + n.chuBan + '</a>'
             str += '</div>'
 
             str += '</div>'
