@@ -32,7 +32,7 @@
                     <td>商家类型</td>
                     <td>标注</td>
                     <td>操作</td>
-                  
+                   
 
                 </tr>
             </thead>
@@ -50,7 +50,7 @@
 
         showBookAutho();
 
-    })
+    });
 
 
     function showBookAutho()
@@ -83,7 +83,7 @@
                         '<td>' + this.quanTity + '</td>' +
                         '<td>' + this.suoolierType + '</td>' +
                         '<td>' + this.remark + '</td>' +
-                        '<td><a href="javascript: del(' + this.suppLierId + ')">删除|</a><input id="Button1" type="button" value="修改权限" onclick="modify(' + this.suppLierId + ')" /></td>' +
+                        '<td><a href="javascript:orderDetails(\'' + this.suppLierId +'\')">删除|</a> <button type="button" onclick="updateInfo(\'' + this.suppLierId + '\')">修改权限</button> </td>' +
                   
 
                         + '</tr>';
@@ -98,10 +98,19 @@
 
     }
 
-    //修改商家权限
-    function modify(supplisrId)
+
+
+    function orderDetails(suppLierId)
     {
-        location.href = "/AdminsInfo/SupplierUpdate?supplierId=" + supplisrId;
+
+        alert(suppLierId);
+
+    }
+    //修改商家权限
+    function updateInfo(suppLierId)
+    {
+        alert(suppLierId);
+        location.href = "/AdminsInfo/SupplierUpdate?supplierId=" + suppLierId;
             
 
 

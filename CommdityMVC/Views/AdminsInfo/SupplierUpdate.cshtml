@@ -14,7 +14,185 @@
 </head>
 <body>
 
+    <div>
+        <table class="container">
+            <tr>
 
+                <td><input id="Hidden1" type="hidden" value="@ViewBag.supplierId" />登录名称：</td>
+                <td><input id="TextContenName" type="text" /></td>
+                <td>
+                    登录密码：
+                </td>
+                <td><input id="TextPwd" type="text" /></td>
+                
+            </tr>
+            <tr>
+                <td>商家店名：</td>
+                <td><input id="TextShopName" type="text" /></td>
+                <td>
+                    真实姓名：
+                </td>
+                <td><input id="TrueName" type="text" /></td>
+            </tr>
+
+            <tr>
+                <td>手机号：</td>
+                <td><input id="TextPhone" type="text" /></td>
+                <td>邮箱：</td>
+                <td><input id="TextEmail" type="text" /></td>
+            </tr>
+
+            <tr>
+                <td>店铺地址：</td>
+                <td><input id="TextShopAddress" type="text" /></td>
+                <td>销售额：</td>
+                <td><input id="AllSaleNum" type="text" /></td>
+               
+            </tr>
+
+            <tr>
+                <td>商家类型：</td>
+                <td><input id="TextShopType" type="text" /></td>
+                <td>允许上架图书数量：</td>
+                <td><input id="BookNum" type="text" /></td>
+            </tr>
+            <tr>
+                <td><input id="Button1" type="button" value="修改权限" onclick="modifys()" /></td>
+            </tr>
+        </table>
+    </div>
 
 </body>
 </html>
+<script>
+    //首次加载
+    $(function ()
+    {
+
+        var supplierId = $("#Hidden1").val();
+
+
+        $.ajax({
+            url: "http://localhost:54063/api/AdminControl/ModifySupplier?suppliserid=" + supplierId,
+            type: "get",
+            dataType: "json",
+            success: function (data)
+            {
+                //登陆名称
+                $("#TextContenName").val(data.contactName);
+                //登录密码
+                $("#TextPwd").val(data.supplierPwd);
+                //商家店名
+                $("#TextShopName").val(data.shopName);
+                //真实姓名
+                $("#TrueName").val(data.contactName);
+                //手机号
+                $("#TextPhone").val(data.cortactPhone);
+                //邮箱
+                $("#TextEmail").val(data.mail);
+                //店铺地址
+                $("#TextShopAddress").val(data.shopAddress);
+                //销售额
+               
+
+                $("#AllSaleNum").val(data.allSaledAccount);
+
+                var sumNum = Number($("#AllSaleNum").val());
+
+
+                if (sumNum >= 1000 && sumNum <= 2000) {
+                    //允许上架数量
+                    $("#BookNum").val(40);
+                    //商家类型
+                    $("#TextShopType").val("会员商家");
+
+                }
+                else if (sumNum < 1000) {
+                    //允许上架数量
+                    $("#BookNum").val(20);
+                    //商家类型
+                    $("#TextShopType").val("普通商家");
+                }
+                else
+                {
+                    //允许上架数量
+                    $("#BookNum").val(60);
+                    //商家类型
+                    $("#TextShopType").val("超级商家");
+
+                }
+                
+               
+               
+
+               
+            }
+
+
+        })
+
+
+    })
+
+
+
+    //修改
+    function modifys()
+    {
+        //登陆名称
+      var conName=$("#TextContenName").val();
+        //登录密码
+       var suppPwd= $("#TextPwd").val();
+        //商家店名
+       var shopName= $("#TextShopName").val();
+        //真实姓名
+       var trueName= $("#TrueName").val();
+        //手机号
+       var phone= $("#TextPhone").val();
+        //邮箱
+       var email= $("#TextEmail").val();
+        //店铺地址
+       var shopAddress= $("#TextShopAddress").val();
+        //销售额
+        var saleNum = $("#AllSaleNum").val();
+
+            //允许上架数量
+        var bookNum = $("#BookNum").val();
+
+            //商家类型
+        var shopType = $("#TextShopType").val();
+
+
+        var obj = {};
+        obj.SuppLierId = $("#Hidden1").val();
+        obj.ContactName = conName;
+        obj.SupplierPwd = suppPwd;
+        obj.ShopName = shopName;
+        obj.TrueName = trueName;
+        obj.CortactPhone = phone;
+        obj.Mail = email;
+        obj.ShopAddress = shopAddress;
+        obj.AllSaledAccount = saleNum;
+        obj.QuanTity = bookNum;
+        obj.SuoolierType = shopType;
+
+        $.ajax({
+            url: "http://localhost:54063/api/AdminControl/ModifyInfo?mode=" + JSON.stringify(obj),
+            type: "post",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (data) {
+
+                if (data > 0) {
+                    alert("修改成功");
+                    location.href = "/AdminsInfo/SupplierShow";
+
+                }
+                else {
+                    alert("添加失败");
+                }
+            }
+        })
+
+    }
+</script>
