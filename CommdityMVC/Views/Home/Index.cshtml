@@ -228,8 +228,12 @@
     </script>
     <script type="text/javascript">
 
+
+        localStorage["Token"] = "你好陌生人";
+
         $("#btns").click(function () {
             $("#People").html("你好陌生人");
+            localStorage["Token"] = "你好陌生人";
             $("#btn").show()
         })
 
