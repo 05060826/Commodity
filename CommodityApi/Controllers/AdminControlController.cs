@@ -401,44 +401,55 @@ namespace CommodityApi.Controllers
         }
         [HttpGet]
         /// <summary>
-        /// 修改商家权限
+        /// 反填商家信息
         /// </summary>
         /// <returns></returns>
-        public int ModifySupplier(string suppliserid)
+        public UserRoderInfo ModifySupplier(string suppliserid)
         {
 
             var listsupplier = dal.AllRoderInfo().ToList();
-
             UserRoderInfo mode = listsupplier.Where(m => m.SuppLierId.Contains(suppliserid)).FirstOrDefault();
 
-            if (mode.AllSaledAccount >= 1000 && mode.AllSaledAccount <= 2000)
-            {
-                mode.QuanTity = 40;
-                mode.SuoolierType = "会员商家";
-            }
-            else if (mode.AllSaledAccount < 1000)
-            {
-                mode.QuanTity = 20;
-                mode.SuoolierType = "普通商家";
-            }
-            else
-            {
-                mode.QuanTity = 60;
-                mode.SuoolierType = "超级商家";
+            //if (mode.AllSaledAccount >= 1000 && mode.AllSaledAccount <= 2000)
+            //{
+            //    mode.QuanTity = 40;
+            //    mode.SuoolierType = "会员商家";
+            //}
+            //else if (mode.AllSaledAccount < 1000)
+            //{
+            //    mode.QuanTity = 20;
+            //    mode.SuoolierType = "普通商家";
+            //}
+            //else
+            //{
+            //    mode.QuanTity = 60;
+            //    mode.SuoolierType = "超级商家";
 
 
-            }
+            //}
 
 
-            return dal.ModifyRoderInfo(mode);
+            return mode;
         
         
+        }
+        [HttpPost]
+        public int ModifyInfo(string  mode)
+        {
+            UserRoderInfo mods = JsonConvert.DeserializeObject<UserRoderInfo>(mode);
+
+
+
+            return dal.ModifyRoderInfo(mods);
+
+
+
+
         }
 
 
 
-
-
+       
 
         [HttpGet]
 
@@ -448,6 +459,9 @@ namespace CommodityApi.Controllers
         /// <returns></returns>
         public List<Customer> ShowCustor()
         {
+
+
+            
 
 
             var listcu = dal.ShowCustor();
