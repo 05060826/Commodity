@@ -31,7 +31,7 @@
                 var zz = "";
                 $.each(result, function (i, n) {
                     $.each(n.ReplyA, function(x,y) {
-                        zz +="<div>"+y+"</br></div>";
+                        zz +="<div>"+y+"   <a href='javascript:;'>回复</a></br></div>";
                     })
                     str += "<div style='background-color:skyblue' ><div>"+n.Isbn+"</div>"+zz+"</div>";
                 })

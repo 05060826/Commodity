@@ -14,7 +14,7 @@ namespace Commodity.Controllers
         }
         //图书
         public IActionResult BookOk()
-        {
+        {           
             return View();
         }
         public IActionResult BookRead()

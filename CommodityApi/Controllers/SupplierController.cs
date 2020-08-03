@@ -335,7 +335,7 @@ namespace CommodityApi.Controllers
                             join dd in context.SupplierBookInfo
                             on da.SupplierId equals dd.SupplierId
                             where da.SupplierId == SupplierId
-                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId, du.BuyNum, du.ConsigName, du.ClinchTime }).ToList();
+                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId, du.BuyNum, du.ConsigName, du.ClinchTime }).Distinct().ToList();
                 var slist = list.Skip((pageName - 1) * limitName).Take(limitName).ToList();
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("data", slist);
@@ -369,7 +369,7 @@ namespace CommodityApi.Controllers
                             join dd in context.SupplierBookInfo
                             on da.SupplierId equals dd.SupplierId
                             where da.SupplierId == SupplierId && du.PayStatues == "未支付"
-                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId, du.BuyNum, du.ConsigName, du.ClinchTime, du.PayStatues }).ToList();
+                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId, du.BuyNum, du.ConsigName, du.ClinchTime, du.PayStatues }).Distinct().ToList();
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("data", list);
                 dic.Add("count", list.Count);
@@ -401,7 +401,7 @@ namespace CommodityApi.Controllers
                             join dd in context.SupplierBookInfo
                             on da.SupplierId equals dd.SupplierId
                             where da.SupplierId == SupplierId && du.OrderStatue == "未发货"
-                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId, du.BuyNum, du.ConsigName, du.ClinchTime, du.PayStatues, du.OrderStatue }).ToList();
+                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId, du.BuyNum, du.ConsigName, du.ClinchTime, du.PayStatues, du.OrderStatue }).Distinct().ToList();
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("data", list);
                 dic.Add("count", list.Count);
@@ -458,7 +458,7 @@ namespace CommodityApi.Controllers
                             join dd in context.SupplierBookInfo
                             on da.SupplierId equals dd.SupplierId
                             where da.SupplierId == SupplierId && du.DelivaeryStatue == "待确认收货"
-                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId, du.BuyNum, du.ConsigName, du.ClinchTime, du.PayStatues, du.OrderStatue, du.DelivaeryStatue }).ToList();
+                            select new { da.Isbn, da.SupplierId, da.BookName, da.BookPrice, da.Quantity, da.Statue, du.OrderId, du.BuyNum, du.ConsigName, du.ClinchTime, du.PayStatues, du.OrderStatue, du.DelivaeryStatue }).Distinct().ToList();
                 Dictionary<string, object> dic = new Dictionary<string, object>();
                 dic.Add("data", list);
                 dic.Add("count", list.Count);
