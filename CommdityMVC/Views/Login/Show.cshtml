@@ -127,26 +127,30 @@
 
     function buy(index) {
 
-        //if ($("#People").html() == "你好陌生人") {
-        //    alert("请先登录，再购买");
-        //    return;
-        //}
-        
+        var name = localStorage["Token"];
+        if (name == "你好陌生人") {
+            alert("请登录后再购买")
+            return;
+        }
+        else {
+            var price = parseFloat($("#e" + index).html());
 
-        var price = parseFloat($("#e" + index).html());
-      
-        location.href = "/Client_/ADD/?price="+price+"&count=1";
+            location.href = "/Client_/ADD/?price=" + price + "&count=1";
+          
+        }
+     
        
+     
     }
 
     function add(index) {
 
-        //if ($("#People").html() == "你好陌生人")
-        //{
-        //    alert("请先登录，再加入购物车");
-        //    return;
-        //}
-       
+        var name = localStorage["Token"];
+        if (name == "你好陌生人") {
+            alert("请登录后再加入购物车")
+            return;
+        }
+        else {
             var myDate = new Date();
 
             var year = myDate.getFullYear();        //获取当前年
@@ -190,7 +194,11 @@
                 }
 
             })
+
+        }
+
        
+
     }
 
     function getNow(s) {
