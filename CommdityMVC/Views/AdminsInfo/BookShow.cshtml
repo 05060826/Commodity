@@ -17,8 +17,8 @@
 <body>
     <div>
         <input id="Button1" class="layui-btn layui-btn-sm layui-btn-normal" type="button" value="查询" onclick="shows()" />
-        <table class="container">
-            <tr >
+        <table class="container" style="text-align:center;" border="1" bordercolor="orange">
+            <tr>
                 <td>作者：</td>
                 <td><input id="SelAuthName" type="text" /></td>
                 <td>书名：</td>
@@ -26,14 +26,15 @@
                 <td>出版社：</td>
                 <td><input id="chuban" type="text" /></td>
                 <td>
-                    分类：</td>
+                    分类：
+                </td>
                 <td>
-                        <select id="SelectType">
+                    <select id="SelectType">
                     </select>
                 </td>
 
                 <td>
-                    <input id="CheckboxPUP" value="ase"  type="checkbox" />价格升序
+                    <input id="CheckboxPUP" value="ase" type="checkbox" />价格升序
                     <input id="CheckboxNumDown" value="des" type="checkbox" />销量降序
                 </td>
             </tr>

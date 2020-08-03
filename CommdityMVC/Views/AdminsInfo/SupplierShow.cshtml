@@ -15,8 +15,8 @@
 </head>
 <body>
     <div>
-        <table class="container;tab table-bordered">
-            <thead>
+        <table class="container;" style="text-align:center;" border="1" bordercolor="orange">
+            <thead  style="color:mediumpurple">
                 <tr>
                     <td>商家编号</td>
                     <td>商家注册密码</td>
@@ -83,7 +83,7 @@
                         '<td>' + this.quanTity + '</td>' +
                         '<td>' + this.suoolierType + '</td>' +
                         '<td>' + this.remark + '</td>' +
-                        '<td><a href="javascript:orderDetails(\'' + this.suppLierId +'\')">删除|</a> <button type="button" onclick="updateInfo(\'' + this.suppLierId + '\')">修改权限</button> </td>' +
+                        '<td><a href="javascript:orderDetails(\'' + this.suppLierId +'\')">删除|</a> <button type="button" class="btn btn-warning btn-sm" onclick="updateInfo(\'' + this.suppLierId + '\')">修改权限</button> </td>' +
                   
 
                         + '</tr>';

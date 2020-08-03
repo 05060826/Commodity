@@ -139,7 +139,7 @@ namespace CommodityApi.Controllers
         public UserShowModel NonPaymentOne(int pageIndex = 1, int pageSize = 3)
         {
             var list = _business.GetUserorderRecound();
-            var Wlist = list.Where(m => m.PayStatues.Equals("未支付")&m.PayStatues.Contains(null)).ToList();
+            var Wlist = list.Where(m => m.PayStatues.Equals("未支付")).ToList();
             //总条数
             var totalCount = Wlist.Count();
             //总页数

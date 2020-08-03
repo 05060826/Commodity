@@ -14,18 +14,18 @@
 </head>
 <body>
 
-    <div class="border border-primary">
-        <table>
+    <div>
+        <table style="text-align:center;" border="1" bordercolor="orange" class="container">
             <tr>
                 <td>图书分类编号</td>
-                <td><input id="TextAllClassId" type="text" placeholder="请输入四位数编号" /></td>
+                <td><input id="TextAllClassId" type="text" placeholder="请输入四位数编号"  border="1" bordercolor="orange" /></td>
                 <td>图书分类名称</td>
-                <td><input id="TextAllClassName" type="text" /></td>
+                <td><input id="TextAllClassName" type="text"  border="1" bordercolor="orange"  /></td>
             </tr>
         </table>
     </div>
     <div style="margin-top:20px">
-        <table>
+        <table style="text-align:center;" border="1" bordercolor="orange" class="container">
             <tr>
                 <td>图书总分类:</td>
                 <td><select id="SelectallTypeId">
@@ -45,7 +45,7 @@
             </tr>
         </table>
 
-        <input id="Button1" type="button" value="保存" onclick="btnadd()" />
+        <input id="Button1" type="button" class="btn btn-warning btn-sm" value="保存" onclick="btnadd()" />
     </div>
 
 

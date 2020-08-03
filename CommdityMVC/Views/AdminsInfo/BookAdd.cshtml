@@ -18,12 +18,12 @@
 </head>
 <body>
     <div>
-        <table style="text-align:justify">
+        <table style=" text-align:center;" border="1" bordercolor="orange" class="container">
             <tr>
                 <td>图书类别：</td>
-                <td><select id="bookType">
-
-                </select>
+                <td>
+                    <select id="bookType">
+                    </select>
                 </td>
                 <td>ISBN：</td>
                 <td><input id="TextISBN" type="text" /></td>
@@ -32,7 +32,7 @@
                 <td>书名：</td>
                 <td><input id="TextBookName" type="text" /></td>
                 <td>作者名称代号：</td>
-                <td><input id="TextAuthor" type="text" /><input id="Button1" type="button" value="添加作者" onclick="addauthor()"/></td>
+                <td><input id="TextAuthor" type="text" /><input id="Button1" class="btn btn-warning btn-sm"  type="button" value="添加作者" onclick="addauthor()" /></td>
             </tr>
             <tr>
                 <td>出版社：</td>
@@ -73,8 +73,8 @@
                 <td colspan="4"><textarea id="TextJie" rows="2" cols="20"></textarea></td>
             </tr>
             <tr>
-                <td><input id="Button1" class="btn btn-warning btn-sm" type="button" value="提交" onclick="save()" /></td>
-                <td><input id="Button1" class="btn btn-warning btn-sm" type="button" value="重置" onclick="back()" /></td>
+                <td colspan="2"><input id="Button1" class="btn btn-warning btn-sm" type="button" value="提交" onclick="save()" /></td>
+                <td colspan="2"><input id="Button1" class="btn btn-warning btn-sm" type="button" value="重置" onclick="back()" /></td>
             </tr>
         </table>
     </div>
